@@ -6,7 +6,7 @@
    1. Hero görselleri: chip / schematic / modules (SVG, JS ile çizilir)
    2. Hero arka planı: devre izleri canvas'ı
    3. Hero slaytı: geçişler, otomatik oynatma, kontroller
-   4. Nasıl çalışıyoruz: aşamalar + kaydırmaya bağlı kart patlatma
+   4. Nasıl çalışıyoruz: aşamalar sırayla belirir
    5. Bölüm başlıkları, kartlar ve kapanış girişleri
    6. Hero'su olmayan sayfalar için basit giriş
    7. Yumuşak kaydırma (Lenis)
@@ -804,64 +804,68 @@
 
   /* =======================================================
      4. Nasıl çalışıyoruz
-     Kart sağ sütunda CSS "sticky" ile ekranda kalır; bölüm
-     boyunca kaybolmaz. Kaydırma ilerledikçe 001…114 (mobilde 057) kareleri
-     çizilir (patlama); yukarı kaydırınca geri sarılır (birleşme).
+     Bölüm ekrana girince dört aşama sırayla alttan gelir; her biri
+     geldiğinde yanar (.is-lit) ve oku bir sonrakini gösterir.
      ======================================================= */
   function initProcess() {
-    const section = document.getElementById('nasil-calisiyoruz');
-    if (!section || !hasScrollTrigger) return;
+    const steps = gsap.utils.toArray('#nasil-calisiyoruz .p-step');
+    if (!steps.length) return;
 
-    const steps = Array.from(section.querySelectorAll('.p-step'));
-    const stepsBox = section.querySelector('.process-steps');
-    const railFill = section.querySelector('.process-rail-fill');
+    if (reduceMotion || !hasScrollTrigger) {
+      steps.forEach((s) => s.classList.add('is-lit'));
+      return;
+    }
 
-    // Aşamalar: ekranın ortasına gelen aktif olur, geçilenler işaretlenir
+    gsap.set(steps, { y: 40, opacity: 0 });
+    const tl = gsap.timeline({
+      scrollTrigger: { trigger: steps[0].parentNode, start: 'top 78%', once: true },
+    });
     steps.forEach((step, i) => {
+      tl.to(step, { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out' }, i * 0.28)
+        .add(() => step.classList.add('is-lit'), i * 0.28 + 0.3);
+    });
+  }
+
+  /* =======================================================
+     4b. Ürünler: kartın içine bakın (MW-PWR-BK kare dizisi)
+     Aşağı kaydırdıkça kart açılır, son adımda yeniden birleşir;
+     yukarı çıkınca aynı yol tersinden izlenir. Her açıklama adımı
+     ekranın ortasına gelince yanar (.is-active).
+     ======================================================= */
+  function initSequence() {
+    const box = document.querySelector('.bk-explode');
+    if (!box) return;
+    const steps = gsap.utils.toArray(box.querySelectorAll('.bk-step'));
+    const canvas = box.querySelector('.seq-canvas');
+    const poster = box.querySelector('.seq-poster');
+    if (reduceMotion || !hasScrollTrigger) {
+      steps.forEach((s) => s.classList.add('is-active'));
+      return; // sabit ilk kare (poster) kalır
+    }
+
+    // Mobilde kart üstte yapışık durur; adımlar onun altındaki alanda yanar
+    const small = window.matchMedia('(max-width: 767px)').matches;
+    const mark = small ? '74%' : '60%';
+    steps.forEach((step) => {
       window.ScrollTrigger.create({
         trigger: step,
-        start: 'top 55%',
-        end: 'bottom 55%',
-        onToggle: (self) => {
-          if (self.isActive) steps.forEach((s, n) => {
-            s.classList.toggle('is-active', n === i);
-            s.classList.toggle('is-passed', n < i);
-          });
-        },
+        start: `top ${mark}`,
+        end: `bottom ${mark}`,
+        toggleClass: 'is-active',
       });
-      if (!reduceMotion) {
-        gsap.from(step.querySelector('.p-step-body'), {
-          y: 16, opacity: 0, duration: 0.7,
-          scrollTrigger: { trigger: step, start: 'top 75%', toggleActions: 'play none none reverse' },
-        });
-      }
     });
-
-    // Dikey hat kaydırmayla dolar
-    gsap.fromTo(railFill, { scaleY: 0 }, {
-      scaleY: 1, ease: 'none',
-      scrollTrigger: { trigger: stepsBox, start: 'top 55%', endTrigger: steps[steps.length - 1], end: 'center 55%', scrub: true },
-    });
-
-    // ----- Kart patlatma (kare dizisi) -----
-    const visual = section.querySelector('.process-visual');
-    const canvas = visual.querySelector('.seq-canvas');
-    const poster = visual.querySelector('.seq-poster');
-    if (reduceMotion) return; // sabit ilk kare (poster) kalır
 
     const ctx = canvas.getContext('2d');
-    // Mobilde daha küçük ve daha az kareli set (57 kare) kullanılır
-    const small = window.matchMedia('(max-width: 767px)').matches;
-    const count = Number(small ? visual.dataset.seqCountSm : visual.dataset.seqCount);
-    const path = small ? visual.dataset.seqPathSm : visual.dataset.seqPath;
-    const version = visual.dataset.seqVersion ? `?v=${visual.dataset.seqVersion}` : '';
+    // Mobilde daha küçük ve daha az kareli set (57 kare)
+    const count = Number(small ? box.dataset.seqCountSm : box.dataset.seqCount);
+    const path = small ? box.dataset.seqPathSm : box.dataset.seqPath;
+    const version = box.dataset.seqVersion ? `?v=${box.dataset.seqVersion}` : '';
     const frames = new Array(count);
     const state = { frame: 0 };
     let drawn = -1;
 
     function resize() {
-      // clientWidth/Height: kartın giriş animasyonundaki ölçek (scale) dahil edilmez;
-      // getBoundingClientRect kullanılırsa canvas küçük kalır ve kart bulanıklaşır.
+      // clientWidth: CSS ölçeği dahil edilmez, canvas tam çözünürlükte kalır
       const dpr = Math.min(window.devicePixelRatio || 1, 3);
       canvas.width = Math.round(canvas.clientWidth * dpr);
       canvas.height = Math.round(canvas.clientHeight * dpr);
@@ -885,11 +889,10 @@
       const i = nearestLoaded(Math.round(state.frame));
       if (i < 0 || i === drawn) return;
       const img = frames[i];
-      const s = Math.min(canvas.width / img.naturalWidth, canvas.height / img.naturalHeight);
-      const w = img.naturalWidth * s;
-      const h = img.naturalHeight * s;
+      const k = Math.min(canvas.width / img.naturalWidth, canvas.height / img.naturalHeight);
+      const w = img.naturalWidth * k;
+      const h = img.naturalHeight * k;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      // En kaliteli yeniden örnekleme (varsayılan "low" kareleri bulanıklaştırır)
       ctx.imageSmoothingEnabled = true;
       ctx.imageSmoothingQuality = 'high';
       ctx.drawImage(img, (canvas.width - w) / 2, (canvas.height - h) / 2, w, h);
@@ -909,25 +912,23 @@
         img.onload = () => {
           if (i === 0) { canvas.hidden = false; poster.hidden = true; resize(); } else render();
         };
-        // ?v=… : kareler yenilenince tarayıcı eskilerini önbellekten göstermesin
         img.src = `${path}${String(i + 1).padStart(3, '0')}.webp${version}`;
         frames[i] = img;
       });
     }
-    window.ScrollTrigger.create({ trigger: section, start: 'top 250%', once: true, onEnter: load });
+    window.ScrollTrigger.create({ trigger: box, start: 'top 250%', once: true, onEnter: load });
 
-    /* Patlama ilerlemesi
-       Aşağı kaydırırken: 1. aşamada kart montajlı → 3. aşamaya ("Prototip & Test")
-       kadar açılır → 4. aşamada ("Üretime Geçiş") yeniden birleşir.
-       Yukarı kaydırınca aynı yol tersinden izlenir.
-       scroll.p (0 → 1) kaydırmayı yumuşak takip eder; kare numarası
-       bu değerden "üçgen" şeklinde hesaplanır (aç → kapat). */
+    /* İlerleme (0 → 1) → kare: 1.–4. adım boyunca açılır, açık kalır,
+       son adımda yeniden birleşir. */
+    const OPEN = 0.62;
+    const CLOSE = 0.8;
     const scroll = { p: 0 };
-    let peak = 0.66; // en açık anın konumu (0–1); ekran boyuna göre yeniden hesaplanır
-
     function frameFromProgress(p) {
-      const t = p < peak ? p / peak : 1 - (p - peak) / (1 - peak);
-      return t * (count - 1);
+      let t;
+      if (p < OPEN) t = p / OPEN;
+      else if (p < CLOSE) t = 1;
+      else t = 1 - (p - CLOSE) / (1 - CLOSE);
+      return Math.max(0, Math.min(1, t)) * (count - 1);
     }
 
     gsap.to(scroll, {
@@ -938,25 +939,12 @@
         render();
       },
       scrollTrigger: {
-        trigger: stepsBox,
-        start: 'top 60%',
+        trigger: steps[0],
+        start: `center ${mark}`,
         endTrigger: steps[steps.length - 1],
-        end: 'center 55%',
+        end: `center ${mark}`,
         scrub: 0.4,
-        // Tepe noktası: 3. aşamanın ortası ekranın %55'ine geldiği an
-        onRefresh(self) {
-          const s3 = steps[Math.min(2, steps.length - 1)];
-          const r = s3.getBoundingClientRect();
-          const at = window.scrollY + r.top + r.height / 2 - window.innerHeight * 0.55;
-          peak = Math.min(0.9, Math.max(0.1, (at - self.start) / (self.end - self.start)));
-        },
       },
-    });
-
-    // Kart ilk kez görünürken hafifçe büyüyerek gelir
-    gsap.from(visual.querySelector('.process-frame'), {
-      scale: 0.85, opacity: 0, duration: 1,
-      scrollTrigger: { trigger: section, start: 'top 70%' },
     });
 
     window.addEventListener('resize', resize);
@@ -1624,6 +1612,7 @@
   const bg = initHeroCanvas();
   const slider = initSlider(bg);
   initProcess();
+  initSequence();
   initReveals();
   initValueCards();
   initMagnetic();

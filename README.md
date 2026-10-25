@@ -6,8 +6,8 @@ modwaretechnology.com sitesinin kaynak dosyaları. Saf HTML + CSS + JavaScript; 
 
 | Dosya | Sayfa |
 |---|---|
-| `index.html` | Ana sayfa: hero slaytı, "Nasıl çalışıyoruz" (kaydırmayla patlayan kart), değerler |
-| `urunler.html` | Ürün galerisi, kategori filtresi, ürün detay penceresi |
+| `index.html` | Ana sayfa: hero slaytı, "Nasıl çalışıyoruz" aşamaları, değerler |
+| `urunler.html` | Ürün galerisi, kategori filtresi, ürün detay penceresi, MW-PWR01 entegrasyon şeması, kaydırmayla açılan MW-PWR-BK |
 | `hakkimizda.html` | Hakkımızda: fotoğraflı hero, cam kartlar, kaydırmayla açılan cümle |
 | `teklif.html` | Teklif formu (Netlify Forms) |
 | `404.html` | Bulunamayan sayfa |
@@ -18,7 +18,8 @@ modwaretechnology.com sitesinin kaynak dosyaları. Saf HTML + CSS + JavaScript; 
 - `js/main.js`: menü, form, ürün penceresi, filtre gibi temel davranışlar (GSAP olmadan da çalışır)
 - `js/animations.js`: GSAP animasyonları, preloader, Lenis yumuşak kaydırma, özel imleç
 - `assets/urunler/`: ürün görselleri (şeffaf arka planlı WebP)
-- `assets/sequence/`: kart patlatma kareleri (`pwr-bk/` masaüstü 114 kare, `pwr-bk-sm/` mobil 57 kare)
+- `assets/hakkimizda/`: Hakkımızda arka plan fotoğrafı
+- `assets/sequence/pwr-bk/` (114 kare) ve `pwr-bk-sm/` (57 kare, mobil): Ürünler sayfasındaki kart patlatma kareleri
 - `_headers`: Netlify önbellek ve güvenlik başlıkları
 - `netlify.toml`: Netlify yayın ayarı
 

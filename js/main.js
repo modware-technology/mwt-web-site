@@ -328,6 +328,11 @@
         });
       });
 
+      // Platform şemasındaki kartlar ve "Detayları gör" butonları
+      document.querySelectorAll('[data-open-product]').forEach((btn) => {
+        btn.addEventListener('click', () => openProduct(btn.dataset.openProduct, btn));
+      });
+
       // urunler.html#pwr-bk gibi bir bağlantıyla gelindiyse o ürünü aç
       const initial = window.location.hash.slice(1);
       if (initial && products[initial]) {
