@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Ürünler | ModWare Technology</title>
+  <meta name="description" content="ModWare ürünleri: STM32 geliştirme kartları, sensör ve LoRa haberleşme modülleri, MW-PWR01 modüler güç platformu.">
+
+  <!-- Sekme ikonu -->
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta name="theme-color" content="#0a0f1c">
+
+  <!-- Preloader yalnızca JS çalışıyorsa görünür. GSAP/animations.js
+       5 sn içinde devralmazsa güvenlik zamanlayıcısı onu kaldırır. -->
+  <script>
+    document.documentElement.classList.add('is-loading');
+    window.__preloaderSafety = setTimeout(function () {
+      document.documentElement.classList.remove('is-loading');
+    }, 5000);
+  </script>
+
+  <!-- Fontlar: Space Grotesk (başlıklar) + Inter (metin) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+
+  <link rel="stylesheet" href="css/style.css?v=20">
+</head>
+<body data-page="urunler">
+
+  <!-- ============ PRELOADER ============ -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader-inner">
+      <p class="preloader-word" data-preloader-word>MODWARE</p>
+      <div class="preloader-bar"><span class="preloader-bar-fill"></span></div>
+      <p class="preloader-count"><span data-preloader-count>0</span>%</p>
+    </div>
+  </div>
+
+  <!-- ============ ARKA PLAN KATMANI (sabit, içeriğin arkasında) ============ -->
+  <div class="bg-layer" aria-hidden="true">
+    <div class="bg-glow"></div>
+    <div class="bg-shade"></div>
+    <div class="bg-noise"></div>
+  </div>
+
+  <!-- ============ ÖZEL İMLEÇ (yalnızca fareli cihazlarda) ============ -->
+  <div class="cursor" aria-hidden="true">
+    <div class="cursor-ring"></div>
+    <div class="cursor-dot"></div>
+  </div>
+
+  <!-- ============ KAYDIRMA İLERLEME ÇUBUĞU ============ -->
+  <div class="scroll-progress" aria-hidden="true"><span class="scroll-progress-bar"></span></div>
+
+  <!-- Klavye kullanıcıları için içeriğe atlama bağlantısı -->
+  <a class="skip-link" href="#main">İçeriğe geç</a>
+
+  <!-- ============ ORTAK ÜST MENÜ ============
+       Bu blok her sayfada aynıdır. Aktif sayfa,
+       main.js tarafından <body data-page> değerine göre işaretlenir. -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html" aria-label="ModWare Technology ana sayfa">
+        <img src="assets/logo/modware-logo-light.png" alt="ModWare" width="275" height="30">
+      </a>
+
+      <!-- Mobilde menüyü açıp kapatan buton -->
+      <button class="nav-toggle" id="nav-toggle" type="button"
+              aria-controls="site-nav" aria-expanded="false" aria-label="Menüyü aç">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="Ana menü">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="index.html" data-nav="home">Ana Sayfa</a></li>
+          <li><a class="nav-link" href="urunler.html" data-nav="urunler">Ürünler</a></li>
+          <li><a class="nav-link" href="hakkimizda.html" data-nav="hakkimizda">Hakkımızda</a></li>
+        </ul>
+        <a class="btn btn-accent nav-cta" href="teklif.html">Teklif Al</a>
+      </nav>
+    </div>
+  </header>
+  <!-- ============ /ORTAK ÜST MENÜ ============ -->
+
+  <main id="main">
+
+    <!-- ============ ÜRÜNLER: SAYFA BAŞLIĞI ============ -->
+    <section class="page-head" aria-labelledby="products-title">
+      <div class="container page-head-inner">
+        <p class="eyebrow" data-anim="hero">Ürünler</p>
+        <h1 id="products-title" data-split-intro>Birlikte çalışan modüller</h1>
+        <p class="page-lede" data-anim="hero">Geliştirme kartlarından sensörlere, haberleşmeden güç yönetimine kadar her ModWare modülü aynı ekosistemin parçası. Bir karta tıklayın, teknik detaylarını görün.</p>
+
+        <!-- Kategori filtresi (main.js) -->
+        <div class="product-filters" role="group" aria-label="Kategoriye göre filtrele" data-anim="hero">
+          <button class="filter-chip" type="button" data-filter="all" aria-pressed="true">Tümü</button><button class="filter-chip" type="button" data-filter="gelistirme" aria-pressed="false">Geliştirme & Kontrol</button><button class="filter-chip" type="button" data-filter="sensor" aria-pressed="false">Sensör</button><button class="filter-chip" type="button" data-filter="haberlesme" aria-pressed="false">Haberleşme</button><button class="filter-chip" type="button" data-filter="guc" aria-pressed="false">Güç</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ÜRÜN GALERİSİ ============
+         Kartlar ve pencere (modal) içeriği aynı ürün listesinden üretildi.
+         Görseller: assets/urunler/*.webp (şeffaf arka planlı). -->
+    <section class="section product-gallery" aria-label="Ürün listesi">
+      <div class="container">
+        <div class="product-grid" id="product-grid">
+
+          <article class="product-card" data-category="gelistirme" data-product="spark">
+            <div class="product-image-wrapper">
+              
+              <img src="assets/urunler/spark.webp" alt="Modware Spark kartı" width="760" height="542" loading="lazy" decoding="async">
+            </div>
+            <div class="product-body">
+              <p class="product-code">MW-SPARK · Geliştirme &amp; Kontrol</p>
+              <h3 class="product-title">MODWARE SPARK</h3>
+              <p class="product-slogan">Fikirden çalışan prototipe giden en kısa yol.</p>
+              <p class="product-desc">STM32 tabanlı kompakt geliştirme kartı. Haberleşme protokollerini denemek, yeni yazılımlar geliştirmek ve hızlı prototip çıkarmak için tasarlandı.</p>
+              <ul class="product-tags" aria-label="Öne çıkanlar"><li>STM32</li><li>Hızlı prototip</li><li>Eğitim</li><li>Endüstriyel</li></ul>
+              <button class="product-more" type="button" aria-haspopup="dialog">
+                Göz atın
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="product-card" data-category="sensor" data-product="sense">
+            <div class="product-image-wrapper">
+              
+              <img src="assets/urunler/sense.webp" alt="Modware Sense kartı" width="1014" height="642" loading="lazy" decoding="async">
+            </div>
+            <div class="product-body">
+              <p class="product-code">MW-SENSE · Sensör</p>
+              <h3 class="product-title">MODWARE SENSE</h3>
+              <p class="product-slogan">Doğru ölçüm, güvenli sistem.</p>
+              <p class="product-desc">Akım sensörleri üzerinden geçen değerleri hassas biçimde ölçer. Motor sürücülerinde ve enerji izleme projelerinde gerçek zamanlı akım takibi sağlar.</p>
+              <ul class="product-tags" aria-label="Öne çıkanlar"><li>Akım ölçümü</li><li>Gerçek zamanlı</li><li>Motor sürücü</li><li>Enerji izleme</li></ul>
+              <button class="product-more" type="button" aria-haspopup="dialog">
+                Göz atın
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="product-card" data-category="sensor" data-product="aero">
+            <div class="product-image-wrapper">
+              
+              <img src="assets/urunler/aero.webp" alt="Modware Aero kartı" width="952" height="660" loading="lazy" decoding="async">
+            </div>
+            <div class="product-body">
+              <p class="product-code">MW-AERO · Sensör</p>
+              <h3 class="product-title">MODWARE AERO</h3>
+              <p class="product-slogan">Hız ve irtifa, tek kartta.</p>
+              <p class="product-desc">Çift basınç sensörüyle hava hızını ve irtifayı aynı anda yüksek hassasiyetle ölçer. İHA, drone ve havacılık projelerinin uçuş kontrolü için optimize edildi.</p>
+              <ul class="product-tags" aria-label="Öne çıkanlar"><li>Çift basınç sensörü</li><li>Hava hızı</li><li>İrtifa</li><li>I²C</li></ul>
+              <button class="product-more" type="button" aria-haspopup="dialog">
+                Göz atın
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="product-card" data-category="haberlesme" data-product="link">
+            <div class="product-image-wrapper">
+              
+              <img src="assets/urunler/link.webp" alt="Modware Link kartı" width="642" height="430" loading="lazy" decoding="async">
+            </div>
+            <div class="product-body">
+              <p class="product-code">MW-LINK · Haberleşme</p>
+              <h3 class="product-title">MODWARE LINK</h3>
+              <p class="product-slogan">Uzun menzil, düşük güç, kesintisiz veri.</p>
+              <p class="product-desc">STM32 mikrodenetleyici ve entegre LoRa modülüyle IoT uygulamalarında güvenilir veri aktarımı. USB/UART ile programlanır, SWD ile hata ayıklanır.</p>
+              <ul class="product-tags" aria-label="Öne çıkanlar"><li>STM32</li><li>LoRa</li><li>USB/UART</li><li>SWD</li></ul>
+              <button class="product-more" type="button" aria-haspopup="dialog">
+                Göz atın
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="product-card" data-category="gelistirme" data-product="hub">
+            <div class="product-image-wrapper">
+              
+              <img src="assets/urunler/hub.webp" alt="Modware Hub kartı" width="736" height="560" loading="lazy" decoding="async">
+            </div>
+            <div class="product-body">
+              <p class="product-code">MW-HUB · Geliştirme &amp; Kontrol</p>
+              <h3 class="product-title">MODWARE HUB</h3>
+              <p class="product-slogan">Tüm sensörler, tek merkez.</p>
+              <p class="product-desc">I²C, SPI ve analog sensör modüllerini merkezi MCU’ya bağlar. Board-to-board yapısı sayesinde modüller ek kablolama olmadan doğrudan takılır.</p>
+              <ul class="product-tags" aria-label="Öne çıkanlar"><li>I²C</li><li>SPI</li><li>Analog</li><li>Board-to-board</li></ul>
+              <button class="product-more" type="button" aria-haspopup="dialog">
+                Göz atın
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="product-card" data-category="gelistirme" data-product="axis">
+            <div class="product-image-wrapper">
+              
+              <img src="assets/urunler/axis.webp" alt="Modware Axis kartı" width="640" height="642" loading="lazy" decoding="async">
+            </div>
+            <div class="product-body">
+              <p class="product-code">MW-AXIS · Geliştirme &amp; Kontrol</p>
+              <h3 class="product-title">MODWARE AXIS</h3>
+              <p class="product-slogan">Buton, joystick, araç: hepsi tek kontrolde.</p>
+              <p class="product-desc">Mikrodenetleyicili, dijital ve analog arayüzlü çok yönlü kontrol platformu. Buton, switch ve joystick bağlayarak kara/hava araçlarını ya da simülasyonları yönetin.</p>
+              <ul class="product-tags" aria-label="Öne çıkanlar"><li>Dijital G/Ç</li><li>Analog G/Ç</li><li>Joystick</li><li>Simülasyon</li></ul>
+              <button class="product-more" type="button" aria-haspopup="dialog">
+                Göz atın
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="product-card" data-category="guc" data-product="energy">
+            <div class="product-image-wrapper">
+              
+              <img src="assets/urunler/energy.webp" alt="Modware Energy kartı" width="780" height="560" loading="lazy" decoding="async">
+            </div>
+            <div class="product-body">
+              <p class="product-code">MW-ENERGY · Güç</p>
+              <h3 class="product-title">MODWARE ENERGY</h3>
+              <p class="product-slogan">Ekosistemin enerji omurgası.</p>
+              <p class="product-desc">Karmaşık kablolamayı tek kartta toplayan buck dönüştürücü mimarisi. Gürültü filtrelemesiyle hassas sensörlere kararlı, temiz voltaj sağlar.</p>
+              <ul class="product-tags" aria-label="Öne çıkanlar"><li>Buck dönüştürücü</li><li>Kararlı voltaj</li><li>Gürültü filtreleme</li><li>SMD</li></ul>
+              <button class="product-more" type="button" aria-haspopup="dialog">
+                Göz atın
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="product-card" data-category="guc" data-product="power">
+            <div class="product-image-wrapper">
+              
+              <img src="assets/urunler/power.webp" alt="Modware Power kartı" width="870" height="576" loading="lazy" decoding="async">
+            </div>
+            <div class="product-body">
+              <p class="product-code">MW-POWER · Güç</p>
+              <h3 class="product-title">MODWARE POWER</h3>
+              <p class="product-slogan">75 V’a kadar girişten sabit 5 V ve 15 V.</p>
+              <p class="product-desc">75 V’a kadar giriş voltajını güvenle alıp 5 V ve 15 V sabit çıkış üretir. Motor sürücülerinden sensör kartlarına kadar birçok modülü aynı anda besler.</p>
+              <ul class="product-tags" aria-label="Öne çıkanlar"><li>75 V giriş</li><li>5 V çıkış</li><li>15 V çıkış</li><li>Kompakt</li></ul>
+              <button class="product-more" type="button" aria-haspopup="dialog">
+                Göz atın
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="product-card" data-category="guc" data-product="pwr01-base">
+            <div class="product-image-wrapper">
+              <span class="product-badge">MW-PWR01</span>
+              <img src="assets/urunler/pwr01-base.webp" alt="Pwr01 Base kartı" width="1400" height="758" loading="lazy" decoding="async">
+            </div>
+            <div class="product-body">
+              <p class="product-code">MW-PWR01-BASE · Güç</p>
+              <h3 class="product-title">PWR01 BASE</h3>
+              <p class="product-slogan">Girişi korur, gücü dağıtır, her şeyi ölçer.</p>
+              <p class="product-desc">MW-PWR01 platformunun taşıyıcı ve koruma kartı. 12–48 V girişi tek noktadan alır, üç güç modülünü ortak baraya bağlar, arızada tüm çıkışları donanımla keser.</p>
+              <ul class="product-tags" aria-label="Öne çıkanlar"><li>12–48 V</li><li>3 modül yuvası</li><li>Ters koruma</li><li>INA237</li></ul>
+              <button class="product-more" type="button" aria-haspopup="dialog">
+                Göz atın
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="product-card" data-category="guc" data-product="pwr-bb">
+            <div class="product-image-wrapper">
+              <span class="product-badge">MW-PWR01</span>
+              <img src="assets/urunler/pwr-bb.webp" alt="Pwr Bb kartı" width="1400" height="1031" loading="lazy" decoding="async">
+            </div>
+            <div class="product-body">
+              <p class="product-code">MW-PWR-BB · Güç</p>
+              <h3 class="product-title">PWR BB</h3>
+              <p class="product-slogan">Giriş düşse de yükselse de çıkış sabit.</p>
+              <p class="product-desc">Dört anahtarlı buck-boost güç modülü. 12–48 V girişin tamamında sabit 24 V veya 12 V verir; aynı kart birkaç parça farkıyla BB-24 ya da BB-12 olur.</p>
+              <ul class="product-tags" aria-label="Öne çıkanlar"><li>Buck-boost</li><li>24 V / 12 V</li><li>eFuse</li><li>INA237</li></ul>
+              <button class="product-more" type="button" aria-haspopup="dialog">
+                Göz atın
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="product-card" data-category="guc" data-product="pwr-bk">
+            <div class="product-image-wrapper">
+              <span class="product-badge">MW-PWR01</span>
+              <img src="assets/urunler/pwr-bk.webp" alt="Pwr Bk kartı" width="1400" height="984" loading="lazy" decoding="async">
+            </div>
+            <div class="product-body">
+              <p class="product-code">MW-PWR-BK · Güç</p>
+              <h3 class="product-title">PWR BK</h3>
+              <p class="product-slogan">48 V’tan doğrudan temiz 5 V.</p>
+              <p class="product-desc">100 V sınıfı senkron buck kontrolcülü 5 V / 3 A güç modülü. Lojik, sensör, haberleşme ve gömülü bilgisayar yükleri için ölçülen ve korunan 5 V kanal.</p>
+              <ul class="product-tags" aria-label="Öne çıkanlar"><li>5 V / 3 A</li><li>100 V sınıfı</li><li>eFuse</li><li>TMP1075</li></ul>
+              <button class="product-more" type="button" aria-haspopup="dialog">
+                Göz atın
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="product-card" data-category="guc" data-product="pwr01-ctl">
+            <div class="product-image-wrapper">
+              <span class="product-badge">MW-PWR01</span>
+              <img src="assets/urunler/pwr01-ctl.webp" alt="Pwr01 Ctl kartı" width="1265" height="841" loading="lazy" decoding="async">
+            </div>
+            <div class="product-body">
+              <p class="product-code">MW-PWR01-CTL · Güç</p>
+              <h3 class="product-title">PWR01 CTL</h3>
+              <p class="product-slogan">Gösterir, yönetir, kaydeder, haberleşir.</p>
+              <p class="product-desc">STM32G474 tabanlı kontrol ve arayüz kartı. 2,0&quot; renkli ekran, enkoder ve tuşlarla sahada; izoleli USB-C ve RS-485 (Modbus RTU) ile uzaktan yönetilir.</p>
+              <ul class="product-tags" aria-label="Öne çıkanlar"><li>STM32G474</li><li>Modbus RTU</li><li>İzoleli USB-C</li><li>FRAM</li></ul>
+              <button class="product-more" type="button" aria-haspopup="dialog">
+                Göz atın
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </button>
+            </div>
+          </article>
+
+        </div>
+        <p class="product-empty" id="product-empty" hidden>Bu kategoride ürün yok.</p>
+      </div>
+    </section>
+
+    <!-- ============ MW-PWR01 PLATFORM ŞERİDİ ============ -->
+    <section class="section section-alt platform-band" aria-labelledby="platform-title">
+      <div class="container platform-inner">
+        <div class="platform-text">
+          <p class="eyebrow">Platform</p>
+          <h2 id="platform-title" data-split-reveal>MW-PWR01 Modüler Güç Platformu</h2>
+          <p>Taşıyıcı kart, takılabilir güç modülleri ve kontrol kartı birlikte çalışır: 12–48 V DC girişten üç regüleli çıkış; koruma, ölçüm, gösterim ve haberleşme tek cihazda.</p>
+          <button class="btn btn-ghost" type="button" data-filter-jump="guc">Güç modüllerini göster</button>
+        </div>
+        <dl class="platform-stats">
+          <div><dt>DC giriş</dt><dd>12–48 V</dd></div>
+          <div><dt>Kanal</dt><dd>3</dd></div>
+          <div><dt>Toplam çıkış hedefi</dt><dd>123 W</dd></div>
+          <div><dt>İzoleli port</dt><dd>2</dd></div>
+        </dl>
+        <p class="platform-note">Rev A tasarım aşaması; değerler tasarım hedefidir, prototip doğrulaması planlanmıştır.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ ÜRÜN DETAY PENCERESİ ============
+       Karta tıklanınca main.js doldurur ve açar (GSAP: ölçek + belirme).
+       data-lenis-prevent: pencere içinde kaydırma Lenis'e takılmasın. -->
+  <dialog class="product-modal" id="product-modal" aria-labelledby="pm-title" data-lenis-prevent>
+    <div class="pm-inner">
+      <button class="pm-close" type="button" data-pm-close aria-label="Pencereyi kapat">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <div class="pm-media">
+        <div class="product-image-wrapper pm-image">
+          <img id="pm-img" src="" alt="" width="1400" height="1000">
+        </div>
+        <div class="pm-thumbs" id="pm-thumbs" hidden></div>
+      </div>
+      <div class="pm-content">
+        <p class="product-code" id="pm-code"></p>
+        <h2 class="pm-title" id="pm-title"></h2>
+        <p class="product-slogan" id="pm-slogan"></p>
+        <p class="pm-long" id="pm-long"></p>
+        <h3 class="pm-subtitle">Teknik özellikler</h3>
+        <dl class="pm-specs" id="pm-specs"></dl>
+        <ul class="product-tags" id="pm-tags" aria-label="Öne çıkanlar"></ul>
+        <p class="pm-note" id="pm-note" hidden>Rev A tasarım aşaması; değerler tasarım hedefidir, prototip doğrulaması planlanmıştır.</p>
+        <div class="pm-actions">
+          <a class="btn btn-accent" id="pm-quote" href="teklif.html">Teklif Al</a>
+          <button class="btn btn-ghost" type="button" data-pm-close>Kapat</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Ürün verisi (pencere içeriği). Kart metinleriyle aynı kaynaktan üretildi. -->
+  <script type="application/json" id="product-data">{"spark": {"code": "MW-SPARK", "title": "MODWARE SPARK", "slogan": "Fikirden çalışan prototipe giden en kısa yol.", "long": "Fikirlerinizi hayata geçirmenin ilk adımı doğru geliştirme kartıyla başlar. STM32 tabanlı bu kompakt kart; haberleşme protokollerini denemek, yeni yazılımlar geliştirmek ve hızlı prototipler oluşturmak için tasarlandı. İster eğitim amaçlı ister endüstriyel projeler için kullanın, esnek yapısıyla her fikri gerçeğe dönüştürmenize yardımcı olur.", "specs": [["Mikrodenetleyici", "STM32"], ["Kullanım", "Prototipleme, yazılım geliştirme, protokol denemeleri"], ["Hedef", "Eğitim ve endüstriyel projeler"], ["Form", "Kompakt geliştirme kartı"]], "tags": ["STM32", "Hızlı prototip", "Eğitim", "Endüstriyel"], "img": "spark.webp", "img2": null, "platform": null}, "sense": {"code": "MW-SENSE", "title": "MODWARE SENSE", "slogan": "Doğru ölçüm, güvenli sistem.", "long": "Doğru ölçüm olmadan sağlam bir sistem kurulamaz. ModWare Sense, akım sensörleri üzerinden geçen değerleri hassas biçimde ölçerek geliştiricilere güvenilir veri sağlar. İster motor sürücülerinde ister enerji izleme projelerinde kullanın, gerçek zamanlı akım takibi ile tasarımlarınızı daha güvenli ve verimli hale getirir.", "specs": [["Ölçüm", "Akım (akım sensörleri üzerinden)"], ["Takip", "Gerçek zamanlı"], ["Uygulama", "Motor sürücüleri, enerji izleme"], ["Çıktı", "Geliştiriciye güvenilir ölçüm verisi"]], "tags": ["Akım ölçümü", "Gerçek zamanlı", "Motor sürücü", "Enerji izleme"], "img": "sense.webp", "img2": null, "platform": null}, "aero": {"code": "MW-AERO", "title": "MODWARE AERO", "slogan": "Hız ve irtifa, tek kartta.", "long": "Hız ve irtifa ölçümünü tek kartta birleştirin. ModWare Aero, üzerinde bulunan çift basınç sensörüyle bir yandan hava hızını takip ederken diğer yandan irtifa bilgisini yüksek hassasiyetle sağlar. İnsansız hava araçları, drone’lar ve havacılık projeleri için optimize edilen bu kart, güvenilir veriyle uçuş kontrol algoritmalarınızı güçlendirir.", "specs": [["Sensör", "Çift basınç sensörü"], ["Ölçüm", "Hava hızı ve irtifa"], ["Arayüz", "I²C (VCC, GND, SDA, SCL, INT)"], ["Uygulama", "İHA, drone, havacılık"]], "tags": ["Çift basınç sensörü", "Hava hızı", "İrtifa", "I²C"], "img": "aero.webp", "img2": null, "platform": null}, "link": {"code": "MW-LINK", "title": "MODWARE LINK", "slogan": "Uzun menzil, düşük güç, kesintisiz veri.", "long": "Uzun menzilli ve düşük güç tüketimli iletişim projeleri için geliştirilmiş kompakt bir çözüm. STM32 mikrodenetleyici tabanı ve entegre LoRa modülü sayesinde IoT uygulamalarında güvenilir veri aktarımı sağlar. USB/UART üzerinden kolayca programlanabilir; GPIO çıkış pinleri ve SWD debug portu geliştirme süreçlerini hızlandırır. Sensör ağlarından akıllı şehir uygulamalarına kadar geniş kullanım alanı sunar.", "specs": [["Mikrodenetleyici", "STM32"], ["Haberleşme", "Entegre LoRa modülü"], ["Programlama", "USB/UART"], ["Hata ayıklama", "SWD debug portu"], ["G/Ç", "GPIO çıkış pinleri"]], "tags": ["STM32", "LoRa", "USB/UART", "SWD"], "img": "link.webp", "img2": null, "platform": null}, "hub": {"code": "MW-HUB", "title": "MODWARE HUB", "slogan": "Tüm sensörler, tek merkez.", "long": "Tüm sensörlerinizi tek noktada toplayın. ModWare Hub, farklı arayüzlere (I²C, SPI, Analog) sahip sensör modüllerini merkezi MCU’ya kolayca entegre etmenizi sağlar. Board-to-board uyumlu yapısı sayesinde modüller doğrudan bağlanabilir, ek kablolama ihtiyacı ortadan kalkar. Prototipleme, test ve sistem entegrasyonu süreçlerinde güvenilir ve kompakt bir çözüm sunar.", "specs": [["Arayüzler", "I²C, SPI, Analog"], ["Bağlantı", "Board-to-board, kablosuz montaj"], ["Rol", "Sensörleri merkezi MCU’ya toplar"], ["Kullanım", "Prototipleme, test, sistem entegrasyonu"]], "tags": ["I²C", "SPI", "Analog", "Board-to-board"], "img": "hub.webp", "img2": null, "platform": null}, "axis": {"code": "MW-AXIS", "title": "MODWARE AXIS", "slogan": "Buton, joystick, araç: hepsi tek kontrolde.", "long": "Geliştirme süreçlerinizi daha pratik hale getirin. ModWare Axis, üzerinde mikrodenetleyici barındıran ve dijital/analog bağlantı arayüzleri sunan çok yönlü bir kontrol platformudur. Buton, switch, joystick gibi çevresel bileşenleri bağlayarak çeşitli sistemleri (örneğin kara/hava araçları, simülasyon sistemleri) kontrol edebilirsiniz.", "specs": [["İşlemci", "Kart üzerinde mikrodenetleyici"], ["Arayüz", "Dijital ve analog G/Ç"], ["Çevre birimleri", "Buton, switch, joystick"], ["Uygulama", "Kara/hava araçları, simülasyon"]], "tags": ["Dijital G/Ç", "Analog G/Ç", "Joystick", "Simülasyon"], "img": "axis.webp", "img2": null, "platform": null}, "energy": {"code": "MW-ENERGY", "title": "MODWARE ENERGY", "slogan": "Ekosistemin enerji omurgası.", "long": "ModWare Energy, tüm ModWare ekosisteminin yüksek performanslı enerji omurgasını oluşturur. Karmaşık kablolamayı sadeleştirip tek kartlı bir çözümle değiştirmek üzere tasarlanan bu ürün, sisteminizde kararlı ve düzenlenmiş voltaj sağlamak için gelişmiş bir buck dönüştürücü mimarisi kullanır. Birinci sınıf SMD bileşenler ve gelişmiş gürültü filtreleme düzenleri, sinyal girişimini ve voltaj dalgalanmalarını etkili şekilde azaltır; en hassas sensörler ve kontrol cihazları bile endüstriyel sınıf güvenilirlikle çalışır.", "specs": [["Mimari", "Buck dönüştürücü"], ["Çıkış", "Kararlı, düzenlenmiş voltaj"], ["Filtreleme", "Gürültü filtreleme düzenleri"], ["Bileşenler", "Birinci sınıf SMD"]], "tags": ["Buck dönüştürücü", "Kararlı voltaj", "Gürültü filtreleme", "SMD"], "img": "energy.webp", "img2": null, "platform": null}, "power": {"code": "MW-POWER", "title": "MODWARE POWER", "slogan": "75 V’a kadar girişten sabit 5 V ve 15 V.", "long": "ModWare Power, 75 V’a kadar giriş voltajını güvenle alarak 5 V ve 15 V sabit çıkışlar üretir. Motor sürücülerinden sensör kartlarına kadar farklı modüllere aynı anda enerji sağlayarak karmaşık projelerinizi basitleştirir. Kompakt tasarımı ve verimli yapısıyla, sisteminizi büyütürken ihtiyaç duyduğunuz kararlı güç kaynağıdır.", "specs": [["Giriş", "75 V’a kadar"], ["Çıkışlar", "5 V ve 15 V sabit"], ["Besleme", "Birden çok modüle aynı anda"], ["Yapı", "Kompakt, verimli"]], "tags": ["75 V giriş", "5 V çıkış", "15 V çıkış", "Kompakt"], "img": "power.webp", "img2": null, "platform": null}, "pwr01-base": {"code": "MW-PWR01-BASE", "title": "PWR01 BASE", "slogan": "Girişi korur, gücü dağıtır, her şeyi ölçer.", "long": "Sistemin omurgası. 12–48 V DC girişi tek noktadan alır; ters bağlantıya, kısa devreye ve aşırı/düşük gerilime karşı korur, üç güç modülünü ortak baraya bağlar. Bir modül arıza verdiğinde bütün çıkışları yazılımdan bağımsız olarak keser. Diyot yerine MOSFET tabanlı ters koruma ile kayıp ve ısı düşüktür; sigorta, kesici, ölçüm ve modül barası tek kartta birleşir.", "specs": [["Giriş", "12–48 V DC"], ["Toplam çıkış hedefi", "123 W"], ["Modül yuvası", "3 adet, takılabilir"], ["Kart", "220 × 85 mm, 4 katman, ENIG"], ["Revizyon", "Rev A5"], ["Parça", "149 (BOM)"], ["Öne çıkan bileşenler", "TPS48111 ana kesici, INA237 ölçüm, 150 V MOSFET ters koruma"]], "tags": ["12–48 V", "3 modül yuvası", "Ters koruma", "INA237"], "img": "pwr01-base.webp", "img2": null, "platform": true}, "pwr-bb": {"code": "MW-PWR-BB", "title": "PWR BB", "slogan": "Giriş düşse de yükselse de çıkış sabit.", "long": "Dört anahtarlı buck-boost mimarisiyle 12–48 V girişin tamamında sabit 24 V veya 12 V verir. Aynı kart, birkaç parça farkıyla iki ürüne dönüşür: BB-24 (24 V / 2 A) ve BB-12 (12 V / 5 A). Elektronik sigorta yazılımla açılıp kapanır; gerilim, akım, güç ve sıcaklık ölçülür. Akü gerilimi düşerken bile çıkış sabit kalır.", "specs": [["Çıkış", "BB-24: 24 V / 2 A · BB-12: 12 V / 5 A"], ["Mimari", "4 anahtarlı buck-boost"], ["Kart", "70 × 70 mm, 4 katman, ENIG"], ["Revizyon", "Rev A3"], ["Parça", "139 (BB-24) / 140 (BB-12)"], ["Öne çıkan bileşenler", "LM51770 buck-boost, TPS16630 eFuse, INA237 ölçüm"]], "tags": ["Buck-boost", "24 V / 12 V", "eFuse", "INA237"], "img": "pwr-bb.webp", "img2": null, "platform": true}, "pwr-bk": {"code": "MW-PWR-BK", "title": "PWR BK", "slogan": "48 V’tan doğrudan temiz 5 V.", "long": "100 V sınıfı senkron buck kontrolcüyle 12–48 V girişten tek adımda 5 V / 3 A üretir; ara gerilim katı gerekmez. Elektronik sigorta açma/kapama, aşırı akım koruması ve ters akım engeli sunar; çıkışa dışarıdan gerilim gelirse ters akımı keser. Gerilim, akım, güç ve sıcaklık ölçülür; BB modülleriyle aynı arayüzü ve yazılımı kullanır.", "specs": [["Çıkış", "5 V / 3 A regüleli"], ["Kontrolcü", "100 V sınıfı senkron buck, 250 kHz"], ["Kart", "56 × 45 mm, 4 katman, ENIG"], ["Revizyon", "Rev A4"], ["Parça", "73 (BOM)"], ["Öne çıkan bileşenler", "LM5146 buck, TPS259470L eFuse, INA237 ölçüm, TMP1075 sıcaklık"]], "tags": ["5 V / 3 A", "100 V sınıfı", "eFuse", "TMP1075"], "img": "pwr-bk.webp", "img2": null, "platform": true}, "pwr01-ctl": {"code": "MW-PWR01-CTL", "title": "PWR01 CTL", "slogan": "Gösterir, yönetir, kaydeder, haberleşir.", "long": "Sistemin beyni. Kanalları açar/kapatır, çıkışları ayarlar, ölçümleri gösterir ve olayları kaydeder. 2,0\" renkli ekran, basmalı enkoder ve tuşlarla sahada yerinde izleme ve ayar; galvanik izoleli USB-C ve RS-485 (Modbus RTU) ile uzaktan yönetim. Ayarlar, son durum ve olay kaydı FRAM’da güç kesintisinde bile korunur; global arıza LED’i yazılımdan bağımsız, doğrudan donanımdan çalışır.", "specs": [["Mikrodenetleyici", "STM32G474"], ["Ekran", "2,0\" renkli, 240 × 320"], ["Haberleşme", "İzoleli USB-C, RS-485 Modbus RTU (9600–115200 baud)"], ["Kayıt", "FRAM ve gerçek zamanlı saat"], ["Kart", "120 × 85 mm, 4 katman, ENIG"], ["Revizyon", "Rev A4"], ["Parça", "165 (BOM)"], ["Öne çıkan bileşenler", "STM32G474, ADuM3160 USB izolatör, CA-IS2092VW RS-485"]], "tags": ["STM32G474", "Modbus RTU", "İzoleli USB-C", "FRAM"], "img": "pwr01-ctl.webp", "img2": "pwr01-ctl-top.webp", "platform": true}}</script>
+
+  <!-- ============ ORTAK ALT BİLGİ ============ -->
+  <footer class="site-footer">
+    <!-- Footer üstündeki çizgi: sayfa sonuna yaklaşırken soldan sağa dolar -->
+    <div class="footer-line" aria-hidden="true"><span class="footer-line-fill"></span></div>
+    <div class="container footer-inner">
+      <a class="logo logo-sm" href="index.html"><img src="assets/logo/modware-logo-light.png" alt="ModWare" width="275" height="30"></a>
+      <nav class="footer-nav" aria-label="Alt menü">
+        <a class="link-u" href="urunler.html">Ürünler</a>
+        <a class="link-u" href="hakkimizda.html">Hakkımızda</a>
+        <a class="link-u" href="teklif.html">Teklif Al</a>
+      </nav>
+      <!-- İletişim bilgileri: tüm sayfalarda aynı -->
+      <address class="footer-contact">
+        <a class="link-u" href="mailto:info@modwaretechnology.com">info@modwaretechnology.com</a>
+        <a class="footer-social" href="https://www.linkedin.com/company/modware-technology1/" target="_blank" rel="noopener" aria-label="ModWare Technology LinkedIn sayfası (yeni sekmede açılır)">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8h4V24h-4V8zm7.5 0h3.8v2.2h.05c.53-1 1.84-2.2 3.8-2.2 4.06 0 4.8 2.67 4.8 6.15V24h-4v-7.9c0-1.88-.03-4.3-2.62-4.3-2.62 0-3.03 2.05-3.03 4.17V24H8V8z"/></svg>
+          <span>LinkedIn</span>
+        </a>
+        <span class="footer-location">İzmit, Kocaeli</span>
+      </address>
+      <p>© <span data-year>2026</span> ModWare Technology</p>
+    </div>
+  </footer>
+
+  <!-- Yukarı çık: sayfa sonuna gelince belirir (main.js) -->
+  <button class="to-top" id="to-top" type="button" aria-label="Sayfanın başına dön">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+
+  <!-- Kütüphaneler (CDN, sabit sürüm). main.js ve animations.js'den önce yüklenmeli.
+       GSAP + ScrollTrigger: animasyon · SplitType: harf bölme · Lenis: yumuşak kaydırma -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/split-type@0.3.4/umd/index.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
+  <script src="js/main.js?v=20" defer></script>
+  <script src="js/animations.js?v=20" defer></script>
+</body>
+</html>
