@@ -1002,8 +1002,8 @@ html.is-loading body { overflow: hidden; }
 }
 
 /* ----- Özel imleç: devre kartı teması -----
-   Uç: via (lehim pedi) · çevresi: köşeli seçim çerçevesi (PCB programlarındaki gibi)
-   · arkasında kısa, sönen bakır iz. Bağlantı/buton üzerinde çerçeve elemanı sarar.
+   Uç: via (lehim pedi) · çevresi: köşeli seçim çerçevesi (PCB programlarındaki gibi).
+   Bağlantı/buton üzerinde çerçeve biraz büyür ve parlar.
    Yalnızca fareli cihazlarda ve JS hazır olunca (html.has-cursor) gösterilir. */
 .cursor { display: none; }
 html.has-cursor .cursor {
@@ -1012,12 +1012,8 @@ html.has-cursor .cursor {
   inset: 0;
   z-index: 2000;
   pointer-events: none;
-}
-.cursor-trail {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  /* Koyu ince kontur: mor butonların üstünde de seçilsin */
+  filter: drop-shadow(0 0 1px rgba(10, 15, 28, 0.95)) drop-shadow(0 0 1px rgba(10, 15, 28, 0.95));
 }
 .cursor-dot,
 .cursor-frame {
@@ -1037,19 +1033,24 @@ html.has-cursor .cursor {
 .cursor.is-hover .cursor-dot { transform: scale(0.6); background: var(--color-primary); }
 .cursor.is-down .cursor-dot { transform: scale(0.45); background: var(--color-primary); }
 
-.cursor-frame { width: 30px; height: 30px; }
+.cursor-frame {
+  width: 26px;
+  height: 26px;
+  transition: width 0.2s ease, height 0.2s ease;
+}
+.cursor.is-hover .cursor-frame { width: 34px; height: 34px; }
 .cursor-frame i {
   position: absolute;
   width: 8px;
   height: 8px;
   border: 0 solid rgba(155, 143, 224, 0.85);
-  transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
+  transition: border-color 0.2s ease;
 }
 .cursor-frame i:nth-child(1) { top: 0; left: 0; border-top-width: 1.5px; border-left-width: 1.5px; }
 .cursor-frame i:nth-child(2) { top: 0; right: 0; border-top-width: 1.5px; border-right-width: 1.5px; }
 .cursor-frame i:nth-child(3) { bottom: 0; left: 0; border-bottom-width: 1.5px; border-left-width: 1.5px; }
 .cursor-frame i:nth-child(4) { bottom: 0; right: 0; border-bottom-width: 1.5px; border-right-width: 1.5px; }
-.cursor.is-hover .cursor-frame i { width: 12px; height: 12px; border-color: var(--color-primary); }
+.cursor.is-hover .cursor-frame i { border-color: var(--color-primary); }
 
 /* Yerel imleci gizle; yazı alanlarında metin imleci kalsın */
 html.has-cursor,
