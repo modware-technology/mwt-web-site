@@ -35,6 +35,7 @@ modwaretechnology.com sitesinin kaynak dosyaları. Saf HTML + CSS + JavaScript; 
 - `_redirects`: `README.md` yayımlanmaz (404); kaldırılan `guc-elektronigi` sayfası `hizmetler`e, `pcb-tasarimi` sayfası `elektronik-kart-tasarimi`ne yönlenir (301)
 - `netlify.toml`: Netlify yayın ayarı
 - `robots.txt`, `sitemap.xml`: arama motorları için; site haritasında bütün sayfalar var
+- `google9ae5025181fed89f.html`: Google Search Console sahiplik doğrulaması. **Silmeyin**; dosya kalkarsa doğrulama düşer.
 - `assets/og/modware-og.png`: paylaşım önizlemesi görseli (1200 × 630; LinkedIn, WhatsApp, X)
 - Sekme ikonu: `assets/favicon.svg` (tarayıcı sekmesi), `assets/favicon-32.png`, `assets/favicon-192.png` ve kök dizinde `favicon.ico` (16/32/48 px). Google arama sonuçları SVG kullanmadığı için PNG ve ICO da var; dosya adlarını değiştirmeyin (Google ikonu bu adreslerden tanır).
 - `assets/logo/modware-icon-512.png`: arama motorlarına bildirilen firma logosu (ana sayfadaki yapılandırılmış veri)
