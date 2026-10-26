@@ -52,10 +52,14 @@ for fn in sayfalar:
     for r in p.refs:
         u = urlparse(r)
         if u.scheme in ("http", "https", "mailto") or r.startswith("#") or not u.path: continue
+        if u.path.endswith(".html"):
+            sorun.append(f"{fn}: uzantılı iç bağlantı {r} (temiz adres kullanın: /sayfa)")
         yol = unquote(u.path).lstrip("/")
         if "/" in fn and not u.path.startswith("/"):
             sorun.append(f"{fn}: alt klasörde göreli bağlantı {r}")
-        if yol.endswith("/"): yol += "index.html"
+        if yol == "": yol = "index.html"
+        elif yol.endswith("/"): yol += "index.html"
+        elif not os.path.splitext(yol)[1]: yol += ".html"  # temiz adres: /hizmetler → hizmetler.html
         if not os.path.exists(os.path.join(site, yol)): sorun.append(f"{fn}: eksik hedef {r}")
         if yol == "teklif.html" and u.query:
             v = parse_qs(u.query).get("urun", [None])[0]

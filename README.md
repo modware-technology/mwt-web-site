@@ -8,6 +8,7 @@ Bu dal (`site-araclari`) yalnızca sitenin bazı sayfalarını üreten yardımc�
 | `blog_yazilar.py` | Blog yazılarının metinleri. Yeni yazı için listeye ekleyip `seo_uret.py`'yi çalıştırın; yazı sayfası, blog listesi ve site haritası birlikte güncellenir. |
 | `seo_kontrol.py` | Üretilen sayfaları denetler: kapanmamış etiket, tekrarlanan kimlik, tek `h1`, yapılandırılmış veri, kırık iç bağlantı, teklif formu seçenekleri, site haritası. Sonunda `SORUN YOK` yazmalı. |
 | `lh_ozet.py` | Lighthouse hız ölçümü raporlarını (JSON) kısaca özetler. |
+| `onizleme.py` | Yerel önizleme sunucusu: temiz adresleri (`/hizmetler` → `hizmetler.html`) Cloudflare Pages gibi açar. `python onizleme.py <site-klasörü>` → `http://127.0.0.1:8765/` |
 
 ## Kullanım
 
@@ -24,4 +25,5 @@ python seo_kontrol.py <site-klasörü>
 
 - Üretici her çalıştırmada aynı sonucu verir (ikinci çalıştırma hiçbir dosyayı değiştirmez). Hizmet ve blog sayfalarını elle düzenlerseniz, bir sonraki çalıştırmada bu düzenlemeler silinir; kalıcı değişiklikleri buradaki dosyalarda yapın.
 - Başlıklarda her kelime büyük harfle başlar ("ve, ile, ya da, mi" küçük kalır); üretici bunu kendisi uygular.
-- `main` dalına yapılan her gönderim Netlify'da bir yayın demektir ve ücretsiz planda ayda yaklaşık 20 yayın hakkı vardır. Değişiklikleri biriktirip tek seferde gönderin.
+- Site içi bağlantıları üretici temiz adrese çevirir (`hizmetler.html` → `/hizmetler`); `seo_kontrol.py` uzantılı bağlantı kalırsa uyarır.
+- `main` dalına yapılan her gönderim bir yayın demektir (Cloudflare Pages ücretsiz planda ayda 500). Yine de değişiklikleri biriktirip tek seferde göndermek iyi bir alışkanlıktır.

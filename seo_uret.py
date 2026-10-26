@@ -87,6 +87,22 @@ def basliklar(s):
                   lambda m: m.group(1) + _baslik_ic(m.group(2)) + m.group(3), s, flags=re.S)
 
 
+# ---------------------------------------------------------------- temiz adresler
+# Site içi bağlantılar uzantısız ve kökten başlar: hizmetler.html → /hizmetler, index.html → /,
+# blog/index.html → /blog/. Cloudflare Pages .html adreslerini her tıklamada ayrıca yönlendirir;
+# temiz adres doğrudan açılır ve Google'a bildirilen (canonical) adresle aynıdır.
+def temiz_url(s):
+    def cevir(m):
+        yol, ek = m.group(2).lstrip("/"), m.group(3) or ""
+        yeni = "/" + (yol[:-len("index.html")] if yol.endswith("index.html") else yol[:-len(".html")])
+        return f'{m.group(1)}="{yeni}{ek}"'
+    return re.sub(r'\b(href)="(?!https?:|mailto:|tel:|#|//)(/?[a-z0-9/_-]+\.html)([?#][^"]*)?"', cevir, s)
+
+
+def son_isle(s):
+    return temiz_url(basliklar(s))
+
+
 # ---------------------------------------------------------------- ikonlar (24×24, çizgi)
 IKON = {
     "chip": '<rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M9.5 3v4M14.5 3v4M9.5 17v4M14.5 17v4M3 9.5h4M3 14.5h4M17 9.5h4M17 14.5h4"/>',
@@ -695,12 +711,12 @@ def blog_liste_sayfasi():
 
 
 for slug in SAYFALAR:
-    yaz(f"{slug}.html", basliklar(servis_sayfasi(slug)))
-yaz("hizmetler.html", basliklar(hub_sayfasi()))
+    yaz(f"{slug}.html", son_isle(servis_sayfasi(slug)))
+yaz("hizmetler.html", son_isle(hub_sayfasi()))
 print("hizmet sayfaları:", ", ".join(list(SAYFALAR) + ["hizmetler"]))
 for y in YAZILAR:
-    yaz(f"blog/{y['slug']}.html", basliklar(blog_yazi_sayfasi(y)))
-yaz("blog/index.html", basliklar(blog_liste_sayfasi()))
+    yaz(f"blog/{y['slug']}.html", son_isle(blog_yazi_sayfasi(y)))
+yaz("blog/index.html", son_isle(blog_liste_sayfasi()))
 print("blog:", len(YAZILAR), "yazı + liste (" + ", ".join(f"{y['slug']} {okuma(y)[1]} kelime" for y in YAZILAR) + ")")
 
 # ---------------------------------------------------------------- mevcut sayfalar (görünüş değişmez)
@@ -759,14 +775,14 @@ for fn, (title, desc, url, jl) in MEVCUT.items():
         inc = '                    <option value="Tasarım incelemesi">Tasarım incelemesi</option>\n'
         if inc not in s:
             s = s.replace(yeni, yeni + inc)
-    yaz(fn, basliklar(s), nl)
+    yaz(fn, son_isle(s), nl)
 s, nl = oku("404.html")
 s = menu_blok(ikon_blok(s))
 if 'name="robots"' not in s:
     s = s.replace('  <title>Sayfa bulunamadı | ModWare Technology</title>\n',
                   '  <title>Sayfa bulunamadı | ModWare Technology</title>\n  <meta name="robots" content="noindex">\n', 1)
 s = s.replace("<title>Sayfa bulunamadı | ModWare Technology</title>", "<title>Sayfa Bulunamadı | ModWare Technology</title>")
-yaz("404.html", basliklar(s), nl)
+yaz("404.html", son_isle(s), nl)
 print("mevcut sayfalar: başlık, açıklama, canonical, önizleme; index yapılandırılmış veri; 404 noindex; başlık yazımı")
 
 # ---------------------------------------------------------------- robots, sitemap, README engeli
@@ -778,7 +794,8 @@ for y in yollar:
     sm.append(f"  <url><loc>{ALAN}/{y}</loc><lastmod>{TARIH}</lastmod></url>")
 sm.append("</urlset>")
 yaz("sitemap.xml", "\n".join(sm) + "\n")
-yaz("_redirects", "# Depodaki iç belge yayımlanmasın (dosya var olduğu için ! ile zorlanır)\n/README.md  /404.html  404!\n\n"
+yaz("_redirects", "# Kalıcı (301) yönlendirmeler. README.md arama motorlarına _headers dosyasıyla kapatılır\n"
+                 "# (Cloudflare Pages yönlendirmede 404 durumunu desteklemez).\n\n"
                  "# Kaldırılan hizmet sayfası (26.10.2026)\n/guc-elektronigi       /hizmetler  301\n/guc-elektronigi.html  /hizmetler  301\n"
                  "/pcb-tasarimi          /elektronik-kart-tasarimi  301\n/pcb-tasarimi.html     /elektronik-kart-tasarimi  301\n\n"
                  "# Eski sitenin Google'da kayıtlı kalan adresleri (26.10.2026)\n"
