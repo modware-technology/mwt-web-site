@@ -36,6 +36,8 @@ modwaretechnology.com sitesinin kaynak dosyaları. Saf HTML + CSS + JavaScript; 
 - `netlify.toml`: Netlify yayın ayarı
 - `robots.txt`, `sitemap.xml`: arama motorları için; site haritasında bütün sayfalar var
 - `assets/og/modware-og.png`: paylaşım önizlemesi görseli (1200 × 630; LinkedIn, WhatsApp, X)
+- Sekme ikonu: `assets/favicon.svg` (tarayıcı sekmesi), `assets/favicon-32.png`, `assets/favicon-192.png` ve kök dizinde `favicon.ico` (16/32/48 px). Google arama sonuçları SVG kullanmadığı için PNG ve ICO da var; dosya adlarını değiştirmeyin (Google ikonu bu adreslerden tanır).
+- `assets/logo/modware-icon-512.png`: arama motorlarına bildirilen firma logosu (ana sayfadaki yapılandırılmış veri)
 
 Kütüphaneler CDN'den, sabit sürümle yüklenir: GSAP 3.12.5 + ScrollTrigger, SplitType 0.3.4, Lenis 1.1.13.
 
