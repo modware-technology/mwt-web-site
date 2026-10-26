@@ -152,35 +152,42 @@
 
   if (grid) {
     const cards = Array.from(grid.querySelectorAll('.product-card'));
+    const groups = Array.from(grid.querySelectorAll('.product-group'));
     const chips = Array.from(document.querySelectorAll('.filter-chip'));
     const empty = document.getElementById('product-empty');
 
-    /* ----- Kategori filtresi ----- */
+    /* ----- Kategori filtresi: kartlar filtre başlıklarıyla aynı gruplarda; grup gösterilir/gizlenir ----- */
     function applyFilter(cat) {
       chips.forEach((c) => c.setAttribute('aria-pressed', String(c.dataset.filter === cat)));
-      const show = cards.filter((c) => cat === 'all' || c.dataset.category === cat);
-      const hide = cards.filter((c) => !show.includes(c));
+      const showGroups = groups.filter((g) => cat === 'all' || g.dataset.group === cat);
+      const hideGroups = groups.filter((g) => !showGroups.includes(g));
+      const show = cards.filter((c) => showGroups.includes(c.closest('.product-group')));
       empty.hidden = show.length > 0;
 
       const refresh = () => { if (window.ScrollTrigger) window.ScrollTrigger.refresh(); };
       if (gsap && !reduceMotion) {
-        // Önce eşleşmeyenler söner, sonra eşleşenler alttan sırayla gelir
+        // Önce eşleşmeyen gruplar söner, sonra eşleşen grupların başlığı ve kartları alttan sırayla gelir
         const reveal = () => {
-          hide.forEach((c) => { c.hidden = true; });
-          show.forEach((c) => { c.hidden = false; });
-          gsap.fromTo(show, { opacity: 0, y: 24, scale: 1 }, {
+          hideGroups.forEach((g) => { g.hidden = true; });
+          showGroups.forEach((g) => { g.hidden = false; });
+          const heads = showGroups.map((g) => g.querySelector('.product-group-head'));
+          gsap.fromTo([...heads, ...show], { opacity: 0, y: 24, scale: 1 }, {
             opacity: 1, y: 0, duration: 0.5, stagger: 0.05, ease: 'power3.out',
             clearProps: 'transform,opacity', onComplete: refresh,
           });
         };
-        const toHide = hide.filter((c) => !c.hidden);
+        const toHide = hideGroups.filter((g) => !g.hidden);
         if (toHide.length) {
-          gsap.to(toHide, { opacity: 0, scale: 0.96, duration: 0.25, ease: 'power2.in', onComplete: reveal });
+          gsap.to(toHide, {
+            opacity: 0, scale: 0.98, duration: 0.25, ease: 'power2.in',
+            // Gizlenen grubun satır içi stili temizlenmezse yeniden açılınca görünmez kalır
+            onComplete: () => { gsap.set(toHide, { clearProps: 'opacity,transform' }); reveal(); },
+          });
         } else {
           reveal();
         }
       } else {
-        cards.forEach((c) => { c.hidden = !show.includes(c); });
+        groups.forEach((g) => { g.hidden = !showGroups.includes(g); });
         refresh();
       }
     }

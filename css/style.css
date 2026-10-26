@@ -1217,6 +1217,21 @@ img.lazy-fade.is-loaded { opacity: 1; }
 
 /* ----- Galeri ----- */
 .product-gallery { padding-top: clamp(32px, 5vw, 56px); }
+/* Kategori grupları (filtre başlıklarıyla aynı). Gizli grup grid boşluğu bırakmaz. */
+.product-groups { display: grid; gap: clamp(48px, 7vw, 88px); }
+.product-group-head {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: clamp(20px, 3vw, 28px);
+}
+.product-group-head::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(155, 143, 224, 0.45), rgba(155, 143, 224, 0));
+}
+.product-group-title { font-size: clamp(1.35rem, 2.4vw, 1.9rem); }
 .product-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
