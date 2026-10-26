@@ -17,8 +17,7 @@ modwaretechnology.com sitesinin kaynak dosyaları. Saf HTML + CSS + JavaScript; 
 | Dosya | Konu |
 |---|---|
 | `hizmetler.html` | Bütün hizmetlerin listesi |
-| `elektronik-kart-tasarimi.html` | Elektronik kart ve donanım tasarımı |
-| `pcb-tasarimi.html` | PCB tasarımı |
+| `elektronik-kart-tasarimi.html` | Elektronik kart, donanım ve PCB tasarımı |
 | `pcb-uretimi.html` | PCB üretimi |
 | `gomulu-yazilim.html` | Gömülü yazılım geliştirme (STM32, Modbus RTU, LoRa; mevcut yazılımın geliştirilmesi) |
 | `tasarim-incelemesi.html` | Şematik ve PCB tasarım incelemesi (üretim öncesi kontrol) |
@@ -33,7 +32,7 @@ modwaretechnology.com sitesinin kaynak dosyaları. Saf HTML + CSS + JavaScript; 
 - `assets/hakkimizda/`: Hakkımızda arka plan fotoğrafı
 - `assets/sequence/pwr-bk/` (114 kare) ve `pwr-bk-sm/` (57 kare, mobil): Ürünler sayfasındaki kart patlatma kareleri
 - `_headers`: Netlify önbellek ve güvenlik başlıkları
-- `_redirects`: `README.md` yayımlanmaz (404); kaldırılan `guc-elektronigi` sayfası `hizmetler`e yönlenir (301)
+- `_redirects`: `README.md` yayımlanmaz (404); kaldırılan `guc-elektronigi` sayfası `hizmetler`e, `pcb-tasarimi` sayfası `elektronik-kart-tasarimi`ne yönlenir (301)
 - `netlify.toml`: Netlify yayın ayarı
 - `robots.txt`, `sitemap.xml`: arama motorları için; site haritasında bütün sayfalar var
 - `assets/og/modware-og.png`: paylaşım önizlemesi görseli (1200 × 630; LinkedIn, WhatsApp, X)
@@ -55,6 +54,7 @@ Bundan sonra `main` dalına gönderilen her değişiklik siteye kendiliğinden y
 - Ürün metinleri `urunler.html` içindeki kartlarda ve sayfanın altındaki `product-data` JSON bloğunda bulunur; ikisini birlikte güncelleyin.
 - Kartlar kategori gruplarında durur (`<section class="product-group" data-group="…">`: gelistirme, sensor, haberlesme, guc). Yeni kartı doğru grubun içine koyun; kartın `data-category` değeri grubuyla aynı olsun. Filtre grupları gösterip gizler.
 - Değiştirilecek metinler HTML'de `<!-- METİN -->` yorumlarıyla işaretlidir (özellikle Hakkımızda sayfası).
+- Başlıklarda (`h1`–`h3`, teklif formundaki bölüm başlıkları) her kelime büyük harfle başlar: "Elektronik Kart ve Donanım Tasarımı". TDK kuralı gereği "ve, ile, ya da, veya, de/da, ki" ve soru eki "mi" küçük kalır: "Yalnızca PCB Tasarımı Yaptırabilir miyim?". Kısaltmalar (PCB, STM32) olduğu gibi yazılır.
 
 ## Arama motoru notları
 
