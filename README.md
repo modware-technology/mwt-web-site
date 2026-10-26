@@ -12,6 +12,18 @@ modwaretechnology.com sitesinin kaynak dosyaları. Saf HTML + CSS + JavaScript; 
 | `teklif.html` | Teklif formu (Netlify Forms) |
 | `404.html` | Bulunamayan sayfa |
 
+**Hizmet sayfaları** (arama motorlarından gelen ziyaretçi için; ana menüde yok, `sitemap.xml` ile bulunur). Mevcut sayfaların bileşenlerini (sayfa başlığı, kart ızgarası, süreç adımları, kapanış bandı) kullanır. Her sayfanın "Teklif Al" düğmesi formu ilgili hizmet seçili açar (`teklif.html?urun=…`; değer formdaki bir seçenekle birebir aynı olmalı).
+
+| Dosya | Konu |
+|---|---|
+| `hizmetler.html` | Bütün hizmetlerin listesi |
+| `elektronik-kart-tasarimi.html` | Elektronik kart ve donanım tasarımı |
+| `pcb-tasarimi.html` | PCB tasarımı |
+| `pcb-uretimi.html` | PCB üretimi ve SMD dizgi |
+| `gomulu-yazilim.html` | Gömülü yazılım (STM32, Modbus RTU, LoRa) |
+| `guc-elektronigi.html` | Güç elektroniği ve DC-DC dönüştürücüler |
+| `prototip-ar-ge.html` | Prototip geliştirme ve elektronik Ar-Ge |
+
 ## Klasörler
 
 - `css/style.css`: tüm stiller (renkler en üstte `:root` içinde)
@@ -21,7 +33,10 @@ modwaretechnology.com sitesinin kaynak dosyaları. Saf HTML + CSS + JavaScript; 
 - `assets/hakkimizda/`: Hakkımızda arka plan fotoğrafı
 - `assets/sequence/pwr-bk/` (114 kare) ve `pwr-bk-sm/` (57 kare, mobil): Ürünler sayfasındaki kart patlatma kareleri
 - `_headers`: Netlify önbellek ve güvenlik başlıkları
+- `_redirects`: `README.md` yayımlanmaz (404)
 - `netlify.toml`: Netlify yayın ayarı
+- `robots.txt`, `sitemap.xml`: arama motorları için; site haritasında bütün sayfalar var
+- `assets/og/modware-og.png`: paylaşım önizlemesi görseli (1200 × 630; LinkedIn, WhatsApp, X)
 
 Kütüphaneler CDN'den, sabit sürümle yüklenir: GSAP 3.12.5 + ScrollTrigger, SplitType 0.3.4, Lenis 1.1.13.
 
@@ -40,3 +55,10 @@ Bundan sonra `main` dalına gönderilen her değişiklik siteye kendiliğinden y
 - Ürün metinleri `urunler.html` içindeki kartlarda ve sayfanın altındaki `product-data` JSON bloğunda bulunur; ikisini birlikte güncelleyin.
 - Kartlar kategori gruplarında durur (`<section class="product-group" data-group="…">`: gelistirme, sensor, haberlesme, guc). Yeni kartı doğru grubun içine koyun; kartın `data-category` değeri grubuyla aynı olsun. Filtre grupları gösterip gizler.
 - Değiştirilecek metinler HTML'de `<!-- METİN -->` yorumlarıyla işaretlidir (özellikle Hakkımızda sayfası).
+
+## Arama motoru notları
+
+- Her sayfanın `<head>` bölümünde: anahtar kelimeli `<title>` (≈ 70 karakterden kısa), `description` (≈ 160 karakter), `canonical` (uzantısız adres, ör. `https://modwaretechnology.com/urunler`) ve paylaşım önizlemesi (`og:*`). Ana sayfada firma ve web sitesi, hizmet sayfalarında hizmet için yapılandırılmış veri (`application/ld+json`, schema.org) var.
+- Yeni sayfa eklerken: başlık ve açıklamayı benzersiz yazın, `canonical` ekleyin ve `sitemap.xml`'e adresini ekleyin.
+- Google Search Console ve Bing Webmaster Tools'a site haritası olarak `https://modwaretechnology.com/sitemap.xml` gönderilir.
+- Görünmeyen metne anahtar kelime doldurmayın (Google bunu cezalandırır); bir konuda görünmek için o konuyu anlatan görünür bir sayfa gerekir.
