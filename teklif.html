@@ -40,7 +40,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
 
-  <link rel="stylesheet" href="css/style.css?v=28">
+  <link rel="stylesheet" href="css/style.css?v=29">
 </head>
 <body data-page="teklif">
 
@@ -77,7 +77,7 @@
        main.js tarafından <body data-page> değerine göre işaretlenir. -->
   <header class="site-header" id="site-header">
     <div class="container header-inner">
-      <a class="logo" href="index.html" aria-label="ModWare Technology ana sayfa">
+      <a class="logo" href="/" aria-label="ModWare Technology ana sayfa">
         <img src="assets/logo/modware-logo-light.png" alt="ModWare" width="275" height="30">
       </a>
 
@@ -91,13 +91,13 @@
 
       <nav class="site-nav" id="site-nav" aria-label="Ana menü">
         <ul class="nav-list">
-          <li><a class="nav-link" href="index.html" data-nav="home">Ana Sayfa</a></li>
-          <li><a class="nav-link" href="hizmetler.html" data-nav="hizmetler">Hizmetler</a></li>
-          <li><a class="nav-link" href="urunler.html" data-nav="urunler">Ürünler</a></li>
-          <li><a class="nav-link" href="hakkimizda.html" data-nav="hakkimizda">Hakkımızda</a></li>
-          <li><a class="nav-link" href="blog/index.html" data-nav="blog">Blog</a></li>
+          <li><a class="nav-link" href="/" data-nav="home">Ana Sayfa</a></li>
+          <li><a class="nav-link" href="/hizmetler" data-nav="hizmetler">Hizmetler</a></li>
+          <li><a class="nav-link" href="/urunler" data-nav="urunler">Ürünler</a></li>
+          <li><a class="nav-link" href="/hakkimizda" data-nav="hakkimizda">Hakkımızda</a></li>
+          <li><a class="nav-link" href="/blog/" data-nav="blog">Blog</a></li>
         </ul>
-        <a class="btn btn-accent nav-cta" href="teklif.html">Teklif Al</a>
+        <a class="btn btn-accent nav-cta" href="/teklif">Teklif Al</a>
       </nav>
     </div>
   </header>
@@ -118,12 +118,15 @@
       <div class="container quote-grid">
 
         <!-- ============ FORM ============
-             Netlify Forms ile çalışır (data-netlify). Gönderim, doğrulama ve
+             Web3Forms ile çalışır: gönderilen talep info@modwaretechnology.com adresine
+             e-postayla gelir (access_key bu adrese bağlıdır). Gönderim, doğrulama ve
              ilerleme çubuğu: main.js → "Teklif formu". -->
         <form class="quote-form" id="quote-form" name="teklif" method="POST"
-              data-netlify="true" netlify-honeypot="bot-field" novalidate data-anim="hero">
-          <input type="hidden" name="form-name" value="teklif">
-          <p class="hp" aria-hidden="true"><label>Bu alanı boş bırakın <input name="bot-field" id="q-bot" tabindex="-1" autocomplete="off"></label></p>
+              action="https://api.web3forms.com/submit" novalidate data-anim="hero">
+          <input type="hidden" name="access_key" value="WEB3FORMS_ANAHTARI">
+          <input type="hidden" name="subject" value="Yeni teklif talebi: modwaretechnology.com">
+          <input type="hidden" name="from_name" value="ModWare Technology web sitesi">
+          <p class="hp" aria-hidden="true"><label>Bu kutuyu işaretlemeyin <input type="checkbox" name="botcheck" id="q-bot" tabindex="-1" autocomplete="off"></label></p>
 
           <!-- Doldurma ilerlemesi (zorunlu alanlar) -->
           <div class="quote-progress" aria-hidden="true">
@@ -278,7 +281,7 @@
             <div class="field-row">
               <div class="field">
                 <label for="q-email">E-posta <b aria-hidden="true">*</b></label>
-                <input id="q-email" name="eposta" type="email" required autocomplete="email" inputmode="email" placeholder="ornek@domain.com">
+                <input id="q-email" name="email" type="email" required autocomplete="email" inputmode="email" placeholder="ornek@domain.com">
                 <p class="field-error" id="q-email-error"></p>
               </div>
               <div class="field">
@@ -309,7 +312,7 @@
           <svg class="quote-success-icon" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21"/><path d="M15 24.5l6 6 12-13"/></svg>
           <h2>Talebiniz Bize Ulaştı.</h2>
           <p>Formunuzu inceleyip en kısa sürede <strong id="quote-success-email">e-posta adresinize</strong> dönüş yapacağız.</p>
-          <a class="btn btn-ghost" href="urunler.html">Ürünlere göz atın</a>
+          <a class="btn btn-ghost" href="/urunler">Ürünlere göz atın</a>
         </div>
 
         <!-- ============ YAN BİLGİ ============ -->
@@ -346,7 +349,7 @@
     <!-- Footer üstündeki çizgi: sayfa sonuna yaklaşırken soldan sağa dolar -->
     <div class="footer-line" aria-hidden="true"><span class="footer-line-fill"></span></div>
     <div class="container footer-inner">
-      <a class="logo logo-sm" href="index.html"><img src="assets/logo/modware-logo-light.png" alt="ModWare" width="275" height="30"></a>
+      <a class="logo logo-sm" href="/"><img src="assets/logo/modware-logo-light.png" alt="ModWare" width="275" height="30"></a>
       <p class="footer-meta"><span class="footer-location">İzmit, Kocaeli</span> <span class="footer-copy">© <span data-year>2026</span> ModWare Technology</span></p>
       <!-- İletişim ikonları: e-posta ve LinkedIn -->
       <div class="footer-contact">
@@ -367,7 +370,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/split-type@0.3.4/umd/index.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
-  <script src="js/main.js?v=28" defer></script>
-  <script src="js/animations.js?v=28" defer></script>
+  <script src="js/main.js?v=29" defer></script>
+  <script src="js/animations.js?v=29" defer></script>
 </body>
 </html>

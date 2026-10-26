@@ -1,5 +1,5 @@
-# Depodaki iç belge yayımlanmasın (dosya var olduğu için ! ile zorlanır)
-/README.md  /404.html  404!
+# Kalıcı (301) yönlendirmeler. README.md arama motorlarına _headers dosyasıyla kapatılır
+# (Cloudflare Pages yönlendirmede 404 durumunu desteklemez).
 
 # Kaldırılan hizmet sayfası (26.10.2026)
 /guc-elektronigi       /hizmetler  301

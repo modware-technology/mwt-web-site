@@ -1103,7 +1103,7 @@
     pre.el = document.getElementById('preloader');
     clearTimeout(window.__preloaderSafety); // güvenlik zamanlayıcısı artık gerekmez
 
-    // Adreste #çapa varsa (ör. hakkimizda.html#hikaye) açılıştan sonra oraya git
+    // Adreste #çapa varsa (ör. /hakkimizda#hikaye) açılıştan sonra oraya git
     const hashTarget = (() => {
       try { return location.hash.length > 1 ? document.querySelector(location.hash) : null; } catch (err) { return null; }
     })();

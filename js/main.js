@@ -249,7 +249,7 @@
         });
 
         field('pm-note').hidden = !p.platform;
-        field('pm-quote').href = `teklif.html?urun=${encodeURIComponent(p.code)}`; // formda ürün seçili gelir
+        field('pm-quote').href = `/teklif?urun=${encodeURIComponent(p.code)}`; // formda ürün seçili gelir
 
         // Görseller: ikinci görsel varsa küçük resimlerle seçilebilir
         img.removeAttribute('src');
@@ -294,7 +294,7 @@
             { opacity: 1, y: 0, duration: 0.45, stagger: 0.04, delay: 0.12, ease: 'power2.out' });
         }
         inner.scrollTop = 0;
-        history.replaceState(null, '', `#${id}`); // paylaşılabilir bağlantı: urunler.html#pwr-bk
+        history.replaceState(null, '', `#${id}`); // paylaşılabilir bağlantı: /urunler#pwr-bk
       }
 
       function closeProduct() {
@@ -340,7 +340,7 @@
         btn.addEventListener('click', () => openProduct(btn.dataset.openProduct, btn));
       });
 
-      // urunler.html#pwr-bk gibi bir bağlantıyla gelindiyse o ürünü aç
+      // /urunler#pwr-bk gibi bir bağlantıyla gelindiyse o ürünü aç
       const initial = window.location.hash.slice(1);
       if (initial && products[initial]) {
         const card = grid.querySelector(`[data-product="${initial}"]`);
@@ -355,12 +355,12 @@
   }
 
   /* =========================================================
-     Teklif formu (teklif.html)
+     Teklif formu (/teklif)
      - ?urun=MW-PWR-BK ile gelinirse ürün seçili gelir
      - Konu "Teklif / proje" değilse ürün seçimi opsiyonel olur
      - Zorunlu alanlar doldukça ilerleme çubuğu dolar
      - Alan altında Türkçe hata mesajları
-     - Netlify Forms'a gönderir; başarılıysa teşekkür ekranı
+     - Web3Forms'a gönderir (talep info@ adresine e-postayla gelir); başarılıysa teşekkür ekranı
      ========================================================= */
   const quote = document.getElementById('quote-form');
   if (quote) {
@@ -470,12 +470,13 @@
       status.textContent = '';
 
       try {
-        const res = await fetch('/', {
+        const res = await fetch(quote.action, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams(new FormData(quote)).toString(),
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(Object.fromEntries(new FormData(quote))),
         });
-        if (!res.ok) throw new Error(String(res.status));
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || !data.success) throw new Error(data.message || String(res.status));
 
         // Başarılı: formun yerine teşekkür ekranı
         const success = $('quote-success');

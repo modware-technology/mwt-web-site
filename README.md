@@ -9,10 +9,10 @@ modwaretechnology.com sitesinin kaynak dosyaları. Saf HTML + CSS + JavaScript; 
 | `index.html` | Ana sayfa: hero slaytı, "Nasıl çalışıyoruz" aşamaları, değerler |
 | `urunler.html` | Ürün galerisi (kartlar filtre başlıklarıyla aynı dört kategori grubunda), kategori filtresi, ürün detay penceresi, PRISM (MW-PWR01) entegrasyon şeması, kaydırmayla açılan MODWARE PURE 5 |
 | `hakkimizda.html` | Hakkımızda: fotoğraflı hero, cam kartlar, kaydırmayla açılan cümle |
-| `teklif.html` | Teklif formu (Netlify Forms) |
+| `teklif.html` | Teklif formu (Web3Forms; talepler info@modwaretechnology.com adresine e-postayla gelir) |
 | `404.html` | Bulunamayan sayfa |
 
-**Hizmet sayfaları** (ana menüdeki "Hizmetler" bağlantısı `hizmetler.html`'e gider; hepsi `sitemap.xml`'de de var). Mevcut sayfaların bileşenlerini (sayfa başlığı, kart ızgarası, süreç adımları, kapanış bandı) kullanır; `<body data-page="hizmetler">` menüde "Hizmetler"i seçili gösterir. Her sayfanın "Teklif Al" düğmesi formu ilgili hizmet seçili açar (`teklif.html?urun=…`; değer formdaki bir seçenekle birebir aynı olmalı).
+**Hizmet sayfaları** (ana menüdeki "Hizmetler" bağlantısı `/hizmetler` adresine gider; hepsi `sitemap.xml`'de de var). Mevcut sayfaların bileşenlerini (sayfa başlığı, kart ızgarası, süreç adımları, kapanış bandı) kullanır; `<body data-page="hizmetler">` menüde "Hizmetler"i seçili gösterir. Her sayfanın "Teklif Al" düğmesi formu ilgili hizmet seçili açar (`/teklif?urun=…`; değer formdaki bir seçenekle birebir aynı olmalı).
 
 | Dosya | Konu |
 |---|---|
@@ -35,7 +35,7 @@ modwaretechnology.com sitesinin kaynak dosyaları. Saf HTML + CSS + JavaScript; 
 | `blog/pcb-tasarim-incelemesi-sik-yapilan-hatalar.html` | Üretim öncesi tasarım incelemesi: sık yapılan hatalar |
 | `blog/prototip-pcb-maliyetini-dusurme.html` | Prototip PCB maliyetini düşürme |
 
-Blog sayfaları alt klasörde olduğu için içlerindeki bütün bağlantılar ve dosya yolları kökten başlar (`/css/style.css`, `/hizmetler.html`). Göreli yol (`css/style.css`) yayında `/blog/css/…` olarak çözülür ve sayfa bozulur.
+Blog sayfaları alt klasörde olduğu için içlerindeki bütün bağlantılar ve dosya yolları kökten başlar (`/css/style.css`, `/hizmetler`). Göreli yol (`css/style.css`) yayında `/blog/css/…` olarak çözülür ve sayfa bozulur.
 
 Yeni yazı eklemek için mevcut bir yazının dosyasını kopyalayın; başlığı (`<title>`, `h1`), açıklamayı, `canonical` adresini, paylaşım önizlemesini, yapılandırılmış veriyi (BlogPosting ve BreadcrumbList) ve metni değiştirin. Ardından `blog/index.html`'deki listeye bir kart, `sitemap.xml`'e de adresi ekleyin.
 
@@ -47,9 +47,9 @@ Yeni yazı eklemek için mevcut bir yazının dosyasını kopyalayın; başlığ
 - `assets/urunler/`: ürün görselleri (şeffaf arka planlı WebP)
 - `assets/hakkimizda/`: Hakkımızda arka plan fotoğrafı
 - `assets/sequence/pwr-bk/` (114 kare) ve `pwr-bk-sm/` (57 kare, mobil): Ürünler sayfasındaki kart patlatma kareleri
-- `_headers`: Netlify önbellek ve güvenlik başlıkları
-- `_redirects`: `README.md` yayımlanmaz (404); kaldırılan `guc-elektronigi` sayfası `hizmetler`e, `pcb-tasarimi` sayfası `elektronik-kart-tasarimi`ne yönlenir (301). Eski sitenin Google'da kayıtlı kalan adresleri de yeni karşılıklarına yönlenir: `mwhub` → `urunler`, `iletisim` → `teklif`, `hakkmzda` → `hakkimizda`.
-- `netlify.toml`: Netlify yayın ayarı
+- `_headers`: önbellek ve güvenlik başlıkları; `README.md` arama motorlarına kapalı (`X-Robots-Tag: noindex`)
+- `_redirects`: kaldırılan `guc-elektronigi` sayfası `hizmetler`e, `pcb-tasarimi` sayfası `elektronik-kart-tasarimi`ne yönlenir (301). Eski sitenin Google'da kayıtlı kalan adresleri de yeni karşılıklarına yönlenir: `mwhub` → `urunler`, `iletisim` → `teklif`, `hakkmzda` → `hakkimizda`.
+- `netlify.toml`: eski Netlify yayın ayarı (Cloudflare Pages kullanmaz; Netlify kapatılınca silinebilir)
 - `robots.txt`, `sitemap.xml`: arama motorları için; site haritasında bütün sayfalar var
 - `google9ae5025181fed89f.html` ve `google15c7243daf595014.html`: Google Search Console sahiplik doğrulamaları (ilki kişisel hesap, ikincisi Modware hesabı). **Silmeyin**; dosya kalkarsa o hesabın doğrulaması düşer.
 - `assets/og/modware-og.png`: paylaşım önizlemesi görseli (1200 × 630; LinkedIn, WhatsApp, X)
@@ -58,21 +58,24 @@ Yeni yazı eklemek için mevcut bir yazının dosyasını kopyalayın; başlığ
 
 Kütüphaneler CDN'den, sabit sürümle yüklenir: GSAP 3.12.5 + ScrollTrigger, SplitType 0.3.4, Lenis 1.1.13.
 
-## Yayın (Netlify)
+## Yayın (Cloudflare Pages)
 
-1. Netlify'da **Add new project → Import an existing project → GitHub** ile bu depoyu seçin.
-2. Build ayarlarını boş bırakın (`netlify.toml` zaten "derleme yok, kökten yayınla" diyor) ve **Deploy** deyin.
-3. **Forms → Enable form detection** açın, ardından bir kez **Deploys → Trigger deploy** yapın.
-4. **Forms → Notifications** bölümüne `info@modwaretechnology.com` ekleyin.
+Site Cloudflare Pages'ten yayınlanır; `main` dalına gönderilen her değişiklik siteye kendiliğinden yansır (ücretsiz planda ayda 500 yayın, trafik sınırı yok). Derleme adımı yoktur.
 
-Bundan sonra `main` dalına gönderilen her değişiklik siteye kendiliğinden yansır.
+1. Cloudflare panelinde **Workers & Pages → Create → Pages → Import an existing Git repository** ile bu depoyu seçin.
+2. Production branch `main`, Framework preset `None`; build command ve build output directory boş.
+3. **Custom domains** bölümüne `modwaretechnology.com` ve `www.modwaretechnology.com` eklenir (alan adının DNS'i Cloudflare'dedir). `www` adresi bir yönlendirme kuralıyla (Rules → Redirect Rules) kök adrese 301 ile yönlenir.
 
+Teklif formu Web3Forms'a gönderir: anahtar `teklif.html`'deki `access_key` alanındadır ve `info@modwaretechnology.com` adresine bağlıdır (yeni anahtar: web3forms.com). Anahtarın sayfada görünmesi normaldir.
+
+Yerel önizleme için `site-araclari` dalındaki `onizleme.py` temiz adresleri (`/hizmetler`) Cloudflare gibi açar: `python onizleme.py <site-klasörü>` → `http://127.0.0.1:8765/`.
 ## Güncelleme notları
 
 - CSS/JS değiştirdiğinizde HTML'deki `?v=…` sürüm numarasını artırın (tüm sayfalarda), yoksa ziyaretçiler eski dosyayı önbellekten görebilir.
 - Ürün metinleri `urunler.html` içindeki kartlarda ve sayfanın altındaki `product-data` JSON bloğunda bulunur; ikisini birlikte güncelleyin.
 - Kartlar kategori gruplarında durur (`<section class="product-group" data-group="…">`: gelistirme, sensor, haberlesme, guc). Yeni kartı doğru grubun içine koyun; kartın `data-category` değeri grubuyla aynı olsun. Filtre grupları gösterip gizler.
 - Değiştirilecek metinler HTML'de `<!-- METİN -->` yorumlarıyla işaretlidir (özellikle Hakkımızda sayfası).
+- Site içi bağlantılar uzantısız ve kökten başlar: `/hizmetler`, `/blog/`, ana sayfa için `/`. Dosyanın adı `hizmetler.html` olsa da bağlantıda `.html` yazılmaz; Cloudflare Pages `.html` adreslerini ayrıca yönlendirir.
 - Başlıklarda (`h1`–`h3`, teklif formundaki bölüm başlıkları) her kelime büyük harfle başlar: "Elektronik Kart ve Donanım Tasarımı". TDK kuralı gereği "ve, ile, ya da, veya, de/da, ki" ve soru eki "mi" küçük kalır: "Yalnızca PCB Tasarımı Yaptırabilir miyim?". Kısaltmalar (PCB, STM32) olduğu gibi yazılır.
 
 ## Arama motoru notları
