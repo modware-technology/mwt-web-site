@@ -19,7 +19,7 @@ modwaretechnology.com sitesinin kaynak dosyaları. Saf HTML + CSS + JavaScript; 
 | `hizmetler.html` | Bütün hizmetlerin listesi |
 | `elektronik-kart-tasarimi.html` | Elektronik kart ve donanım tasarımı |
 | `pcb-tasarimi.html` | PCB tasarımı |
-| `pcb-uretimi.html` | PCB üretimi ve SMD dizgi |
+| `pcb-uretimi.html` | PCB üretimi |
 | `gomulu-yazilim.html` | Gömülü yazılım (STM32, Modbus RTU, LoRa) |
 | `guc-elektronigi.html` | Güç elektroniği ve DC-DC dönüştürücüler |
 | `prototip-ar-ge.html` | Prototip geliştirme ve elektronik Ar-Ge |
