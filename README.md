@@ -48,7 +48,7 @@ Yeni yazı eklemek için mevcut bir yazının dosyasını kopyalayın; başlığ
 - `assets/hakkimizda/`: Hakkımızda arka plan fotoğrafı
 - `assets/sequence/pwr-bk/` (114 kare) ve `pwr-bk-sm/` (57 kare, mobil): Ürünler sayfasındaki kart patlatma kareleri
 - `_headers`: Netlify önbellek ve güvenlik başlıkları
-- `_redirects`: `README.md` yayımlanmaz (404); kaldırılan `guc-elektronigi` sayfası `hizmetler`e, `pcb-tasarimi` sayfası `elektronik-kart-tasarimi`ne yönlenir (301)
+- `_redirects`: `README.md` yayımlanmaz (404); kaldırılan `guc-elektronigi` sayfası `hizmetler`e, `pcb-tasarimi` sayfası `elektronik-kart-tasarimi`ne yönlenir (301). Eski sitenin Google'da kayıtlı kalan adresleri de yeni karşılıklarına yönlenir: `mwhub` → `urunler`, `iletisim` → `teklif`, `hakkmzda` → `hakkimizda`.
 - `netlify.toml`: Netlify yayın ayarı
 - `robots.txt`, `sitemap.xml`: arama motorları için; site haritasında bütün sayfalar var
 - `google9ae5025181fed89f.html`: Google Search Console sahiplik doğrulaması. **Silmeyin**; dosya kalkarsa doğrulama düşer.
