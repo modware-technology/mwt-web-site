@@ -843,14 +843,24 @@
       return; // sabit ilk kare (poster) kalır
     }
 
-    // Mobilde kart üstte yapışık durur; adımlar onun altındaki alanda yanar
-    const small = window.matchMedia('(max-width: 767px)').matches;
-    const mark = small ? '74%' : '60%';
+    // Adımın kutusu okuma çizgisini içerdiği sürece adım yanar (kutular eşit boy, yazı ortalı).
+    // Masaüstü: çizgi ekranın %35'i; yazı soluk gelir, %70'e gelince yanar ve ekrandan çıkana kadar
+    // yanık kalır. Mobil (CSS ile aynı kırılım, 860 px; kart üstte yapışık): yazı yapışık kartın altındaki
+    // alana girince yanar, kartın altına girene kadar yanık kalır. Çizgi her yenilemede yeniden hesaplanır.
+    const stackedMq = window.matchMedia('(max-width: 860px)');
+    const small = window.matchMedia('(max-width: 767px)').matches; // küçük kare seti
+    const stage = box.querySelector('.bk-stage');
+    function stepLine() {
+      if (!stackedMq.matches) return window.innerHeight * 0.35;
+      const stuckBottom = parseFloat(getComputedStyle(stage).top) + stage.offsetHeight;
+      return stuckBottom + steps[0].offsetHeight / 2;
+    }
+    const seqMark = stackedMq.matches ? '74%' : '60%';
     steps.forEach((step) => {
       window.ScrollTrigger.create({
         trigger: step,
-        start: `top ${mark}`,
-        end: `bottom ${mark}`,
+        start: () => `top ${stepLine()}px`,
+        end: () => `bottom ${stepLine()}px`,
         toggleClass: 'is-active',
       });
     });
@@ -940,9 +950,9 @@
       },
       scrollTrigger: {
         trigger: steps[0],
-        start: `center ${mark}`,
+        start: `center ${seqMark}`,
         endTrigger: steps[steps.length - 1],
-        end: `center ${mark}`,
+        end: `center ${seqMark}`,
         scrub: 0.4,
       },
     });
