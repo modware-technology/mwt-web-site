@@ -1169,29 +1169,31 @@
     }
 
     /* ----- İlk giriş: harfler açılır, çizgi %0 → %100 dolar,
-             perde yukarı kayar, sayfa 1.05 → 1 ölçekle gelir ----- */
-    const fillTime = seen ? 0.6 : 1.5; // aynı ziyarette yeniden yüklemede daha kısa
+             perde yukarı kayar, sayfa 1.05 → 1 ölçekle gelir.
+             Sayfa yaklaşık 1 sn'de görünmeye başlar (açılış hızı Google'ın ölçtüğü
+             "en büyük içerik" süresini doğrudan etkiler). ----- */
+    const fillTime = seen ? 0.4 : 0.6; // aynı ziyarette yeniden yüklemede daha kısa
     const progress = { v: 0 };
     const intro = gsap.timeline();
     intro
-      .from(pre.chars, { yPercent: 110, opacity: 0, duration: 0.8, stagger: 0.07, ease: 'power4.out' }, 0)
-      .to(progress, { v: 100, duration: fillTime, ease: 'power2.inOut', onUpdate: () => setFill(progress.v) }, 0.15);
+      .from(pre.chars, { yPercent: 110, opacity: 0, duration: 0.45, stagger: 0.03, ease: 'power4.out' }, 0)
+      .to(progress, { v: 100, duration: fillTime, ease: 'power2.inOut', onUpdate: () => setFill(progress.v) }, 0.05);
 
-    // Hem dolum bitsin hem yazı tipleri hazır olsun (en fazla 3 sn bekle)
+    // Hem dolum bitsin hem yazı tipleri hazır olsun (en fazla 1,2 sn bekle)
     const fontsReady = document.fonts && document.fonts.ready
-      ? Promise.race([document.fonts.ready, new Promise((r) => setTimeout(r, 3000))])
+      ? Promise.race([document.fonts.ready, new Promise((r) => setTimeout(r, 1200))])
       : Promise.resolve();
     const introDone = new Promise((r) => intro.eventCallback('onComplete', r));
 
     Promise.all([fontsReady, introDone]).then(() => {
       gsap.timeline({ onComplete: finish })
-        .to(pre.chars, { yPercent: -110, opacity: 0, duration: 0.45, stagger: 0.04, ease: 'power3.in' })
-        .to([pre.fill.parentNode, pre.count], { opacity: 0, duration: 0.3 }, '<')
-        .to(pre.el, { yPercent: -100, duration: 0.8, ease: 'power4.inOut' }, '-=0.15')
+        .to(pre.chars, { yPercent: -110, opacity: 0, duration: 0.25, stagger: 0.02, ease: 'power3.in' })
+        .to([pre.fill.parentNode, pre.count], { opacity: 0, duration: 0.2 }, '<')
+        .to(pre.el, { yPercent: -100, duration: 0.5, ease: 'power4.inOut' }, '-=0.1')
         .fromTo(page,
           { scale: 1.05, opacity: 0, transformOrigin: '50% 0%' },
-          { scale: 1, opacity: 1, duration: 1, ease: 'power3.out', clearProps: 'transform,opacity,transformOrigin' },
-          '<0.25');
+          { scale: 1, opacity: 1, duration: 0.6, ease: 'power3.out', clearProps: 'transform,opacity,transformOrigin' },
+          '<0.1');
     });
   }
 

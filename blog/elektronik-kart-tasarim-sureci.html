@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Elektronik Kart Tasarım Süreci: Fikirden Seri Üretime | ModWare</title>
+  <meta name="description" content="Elektronik kart nasıl tasarlanır? Gereksinimden şematiğe, PCB yerleşiminden prototip testine ve seri üretime kadar her adımı ve dikkat edilecekleri anlattık.">
+  <link rel="canonical" href="https://modwaretechnology.com/blog/elektronik-kart-tasarim-sureci">
+
+  <!-- Paylaşım önizlemesi (LinkedIn, WhatsApp, X) -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="ModWare Technology">
+  <meta property="og:locale" content="tr_TR">
+  <meta property="og:title" content="Elektronik Kart Tasarım Süreci: Fikirden Seri Üretime | ModWare">
+  <meta property="og:description" content="Elektronik kart nasıl tasarlanır? Gereksinimden şematiğe, PCB yerleşiminden prototip testine ve seri üretime kadar her adımı ve dikkat edilecekleri anlattık.">
+  <meta property="og:url" content="https://modwaretechnology.com/blog/elektronik-kart-tasarim-sureci">
+  <meta property="og:image" content="https://modwaretechnology.com/assets/og/modware-og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="article:published_time" content="2026-10-26">
+  <meta property="article:section" content="Elektronik kart tasarımı">
+
+  <!-- Arama motorları için yapılandırılmış veri (schema.org) -->
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "BlogPosting", "@id": "https://modwaretechnology.com/blog/elektronik-kart-tasarim-sureci#yazi", "headline": "Elektronik Kart Tasarım Süreci: Fikirden Seri Üretime Adım Adım", "description": "Elektronik kart nasıl tasarlanır? Gereksinimden şematiğe, PCB yerleşiminden prototip testine ve seri üretime kadar her adımı ve dikkat edilecekleri anlattık.", "datePublished": "2026-10-26", "dateModified": "2026-10-26", "inLanguage": "tr-TR", "url": "https://modwaretechnology.com/blog/elektronik-kart-tasarim-sureci", "mainEntityOfPage": "https://modwaretechnology.com/blog/elektronik-kart-tasarim-sureci", "image": "https://modwaretechnology.com/assets/og/modware-og.png", "articleSection": "Elektronik kart tasarımı", "wordCount": 947, "author": {"@type": "Organization", "@id": "https://modwaretechnology.com/#org", "name": "ModWare Technology", "url": "https://modwaretechnology.com/"}, "publisher": {"@type": "Organization", "@id": "https://modwaretechnology.com/#org", "name": "ModWare Technology", "url": "https://modwaretechnology.com/", "logo": {"@type": "ImageObject", "url": "https://modwaretechnology.com/assets/logo/modware-icon-512.png"}}, "isPartOf": {"@type": "Blog", "@id": "https://modwaretechnology.com/blog/#blog", "url": "https://modwaretechnology.com/blog/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": "https://modwaretechnology.com/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://modwaretechnology.com/blog/"}, {"@type": "ListItem", "position": 3, "name": "Elektronik Kart Tasarım Süreci: Fikirden Seri Üretime Adım Adım"}]}]}</script>
+
+  <!-- Sekme ikonu -->
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/assets/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <meta name="theme-color" content="#0a0f1c">
+
+  <!-- Preloader yalnızca JS çalışıyorsa görünür. GSAP/animations.js
+       5 sn içinde devralmazsa güvenlik zamanlayıcısı onu kaldırır. -->
+  <script>
+    document.documentElement.classList.add('is-loading');
+    window.__preloaderSafety = setTimeout(function () {
+      document.documentElement.classList.remove('is-loading');
+    }, 5000);
+  </script>
+
+  <!-- Fontlar: Space Grotesk (başlıklar) + Inter (metin) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+
+  <link rel="stylesheet" href="/css/style.css?v=28">
+</head>
+<body data-page="blog">
+
+  <!-- ============ PRELOADER ============ -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader-inner">
+      <p class="preloader-word" data-preloader-word>MODWARE</p>
+      <div class="preloader-bar"><span class="preloader-bar-fill"></span></div>
+      <p class="preloader-count"><span data-preloader-count>0</span>%</p>
+    </div>
+  </div>
+
+  <!-- ============ ARKA PLAN KATMANI (sabit, içeriğin arkasında) ============ -->
+  <div class="bg-layer" aria-hidden="true">
+    <div class="bg-glow"></div>
+    <div class="bg-shade"></div>
+    <div class="bg-noise"></div>
+  </div>
+
+  <!-- ============ ÖZEL İMLEÇ (yalnızca fareli cihazlarda) ============ -->
+  <div class="cursor" aria-hidden="true">
+    <div class="cursor-frame"><i></i><i></i><i></i><i></i></div>
+    <div class="cursor-dot"></div>
+  </div>
+
+  <!-- ============ KAYDIRMA İLERLEME ÇUBUĞU ============ -->
+  <div class="scroll-progress" aria-hidden="true"><span class="scroll-progress-bar"></span></div>
+
+  <!-- Klavye kullanıcıları için içeriğe atlama bağlantısı -->
+  <a class="skip-link" href="#main">İçeriğe geç</a>
+
+  <!-- ============ ORTAK ÜST MENÜ ============
+       Bu blok her sayfada aynıdır. Aktif sayfa,
+       main.js tarafından <body data-page> değerine göre işaretlenir. -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="/index.html" aria-label="ModWare Technology ana sayfa">
+        <img src="/assets/logo/modware-logo-light.png" alt="ModWare" width="275" height="30">
+      </a>
+
+      <!-- Mobilde menüyü açıp kapatan buton -->
+      <button class="nav-toggle" id="nav-toggle" type="button"
+              aria-controls="site-nav" aria-expanded="false" aria-label="Menüyü aç">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="Ana menü">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="/index.html" data-nav="home">Ana Sayfa</a></li>
+          <li><a class="nav-link" href="/hizmetler.html" data-nav="hizmetler">Hizmetler</a></li>
+          <li><a class="nav-link" href="/urunler.html" data-nav="urunler">Ürünler</a></li>
+          <li><a class="nav-link" href="/hakkimizda.html" data-nav="hakkimizda">Hakkımızda</a></li>
+          <li><a class="nav-link" href="/blog/index.html" data-nav="blog">Blog</a></li>
+        </ul>
+        <a class="btn btn-accent nav-cta" href="/teklif.html">Teklif Al</a>
+      </nav>
+    </div>
+  </header>
+  <!-- ============ /ORTAK ÜST MENÜ ============ -->
+
+  <!-- Blog yazısı: elektronik-kart-tasarim-sureci. Metin site-araclar/blog_yazilar.py dosyasından üretilir. -->
+  <main id="main">
+
+    <!-- ============ SAYFA BAŞLIĞI ============ -->
+    <section class="page-head page-head--yazi" aria-labelledby="page-title">
+      <div class="container page-head-inner">
+        <p class="eyebrow" data-anim="hero"><a href="/blog/index.html">Blog</a> · Elektronik kart tasarımı</p>
+        <h1 id="page-title" data-split-intro>Elektronik Kart Tasarım Süreci: Fikirden Seri Üretime Adım Adım</h1>
+        <p class="page-lede" data-anim="hero">Bir elektronik kartın masadaki fikirden seri üretime ulaşması birkaç net adımdan geçer. Her adımın neyi çözdüğünü bilmek, hem projenin süresini hem de maliyetini doğrudan etkiler.</p>
+        <p class="post-meta" data-anim="hero"><time datetime="2026-10-26">26 Ekim 2026</time> <span aria-hidden="true">·</span> <span>5 dk okuma</span> <span aria-hidden="true">·</span> <span>ModWare Technology mühendislik ekibi</span></p>
+      </div>
+    </section>
+
+    <section class="section article-section">
+      <div class="container">
+        <article class="prose">
+<nav class="toc" aria-label="İçindekiler">
+<p class="toc-title">İçindekiler</p>
+<ol>
+  <li><a href="#1-gereksinimleri-yaziya-dokun">1. Gereksinimleri Yazıya Dökün</a></li>
+  <li><a href="#2-mimari-ve-parca-secimi">2. Mimari ve Parça Seçimi</a></li>
+  <li><a href="#3-sematik-tasarim-ve-hesaplar">3. Şematik Tasarım ve Hesaplar</a></li>
+  <li><a href="#4-pcb-yerlesimi-ve-yonlendirme">4. PCB Yerleşimi ve Yönlendirme</a></li>
+  <li><a href="#5-uretim-dosyalari-ve-prototip">5. Üretim Dosyaları ve Prototip</a></li>
+  <li><a href="#6-test-ve-dogrulama">6. Test ve Doğrulama</a></li>
+  <li><a href="#7-seri-uretime-gecis">7. Seri Üretime Geçiş</a></li>
+  <li><a href="#sureyi-ve-maliyeti-ne-belirler">Süreyi ve Maliyeti Ne Belirler?</a></li>
+  <li><a href="#sonuc">Sonuç</a></li>
+</ol>
+</nav>
+<p>Elektronik kart tasarımı çoğu zaman &quot;şematiği çiz, PCB&#x27;yi çiz, ürettir&quot; diye özetlenir. Pratikte ise kartın sahada sorunsuz çalışması, daha şematiğe başlamadan verilen kararlara bağlıdır. Aşağıda bir kartın fikirden seri üretime kadar geçtiği adımları, her adımda sık gözden kaçan noktalarla birlikte anlatıyoruz.</p>
+<aside class="callout"><p><strong>Kısaca:</strong> Gereksinimler → mimari ve parça seçimi → şematik ve hesaplar → PCB yerleşimi → üretim dosyaları ve prototip → test ve doğrulama → seri üretime geçiş. Her adımın sonuna bir kontrol noktası koymak, hataları en ucuz oldukları anda yakalamayı sağlar.</p></aside>
+<h2 id="1-gereksinimleri-yaziya-dokun">1. Gereksinimleri Yazıya Dökün</h2>
+<p>Tasarımın en ucuz ve en etkili adımı budur. Kartın ne yapacağı kadar, nerede ve hangi koşullarda çalışacağı da netleşmelidir. Kısa bir gereksinim belgesinde en az şu sorular yanıtlanmalıdır:</p>
+<ul>
+  <li><strong>Görev:</strong> Kart neyi ölçecek, neyi sürecek, hangi kararları verecek?</li>
+  <li><strong>Besleme:</strong> Giriş gerilimi kaç volt, ne kadar dalgalanabilir; akü mü, adaptör mü? 12, 24 ya da 48 V sistemlerde ani gerilim yükselmeleri de hesaba katılmalıdır.</li>
+  <li><strong>Arayüzler:</strong> RS-485, CAN, USB, Ethernet ya da kablosuz haberleşme; sensör ve eyleyici bağlantıları.</li>
+  <li><strong>Ortam:</strong> Çalışma sıcaklığı, nem, toz ve titreşim. Endüstriyel bir pano ile ofis ortamı aynı tasarımı gerektirmez.</li>
+  <li><strong>Mekanik:</strong> Kart ölçüsü, kutu, konnektörlerin konumu ve montaj delikleri.</li>
+  <li><strong>Adet ve hedef maliyet:</strong> 10 adet ile 10.000 adet, farklı parça ve üretim kararları demektir.</li>
+  <li><strong>Mevzuat:</strong> CE işareti için EMC ve güvenlik gereksinimleri; ürünün satılacağı pazarın kuralları.</li>
+</ul>
+<p>Bu belge ileride &quot;şu özellik de olsa&quot; türünden kapsam kaymalarını da önler. Yeni bir istek geldiğinde etkisi belgeye bakılarak değerlendirilir.</p>
+<h2 id="2-mimari-ve-parca-secimi">2. Mimari ve Parça Seçimi</h2>
+<p>Gereksinimler netleşince kartın blok şeması çizilir: güç katı, mikrodenetleyici, sensör girişleri, sürücü çıkışları ve haberleşme arayüzleri. Bu aşamadaki kararlar kartın maliyetini ve tedarik riskini büyük ölçüde belirler.</p>
+<ul>
+  <li><strong>Mikrodenetleyici:</strong> Gereken çevre birimleri (ADC, zamanlayıcı, UART, CAN), bellek ve yazılım ekosistemi birlikte değerlendirilir. STM32 gibi geniş aileler, ileride daha güçlü ya da daha ucuz bir modele geçmeyi kolaylaştırır.</li>
+  <li><strong>Güç mimarisi:</strong> Doğrusal regülatör (LDO) basit ve sessizdir; ama giriş ile çıkış arasındaki fark büyükse ısıya dönüşen güç de büyür. 24 V&#x27;tan 3,3 V&#x27;a 100 mA çeken bir devrede LDO yaklaşık 2 W ısı üretir; burada anahtarlamalı bir dönüştürücü (buck) daha doğru seçimdir.</li>
+  <li><strong>Tedarik durumu:</strong> Üretimi durdurulmuş (EOL) ya da yeni tasarımlarda önerilmeyen (NRND) parçalardan kaçınılır. Kritik parçalar için muadil seçenekler baştan belirlenir.</li>
+</ul>
+<h2 id="3-sematik-tasarim-ve-hesaplar">3. Şematik Tasarım ve Hesaplar</h2>
+<p>Şematik, kartın elektriksel tanımıdır. İyi bir şematik yalnızca doğru bağlantıları değil, tasarım kararlarının gerekçelerini de taşır.</p>
+<ul>
+  <li>Regülatörlerin bobin, kondansatör ve geri besleme değerleri üretici formüllerine göre hesaplanır.</li>
+  <li>Ters bağlantı, aşırı gerilim ve kısa devreye karşı korumalar (ters kutup koruması, TVS diyot, sigorta ya da elektronik sigorta) eklenir.</li>
+  <li>Her besleme pinine dekuplaj kondansatörü konur; I²C hatlarına, reset ve açılış (boot) pinlerine gereken dirençler bağlanır.</li>
+  <li>Programlama ve hata ayıklama konnektörü (örneğin STM32 için SWD) ile test noktaları unutulmaz.</li>
+</ul>
+<p>Şematik bittiğinde, PCB&#x27;ye geçmeden önce ikinci bir gözle incelenmesi en ucuz hata ayıklama yöntemidir. Bu konuda <a href="/blog/pcb-tasarim-incelemesi-sik-yapilan-hatalar.html">üretim öncesi tasarım incelemesinde en sık yapılan hatalar</a> yazımıza da göz atabilirsiniz.</p>
+<h2 id="4-pcb-yerlesimi-ve-yonlendirme">4. PCB Yerleşimi ve Yönlendirme</h2>
+<p>PCB tasarımında sıra önemlidir: önce yerleşim, sonra yönlendirme. Konnektörler ve montaj delikleri mekanik çizime göre sabitlenir; ardından güç katı, mikrodenetleyici ve hassas analog bölümler yerleştirilir.</p>
+<ul>
+  <li><strong>Katman yapısı:</strong> Katman sayısı; devre yoğunluğu, akım ve gürültü gereksinimine göre seçilir. Kesintisiz bir toprak düzlemi hem sinyal kalitesini hem de EMC performansını iyileştirir.</li>
+  <li><strong>Akım taşıyan yollar:</strong> Yol genişlikleri, taşıyacakları akıma ve izin verilen sıcaklık artışına göre hesaplanır. IPC-2152 bu hesap için kullanılan standarttır.</li>
+  <li><strong>Gürültü:</strong> Anahtarlamalı güç katının akım döngüleri küçük tutulur, hassas sinyaller bu bölgeden uzaklaştırılır. Ayrıntılar için <a href="/blog/pcb-tasariminda-emc-kurallari.html">PCB tasarımında EMC kuralları</a> yazımıza bakabilirsiniz.</li>
+  <li><strong>Kontroller:</strong> Tasarım kuralı denetimi (DRC) üreticinin kabiliyetlerine göre yapılır; 3D modelle kutu ve konnektör çakışmaları kontrol edilir.</li>
+</ul>
+<h2 id="5-uretim-dosyalari-ve-prototip">5. Üretim Dosyaları ve Prototip</h2>
+<p>PCB&#x27;nin üretilmesi için tasarım programının kendi dosyası değil, standart üretim çıktıları gerekir: Gerber dosyaları, delik dosyası, malzeme listesi (BOM) ve dizgi için konum dosyası. Hangi dosyanın ne işe yaradığını <a href="/blog/pcb-uretimi-icin-gerekli-dosyalar.html">PCB üretimi için gerekli dosyalar</a> yazımızda ayrıntılı anlattık.</p>
+<p>İlk prototip genellikle 5–10 adet üretilir. Bu adet, birkaç kartı farklı testlerde kullanmaya ve bir kart zarar görürse işin durmamasına yeter.</p>
+<h2 id="6-test-ve-dogrulama">6. Test ve Doğrulama</h2>
+<p>Prototip geldiğinde ilk iş, kartı kontrollü biçimde canlandırmaktır:</p>
+<ol>
+  <li>Besleme akım sınırlamalı bir güç kaynağından verilir; ilk açılışta çekilen akım izlenir.</li>
+  <li>Tüm gerilim rayları ölçülür; regülatörlerin çıkışları ve dalgalanmaları kontrol edilir.</li>
+  <li>Mikrodenetleyici programlanır, çevre birimleri tek tek denenir.</li>
+  <li>İşlevsel testler gereksinim belgesindeki maddelere göre yapılır ve sonuçlar kaydedilir.</li>
+  <li>Sıcaklık, uzun süreli çalışma ve gerekiyorsa EMC ön testleri yapılır.</li>
+</ol>
+<p>İlk prototipte küçük düzeltmeler çıkması normaldir. Amaç bunları ikinci revizyonda kapatmak ve seri üretime temiz bir tasarımla geçmektir.</p>
+<h2 id="7-seri-uretime-gecis">7. Seri Üretime Geçiş</h2>
+<p>Prototipte çalışan bir kart, seri üretimde de sorunsuz üretilebilmelidir. Bu aşamada:</p>
+<ul>
+  <li>Üretilebilirlik (DFM) ve test edilebilirlik (DFT) son kez gözden geçirilir.</li>
+  <li>Üretim testi için bir test prosedürü, gerekiyorsa test fikstürü hazırlanır.</li>
+  <li>Malzeme listesi maliyet ve tedarik açısından sadeleştirilir.</li>
+  <li>Montaj çizimleri, yazılım yükleme talimatları ve revizyon kayıtları tamamlanır.</li>
+</ul>
+<p>Az adetli bir ön seri (pilot üretim), büyük siparişten önce süreçteki aksaklıkları görmenin en güvenli yoludur.</p>
+<h2 id="sureyi-ve-maliyeti-ne-belirler">Süreyi ve Maliyeti Ne Belirler?</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Etken</th><th>Etkisi</th></tr></thead>
+<tbody>
+<tr><td>Gereksinimlerin netliği</td><td>Belirsizlik, revizyon sayısını ve süreyi artırır.</td></tr>
+<tr><td>Kartın karmaşıklığı</td><td>Parça sayısı, katman sayısı ve yerleşim süresi artar.</td></tr>
+<tr><td>Prototip turu</td><td>Her ek revizyon, ek üretim ve test süresi demektir.</td></tr>
+<tr><td>Sertifikasyon</td><td>EMC ve güvenlik testleri ayrı bir planlama ister.</td></tr>
+<tr><td>Parça tedariki</td><td>Uzun teslim süreli parçalar takvimi belirler.</td></tr>
+</tbody>
+</table></div>
+<h2 id="sonuc">Sonuç</h2>
+<p>İyi bir elektronik kart; net gereksinimlerin, doğru parça seçiminin, dikkatli bir yerleşimin ve planlı testlerin toplamıdır. Bu adımları atlamak kısa vadede zaman kazandırıyor gibi görünse de çoğu zaman ek bir prototip turu olarak geri döner.</p>
+<p>ModWare Technology olarak <a href="/elektronik-kart-tasarimi.html">elektronik kart ve PCB tasarımı</a>, <a href="/prototip-ar-ge.html">prototip ve Ar-Ge</a> ve <a href="/pcb-uretimi.html">PCB üretimi</a> aşamalarını tek ekipte yürütüyoruz. Projenizin hangi aşamada olduğunu anlatın, size uygun yol haritasını birlikte çıkaralım.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section-alt" aria-labelledby="ilgili-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">İlgili hizmetler</p>
+          <h2 id="ilgili-title" data-split-reveal>Bu Konuda Desteğe mi İhtiyacınız Var?</h2>
+        </header>
+        <div class="values-grid">
+            <article class="value-card tilt-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M9.5 3v4M14.5 3v4M9.5 17v4M14.5 17v4M3 9.5h4M3 14.5h4M17 9.5h4M17 14.5h4"/></svg></span>
+              <h3>Elektronik Kart ve Donanım Tasarımı</h3>
+              <p>Gereksinimden şematiğe, PCB tasarımından prototipe: kontrol, güç, sensör ve haberleşme kartları.</p>
+              <a class="link-u" href="/elektronik-kart-tasarimi.html">Hizmeti inceleyin <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 3h5M10.5 3v6.2L5.2 18.4A1.8 1.8 0 0 0 6.8 21h10.4a1.8 1.8 0 0 0 1.6-2.6L13.5 9.2V3"/><path d="M7.5 15h9"/></svg></span>
+              <h3>Prototip ve Ar-Ge</h3>
+              <p>Fikirden çalışan prototipe, prototipten üretime; test planı ve dokümantasyon.</p>
+              <a class="link-u" href="/prototip-ar-ge.html">Hizmeti inceleyin <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/></svg></span>
+              <h3>PCB Üretimi</h3>
+              <p>Dosya kontrolünden teslimata; prototip ve küçük seri baskı devre kart üretimi.</p>
+              <a class="link-u" href="/pcb-uretimi.html">Hizmeti inceleyin <span aria-hidden="true">→</span></a>
+            </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="diger-yazilar-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Blog</p>
+          <h2 id="diger-yazilar-title" data-split-reveal>Diğer Yazılar</h2>
+        </header>
+        <div class="values-grid">
+            <article class="value-card tilt-card blog-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/></svg></span>
+              <p class="blog-meta">PCB üretimi · 4 dk okuma</p>
+              <h3>PCB Üretimi İçin Hangi Dosyalar Gerekir? Gerber, Delik, BOM ve Dizgi Dosyaları</h3>
+              <p>Gerber katmanları, delik dosyası, BOM ve dizgi dosyası: PCB&#x27;yi üretime göndermeden önce hazırlanması gerekenler ve sık yapılan hatalar.</p>
+              <a class="link-u" href="/blog/pcb-uretimi-icin-gerekli-dosyalar.html">Yazıyı okuyun <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card blog-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span>
+              <p class="blog-meta">Tasarım incelemesi · 4 dk okuma</p>
+              <h3>Üretim Öncesi Tasarım İncelemesi: En Sık Yapılan 15 Hata</h3>
+              <p>Şematikten footprint&#x27;e, yerleşimden üretim dosyalarına: kartı üretime göndermeden önce yakalanması gereken 15 yaygın hata.</p>
+              <a class="link-u" href="/blog/pcb-tasarim-incelemesi-sik-yapilan-hatalar.html">Yazıyı okuyun <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card blog-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg></span>
+              <p class="blog-meta">PCB üretimi · 4 dk okuma</p>
+              <h3>Prototip PCB Maliyetini Düşürmenin 9 Yolu</h3>
+              <p>Standart üretim değerleri, kart boyutu, yüzey kaplama, parça listesi ve revizyon sayısı: prototip bütçesini küçültmenin pratik yolları.</p>
+              <a class="link-u" href="/blog/prototip-pcb-maliyetini-dusurme.html">Yazıyı okuyun <span aria-hidden="true">→</span></a>
+            </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section cta-band" aria-labelledby="cta-title">
+      <div class="container cta-inner">
+        <h2 id="cta-title" data-cta-split>Kartınızı Birlikte Tasarlayalım.</h2>
+        <p class="cta-text">Projenizi kısaca anlatın; kapsam, süre ve tahmini bütçeyle dönelim.</p>
+        <div class="cta-actions">
+          <a class="btn btn-accent" href="/teklif.html?urun=%C3%96zel%20donan%C4%B1m%20tasar%C4%B1m%C4%B1" data-burst>Teklif Al</a>
+          <a class="btn btn-ghost" href="/hizmetler.html" data-burst>Tüm hizmetler</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ ORTAK ALT BİLGİ ============ -->
+  <footer class="site-footer">
+    <!-- Footer üstündeki çizgi: sayfa sonuna yaklaşırken soldan sağa dolar -->
+    <div class="footer-line" aria-hidden="true"><span class="footer-line-fill"></span></div>
+    <div class="container footer-inner">
+      <a class="logo logo-sm" href="/index.html"><img src="/assets/logo/modware-logo-light.png" alt="ModWare" width="275" height="30"></a>
+      <p class="footer-meta"><span class="footer-location">İzmit, Kocaeli</span> <span class="footer-copy">© <span data-year>2026</span> ModWare Technology</span></p>
+      <!-- İletişim ikonları: e-posta ve LinkedIn -->
+      <div class="footer-contact">
+        <a class="footer-icon" href="mailto:info@modwaretechnology.com" aria-label="E-posta gönderin: info@modwaretechnology.com" title="info@modwaretechnology.com"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M4 7l8 6 8-6"/></svg></a>
+        <a class="footer-icon" href="https://www.linkedin.com/company/modware-technology1/" target="_blank" rel="noopener" aria-label="ModWare Technology LinkedIn sayfası (yeni sekmede açılır)" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 5a2 2 0 1 1-4-.002 2 2 0 0 1 4 .002zM7 8.48H3V21h4V8.48zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.72-2.91l.04-1.68z"/></svg></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Yukarı çık: sayfa sonuna gelince belirir (main.js) -->
+  <button class="to-top" id="to-top" type="button" aria-label="Sayfanın başına dön">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+
+  <!-- Kütüphaneler (CDN, sabit sürüm). main.js ve animations.js'den önce yüklenmeli.
+       GSAP + ScrollTrigger: animasyon · SplitType: harf bölme · Lenis: yumuşak kaydırma -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/split-type@0.3.4/umd/index.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
+  <script src="/js/main.js?v=28" defer></script>
+  <script src="/js/animations.js?v=28" defer></script>
+</body>
+</html>

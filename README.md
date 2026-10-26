@@ -23,6 +23,22 @@ modwaretechnology.com sitesinin kaynak dosyaları. Saf HTML + CSS + JavaScript; 
 | `tasarim-incelemesi.html` | Şematik ve PCB tasarım incelemesi (üretim öncesi kontrol) |
 | `prototip-ar-ge.html` | Prototip geliştirme ve elektronik Ar-Ge |
 
+**Blog** (ana menüde "Blog"; `<body data-page="blog">`). Sayfalar `blog/` klasöründedir; yayında `/blog/` ve `/blog/<yazı-adı>` adreslerinden açılır. Her yazının sonunda ilgili hizmet sayfalarına ve diğer yazılara bağlantılar vardır.
+
+| Dosya | Konu |
+|---|---|
+| `blog/index.html` | Yazı listesi |
+| `blog/elektronik-kart-tasarim-sureci.html` | Elektronik kart tasarım süreci |
+| `blog/pcb-uretimi-icin-gerekli-dosyalar.html` | PCB üretimi için gerekli dosyalar |
+| `blog/pcb-tasariminda-emc-kurallari.html` | PCB tasarımında EMC kuralları |
+| `blog/stm32-modbus-rtu-rs485.html` | STM32 ile Modbus RTU (RS-485) |
+| `blog/pcb-tasarim-incelemesi-sik-yapilan-hatalar.html` | Üretim öncesi tasarım incelemesi: sık yapılan hatalar |
+| `blog/prototip-pcb-maliyetini-dusurme.html` | Prototip PCB maliyetini düşürme |
+
+Blog sayfaları alt klasörde olduğu için içlerindeki bütün bağlantılar ve dosya yolları kökten başlar (`/css/style.css`, `/hizmetler.html`). Göreli yol (`css/style.css`) yayında `/blog/css/…` olarak çözülür ve sayfa bozulur.
+
+Yeni yazı eklemek için mevcut bir yazının dosyasını kopyalayın; başlığı (`<title>`, `h1`), açıklamayı, `canonical` adresini, paylaşım önizlemesini, yapılandırılmış veriyi (BlogPosting ve BreadcrumbList) ve metni değiştirin. Ardından `blog/index.html`'deki listeye bir kart, `sitemap.xml`'e de adresi ekleyin.
+
 ## Klasörler
 
 - `css/style.css`: tüm stiller (renkler en üstte `:root` içinde)
@@ -61,7 +77,7 @@ Bundan sonra `main` dalına gönderilen her değişiklik siteye kendiliğinden y
 
 ## Arama motoru notları
 
-- Her sayfanın `<head>` bölümünde: anahtar kelimeli `<title>` (≈ 70 karakterden kısa), `description` (≈ 160 karakter), `canonical` (uzantısız adres, ör. `https://modwaretechnology.com/urunler`) ve paylaşım önizlemesi (`og:*`). Ana sayfada firma ve web sitesi, hizmet sayfalarında hizmet için yapılandırılmış veri (`application/ld+json`, schema.org) var.
+- Her sayfanın `<head>` bölümünde: anahtar kelimeli `<title>` (≈ 70 karakterden kısa), `description` (≈ 160 karakter), `canonical` (uzantısız adres, ör. `https://modwaretechnology.com/urunler`) ve paylaşım önizlemesi (`og:*`). Ana sayfada firma ve web sitesi, hizmet sayfalarında hizmet, blog yazılarında yazı ve sayfa yolu için yapılandırılmış veri (`application/ld+json`, schema.org) var.
 - Yeni sayfa eklerken: başlık ve açıklamayı benzersiz yazın, `canonical` ekleyin ve `sitemap.xml`'e adresini ekleyin.
 - Google Search Console ve Bing Webmaster Tools'a site haritası olarak `https://modwaretechnology.com/sitemap.xml` gönderilir.
 - Görünmeyen metne anahtar kelime doldurmayın (Google bunu cezalandırır); bir konuda görünmek için o konuyu anlatan görünür bir sayfa gerekir.

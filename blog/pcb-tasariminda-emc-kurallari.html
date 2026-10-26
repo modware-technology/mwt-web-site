@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>PCB Tasarımında EMC: Gürültüyü Önlemenin 10 Kuralı | ModWare</title>
+  <meta name="description" content="EMC testini geçen kart, tasarımın ilk gününde başlar: toprak düzlemi, akım döngüleri, dekuplaj, anahtarlamalı güç katı ve konnektör filtrelemesi için 10 kural.">
+  <link rel="canonical" href="https://modwaretechnology.com/blog/pcb-tasariminda-emc-kurallari">
+
+  <!-- Paylaşım önizlemesi (LinkedIn, WhatsApp, X) -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="ModWare Technology">
+  <meta property="og:locale" content="tr_TR">
+  <meta property="og:title" content="PCB Tasarımında EMC: Gürültüyü Önlemenin 10 Kuralı | ModWare">
+  <meta property="og:description" content="EMC testini geçen kart, tasarımın ilk gününde başlar: toprak düzlemi, akım döngüleri, dekuplaj, anahtarlamalı güç katı ve konnektör filtrelemesi için 10 kural.">
+  <meta property="og:url" content="https://modwaretechnology.com/blog/pcb-tasariminda-emc-kurallari">
+  <meta property="og:image" content="https://modwaretechnology.com/assets/og/modware-og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="article:published_time" content="2026-10-26">
+  <meta property="article:section" content="PCB tasarımı">
+
+  <!-- Arama motorları için yapılandırılmış veri (schema.org) -->
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "BlogPosting", "@id": "https://modwaretechnology.com/blog/pcb-tasariminda-emc-kurallari#yazi", "headline": "PCB Tasarımında EMC: Gürültüyü Baştan Önlemenin 10 Kuralı", "description": "EMC testini geçen kart, tasarımın ilk gününde başlar: toprak düzlemi, akım döngüleri, dekuplaj, anahtarlamalı güç katı ve konnektör filtrelemesi için 10 kural.", "datePublished": "2026-10-26", "dateModified": "2026-10-26", "inLanguage": "tr-TR", "url": "https://modwaretechnology.com/blog/pcb-tasariminda-emc-kurallari", "mainEntityOfPage": "https://modwaretechnology.com/blog/pcb-tasariminda-emc-kurallari", "image": "https://modwaretechnology.com/assets/og/modware-og.png", "articleSection": "PCB tasarımı", "wordCount": 798, "author": {"@type": "Organization", "@id": "https://modwaretechnology.com/#org", "name": "ModWare Technology", "url": "https://modwaretechnology.com/"}, "publisher": {"@type": "Organization", "@id": "https://modwaretechnology.com/#org", "name": "ModWare Technology", "url": "https://modwaretechnology.com/", "logo": {"@type": "ImageObject", "url": "https://modwaretechnology.com/assets/logo/modware-icon-512.png"}}, "isPartOf": {"@type": "Blog", "@id": "https://modwaretechnology.com/blog/#blog", "url": "https://modwaretechnology.com/blog/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": "https://modwaretechnology.com/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://modwaretechnology.com/blog/"}, {"@type": "ListItem", "position": 3, "name": "PCB Tasarımında EMC: Gürültüyü Baştan Önlemenin 10 Kuralı"}]}]}</script>
+
+  <!-- Sekme ikonu -->
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/assets/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <meta name="theme-color" content="#0a0f1c">
+
+  <!-- Preloader yalnızca JS çalışıyorsa görünür. GSAP/animations.js
+       5 sn içinde devralmazsa güvenlik zamanlayıcısı onu kaldırır. -->
+  <script>
+    document.documentElement.classList.add('is-loading');
+    window.__preloaderSafety = setTimeout(function () {
+      document.documentElement.classList.remove('is-loading');
+    }, 5000);
+  </script>
+
+  <!-- Fontlar: Space Grotesk (başlıklar) + Inter (metin) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+
+  <link rel="stylesheet" href="/css/style.css?v=28">
+</head>
+<body data-page="blog">
+
+  <!-- ============ PRELOADER ============ -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader-inner">
+      <p class="preloader-word" data-preloader-word>MODWARE</p>
+      <div class="preloader-bar"><span class="preloader-bar-fill"></span></div>
+      <p class="preloader-count"><span data-preloader-count>0</span>%</p>
+    </div>
+  </div>
+
+  <!-- ============ ARKA PLAN KATMANI (sabit, içeriğin arkasında) ============ -->
+  <div class="bg-layer" aria-hidden="true">
+    <div class="bg-glow"></div>
+    <div class="bg-shade"></div>
+    <div class="bg-noise"></div>
+  </div>
+
+  <!-- ============ ÖZEL İMLEÇ (yalnızca fareli cihazlarda) ============ -->
+  <div class="cursor" aria-hidden="true">
+    <div class="cursor-frame"><i></i><i></i><i></i><i></i></div>
+    <div class="cursor-dot"></div>
+  </div>
+
+  <!-- ============ KAYDIRMA İLERLEME ÇUBUĞU ============ -->
+  <div class="scroll-progress" aria-hidden="true"><span class="scroll-progress-bar"></span></div>
+
+  <!-- Klavye kullanıcıları için içeriğe atlama bağlantısı -->
+  <a class="skip-link" href="#main">İçeriğe geç</a>
+
+  <!-- ============ ORTAK ÜST MENÜ ============
+       Bu blok her sayfada aynıdır. Aktif sayfa,
+       main.js tarafından <body data-page> değerine göre işaretlenir. -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="/index.html" aria-label="ModWare Technology ana sayfa">
+        <img src="/assets/logo/modware-logo-light.png" alt="ModWare" width="275" height="30">
+      </a>
+
+      <!-- Mobilde menüyü açıp kapatan buton -->
+      <button class="nav-toggle" id="nav-toggle" type="button"
+              aria-controls="site-nav" aria-expanded="false" aria-label="Menüyü aç">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="Ana menü">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="/index.html" data-nav="home">Ana Sayfa</a></li>
+          <li><a class="nav-link" href="/hizmetler.html" data-nav="hizmetler">Hizmetler</a></li>
+          <li><a class="nav-link" href="/urunler.html" data-nav="urunler">Ürünler</a></li>
+          <li><a class="nav-link" href="/hakkimizda.html" data-nav="hakkimizda">Hakkımızda</a></li>
+          <li><a class="nav-link" href="/blog/index.html" data-nav="blog">Blog</a></li>
+        </ul>
+        <a class="btn btn-accent nav-cta" href="/teklif.html">Teklif Al</a>
+      </nav>
+    </div>
+  </header>
+  <!-- ============ /ORTAK ÜST MENÜ ============ -->
+
+  <!-- Blog yazısı: pcb-tasariminda-emc-kurallari. Metin site-araclar/blog_yazilar.py dosyasından üretilir. -->
+  <main id="main">
+
+    <!-- ============ SAYFA BAŞLIĞI ============ -->
+    <section class="page-head page-head--yazi" aria-labelledby="page-title">
+      <div class="container page-head-inner">
+        <p class="eyebrow" data-anim="hero"><a href="/blog/index.html">Blog</a> · PCB tasarımı</p>
+        <h1 id="page-title" data-split-intro>PCB Tasarımında EMC: Gürültüyü Baştan Önlemenin 10 Kuralı</h1>
+        <p class="page-lede" data-anim="hero">EMC sorunları çoğunlukla test laboratuvarında fark edilir; ama nedenleri neredeyse her zaman PCB&#x27;nin ilk yerleşimindedir. Baştan doğru kurulan bir kart, sonradan eklenen ferrit ve kalkanlardan çok daha ucuza gelir.</p>
+        <p class="post-meta" data-anim="hero"><time datetime="2026-10-26">26 Ekim 2026</time> <span aria-hidden="true">·</span> <span>4 dk okuma</span> <span aria-hidden="true">·</span> <span>ModWare Technology mühendislik ekibi</span></p>
+      </div>
+    </section>
+
+    <section class="section article-section">
+      <div class="container">
+        <article class="prose">
+<nav class="toc" aria-label="İçindekiler">
+<p class="toc-title">İçindekiler</p>
+<ol>
+  <li><a href="#1-her-sinyalin-bir-donus-yolu-vardir">1. Her Sinyalin Bir Dönüş Yolu Vardır</a></li>
+  <li><a href="#2-akim-dongulerini-kucuk-tutun">2. Akım Döngülerini Küçük Tutun</a></li>
+  <li><a href="#3-anahtarlamali-guc-katinda-sicak-donguyu-kucultun">3. Anahtarlamalı Güç Katında &quot;Sıcak Döngüyü&quot; Küçültün</a></li>
+  <li><a href="#4-dekuplaj-kondansatorlerini-dogru-yerlestirin">4. Dekuplaj Kondansatörlerini Doğru Yerleştirin</a></li>
+  <li><a href="#5-katman-yapisini-emc-yi-dusunerek-secin">5. Katman Yapısını EMC&#x27;yi Düşünerek Seçin</a></li>
+  <li><a href="#6-kablolar-antendir-konnektorlerde-filtreleyin">6. Kablolar Antendir: Konnektörlerde Filtreleyin</a></li>
+  <li><a href="#7-saat-ve-hizli-sinyalleri-yavaslatin">7. Saat ve Hızlı Sinyalleri Yavaşlatın</a></li>
+  <li><a href="#8-analog-ve-dijital-bolumleri-yerlesimle-ayirin">8. Analog ve Dijital Bölümleri Yerleşimle Ayırın</a></li>
+  <li><a href="#9-bosta-kalan-bakiri-kaldirin-topraklari-dikin">9. Boşta Kalan Bakırı Kaldırın, Toprakları Dikin</a></li>
+  <li><a href="#10-erken-olcun-on-uyumluluk-testleri">10. Erken Ölçün: Ön Uyumluluk Testleri</a></li>
+  <li><a href="#emc-kontrol-listesi">EMC Kontrol Listesi</a></li>
+  <li><a href="#sonuc">Sonuç</a></li>
+</ol>
+</nav>
+<p>Elektromanyetik uyumluluk (EMC), bir cihazın çevresine kabul edilebilir sınırların üzerinde elektromanyetik gürültü yaymaması (yayılım) ve çevresindeki gürültüden etkilenmeden çalışabilmesi (bağışıklık) demektir. Avrupa pazarında satılan elektronik ürünlerde CE işaretinin bir parçasıdır ve EMC yönetmeliği kapsamında test edilir.</p>
+<p>EMC&#x27;yi sonradan düzeltmek pahalıdır: ek filtreler, ferritler, kalkanlar ve çoğu zaman yeni bir PCB revizyonu gerekir. Oysa gürültünün büyük kısmı, yerleşim aşamasında birkaç temel kurala uyularak baştan önlenebilir.</p>
+<aside class="callout"><p><strong>Kısaca:</strong> Akımın dönüş yolunu düşünün, akım döngülerini küçük tutun, toprak düzlemini bölmeyin, gürültüyü kaynağında filtreleyin; kartın kenarlarını ve kablolarını birer anten gibi düşünün.</p></aside>
+<h2 id="1-her-sinyalin-bir-donus-yolu-vardir">1. Her Sinyalin Bir Dönüş Yolu Vardır</h2>
+<p>Akım her zaman bir döngü içinde akar: gittiği yoldan bir şekilde kaynağına geri döner. Yüksek frekanslarda dönüş akımı, sinyal yolunun hemen altındaki referans düzleminden, en düşük empedanslı yolu izleyerek akar. Bu yüzden hızlı sinyallerin altında kesintisiz bir toprak düzlemi bulunmalıdır. Düzlemdeki bir yarık ya da boşluk, dönüş akımını dolanmaya zorlar; döngü büyür, yayılım artar.</p>
+<h2 id="2-akim-dongulerini-kucuk-tutun">2. Akım Döngülerini Küçük Tutun</h2>
+<p>Bir döngünün yaydığı gürültü, döngü alanı ve akımın değişim hızıyla birlikte artar. Kaynak ile yükü birbirine yakın yerleştirmek, sinyal yolunu ve dönüş yolunu birbirine yakın tutmak döngü alanını küçültür. Bu kural hem yayılımı hem de dışarıdan gürültü toplamayı azaltır.</p>
+<h2 id="3-anahtarlamali-guc-katinda-sicak-donguyu-kucultun">3. Anahtarlamalı Güç Katında &quot;Sıcak Döngüyü&quot; Küçültün</h2>
+<p>Buck dönüştürücü gibi anahtarlamalı regülatörlerde en kritik bölge, giriş kondansatörü ile anahtarlama elemanları arasındaki döngüdür. Bu döngüdeki akım çok hızlı değişir ve kartın en güçlü gürültü kaynaklarından biridir.</p>
+<ul>
+  <li>Giriş kondansatörlerini anahtarlama elemanlarının hemen yanına, mümkün olan en kısa bağlantıyla yerleştirin.</li>
+  <li>Anahtarlama düğümünün (SW) bakır alanını, akımı taşıyacak kadar büyük ama gereğinden geniş olmayacak biçimde tutun.</li>
+  <li>Geri besleme yolunu bobinden ve anahtarlama düğümünden uzak geçirin.</li>
+  <li>Regülatör üreticisinin önerdiği örnek yerleşimi temel alın; bu öneriler genellikle ölçülmüş ve denenmiş yerleşimlerdir.</li>
+</ul>
+<h2 id="4-dekuplaj-kondansatorlerini-dogru-yerlestirin">4. Dekuplaj Kondansatörlerini Doğru Yerleştirin</h2>
+<p>Dekuplaj kondansatörleri, entegrelerin anlık akım ihtiyacını yerel olarak karşılar. Etkili olmaları için besleme pinine en yakın konumda olmalı, toprak bağlantıları da kısa bir via ile doğrudan toprak düzlemine inmelidir. Uzun ve ince bir bağlantı, kondansatörün işe yaradığı frekans aralığını daraltır. Genellikle her besleme pinine bir 100 nF kondansatör ve her besleme rayına bir ya da birkaç daha büyük değerli kondansatör kullanılır.</p>
+<h2 id="5-katman-yapisini-emc-yi-dusunerek-secin">5. Katman Yapısını EMC&#x27;yi Düşünerek Seçin</h2>
+<p>Katman sayısı arttıkça her sinyal katmanının hemen yanına bir referans düzlemi koymak kolaylaşır. Dört katmanlı bir kartta sinyal, toprak, besleme ve sinyal şeklindeki dizilim yaygın ve sağlam bir başlangıçtır. İki katmanlı kartlarda ise bir yüzü olabildiğince kesintisiz toprak dökümüne ayırmak ve yolları bu düzlemi parçalamayacak biçimde planlamak gerekir. Doğru katman sayısı; devre yoğunluğu, hız ve maliyet birlikte düşünülerek belirlenir.</p>
+<h2 id="6-kablolar-antendir-konnektorlerde-filtreleyin">6. Kablolar Antendir: Konnektörlerde Filtreleyin</h2>
+<p>Karttan çıkan her kablo, gürültüyü yayabilen ve toplayabilen bir antendir. Gürültüyü kablo konnektörüne ulaşmadan durdurmak gerekir:</p>
+<ul>
+  <li>Haberleşme ve besleme hatlarına konnektör girişinde ferrit, RC filtre ya da ortak mod bobini ekleyin.</li>
+  <li>ESD ve ani gerilimlere karşı TVS diyotları konnektörün hemen yanına, kısa bir toprak bağlantısıyla yerleştirin.</li>
+  <li>Hızlı sinyalleri ve saat hatlarını konnektörlerden ve kart kenarından uzak tutun.</li>
+</ul>
+<h2 id="7-saat-ve-hizli-sinyalleri-yavaslatin">7. Saat ve Hızlı Sinyalleri Yavaşlatın</h2>
+<p>Gürültünün frekans içeriğini sinyalin frekansından çok kenar hızı belirler. Gereğinden hızlı kenarlar, yüksek frekanslı harmonikler üretir.</p>
+<ul>
+  <li>Kristali mikrodenetleyicinin hemen yanına yerleştirin, yollarını kısa tutun ve altından başka sinyal geçirmeyin.</li>
+  <li>Hızlı çıkışlara 22–33 Ω seri dirençler ekleyerek kenarları yumuşatın.</li>
+  <li>Mikrodenetleyicide pin hızını (STM32&#x27;de GPIO hız ayarı) gereken en düşük değerde tutun.</li>
+</ul>
+<h2 id="8-analog-ve-dijital-bolumleri-yerlesimle-ayirin">8. Analog ve Dijital Bölümleri Yerleşimle Ayırın</h2>
+<p>Toprak düzlemini analog ve dijital diye bölmek çoğu zaman sorunu çözmek yerine yeni dönüş yolu sorunları yaratır. Daha güvenli yaklaşım, tek ve kesintisiz bir toprak düzlemi kullanıp bölümleri yerleşimle ayırmaktır: hassas analog devreleri bir bölgede, gürültülü dijital ve güç devrelerini başka bir bölgede toplamak ve aralarından hızlı sinyal geçirmemek.</p>
+<h2 id="9-bosta-kalan-bakiri-kaldirin-topraklari-dikin">9. Boşta Kalan Bakırı Kaldırın, Toprakları Dikin</h2>
+<p>Toprağa bağlı olmayan, boşta kalan bakır parçaları anten gibi davranabilir; ya kaldırılmalı ya da toprağa bağlanmalıdır. Farklı katmanlardaki toprak alanları, özellikle kart kenarları boyunca ve hızlı sinyallerin katman değiştirdiği noktaların yakınında, sık aralıklı via&#x27;larla birbirine bağlanmalıdır.</p>
+<h2 id="10-erken-olcun-on-uyumluluk-testleri">10. Erken Ölçün: Ön Uyumluluk Testleri</h2>
+<p>Laboratuvar testinden önce yapılan basit ölçümler sürprizleri büyük ölçüde azaltır. Yakın alan probları ve bir spektrum analizörüyle kart üzerindeki gürültü kaynakları bulunabilir; kablolardan yayılan gürültü ise ortak mod akım probuyla ölçülebilir. Prototip aşamasında bulunan bir sorun, ürün aşamasında bulunandan çok daha ucuza çözülür.</p>
+<h2 id="emc-kontrol-listesi">EMC Kontrol Listesi</h2>
+<ul>
+  <li>Hızlı sinyallerin altında kesintisiz bir referans düzlemi var mı?</li>
+  <li>Anahtarlamalı güç katının giriş döngüsü olabildiğince küçük mü?</li>
+  <li>Dekuplaj kondansatörleri pinlere yakın ve doğrudan düzleme bağlı mı?</li>
+  <li>Konnektörlerde filtre ve ESD koruması var mı?</li>
+  <li>Kristal ve saat hatları kısa ve korunaklı mı?</li>
+  <li>Boşta kalan bakır alanı ya da bölünmüş düzlem var mı?</li>
+</ul>
+<h2 id="sonuc">Sonuç</h2>
+<p>EMC, tasarımın sonunda eklenen bir özellik değil; yerleşimin ilk gününden itibaren alınan kararların sonucudur. Bu kurallar her sorunu tek başına çözmez ama sorunların büyük kısmını laboratuvara gitmeden önler.</p>
+<p><a href="/elektronik-kart-tasarimi.html">Elektronik kart ve PCB tasarımı</a> projelerimizde EMC&#x27;yi baştan yerleşimin bir parçası olarak ele alıyoruz. Elinizde hazır bir tasarım varsa, üretime göndermeden önce <a href="/tasarim-incelemesi.html">tasarım incelemesi</a> ile riskleri birlikte görebiliriz.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section-alt" aria-labelledby="ilgili-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">İlgili hizmetler</p>
+          <h2 id="ilgili-title" data-split-reveal>Bu Konuda Desteğe mi İhtiyacınız Var?</h2>
+        </header>
+        <div class="values-grid">
+            <article class="value-card tilt-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M9.5 3v4M14.5 3v4M9.5 17v4M14.5 17v4M3 9.5h4M3 14.5h4M17 9.5h4M17 14.5h4"/></svg></span>
+              <h3>Elektronik Kart ve Donanım Tasarımı</h3>
+              <p>Gereksinimden şematiğe, PCB tasarımından prototipe: kontrol, güç, sensör ve haberleşme kartları.</p>
+              <a class="link-u" href="/elektronik-kart-tasarimi.html">Hizmeti inceleyin <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span>
+              <h3>Tasarım İncelemesi</h3>
+              <p>Şematik ve PCB&#x27;nizi üretime göndermeden önce inceler, hataları ve riskleri raporlarız.</p>
+              <a class="link-u" href="/tasarim-incelemesi.html">Hizmeti inceleyin <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 3h5M10.5 3v6.2L5.2 18.4A1.8 1.8 0 0 0 6.8 21h10.4a1.8 1.8 0 0 0 1.6-2.6L13.5 9.2V3"/><path d="M7.5 15h9"/></svg></span>
+              <h3>Prototip ve Ar-Ge</h3>
+              <p>Fikirden çalışan prototipe, prototipten üretime; test planı ve dokümantasyon.</p>
+              <a class="link-u" href="/prototip-ar-ge.html">Hizmeti inceleyin <span aria-hidden="true">→</span></a>
+            </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="diger-yazilar-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Blog</p>
+          <h2 id="diger-yazilar-title" data-split-reveal>Diğer Yazılar</h2>
+        </header>
+        <div class="values-grid">
+            <article class="value-card tilt-card blog-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span>
+              <p class="blog-meta">Tasarım incelemesi · 4 dk okuma</p>
+              <h3>Üretim Öncesi Tasarım İncelemesi: En Sık Yapılan 15 Hata</h3>
+              <p>Şematikten footprint&#x27;e, yerleşimden üretim dosyalarına: kartı üretime göndermeden önce yakalanması gereken 15 yaygın hata.</p>
+              <a class="link-u" href="/blog/pcb-tasarim-incelemesi-sik-yapilan-hatalar.html">Yazıyı okuyun <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card blog-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M9.5 3v4M14.5 3v4M9.5 17v4M14.5 17v4M3 9.5h4M3 14.5h4M17 9.5h4M17 14.5h4"/></svg></span>
+              <p class="blog-meta">Elektronik kart tasarımı · 5 dk okuma</p>
+              <h3>Elektronik Kart Tasarım Süreci: Fikirden Seri Üretime Adım Adım</h3>
+              <p>Gereksinimden şematiğe, PCB&#x27;den prototipe ve seri üretime: bir elektronik kartın geçtiği adımlar ve her adımda dikkat edilecekler.</p>
+              <a class="link-u" href="/blog/elektronik-kart-tasarim-sureci.html">Yazıyı okuyun <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card blog-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/></svg></span>
+              <p class="blog-meta">Gömülü yazılım · 6 dk okuma</p>
+              <h3>STM32 ile Modbus RTU (RS-485): Donanımda ve Yazılımda Dikkat Edilecekler</h3>
+              <p>RS-485 sürücü seçimi, sonlandırma, yön kontrolü, çerçeve zamanlaması ve CRC: STM32 ile sahada sorunsuz çalışan Modbus RTU için kontrol listesi.</p>
+              <a class="link-u" href="/blog/stm32-modbus-rtu-rs485.html">Yazıyı okuyun <span aria-hidden="true">→</span></a>
+            </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section cta-band" aria-labelledby="cta-title">
+      <div class="container cta-inner">
+        <h2 id="cta-title" data-cta-split>Kartınızı Üretime Göndermeden İnceleyelim.</h2>
+        <p class="cta-text">Projenizi kısaca anlatın; kapsam, süre ve tahmini bütçeyle dönelim.</p>
+        <div class="cta-actions">
+          <a class="btn btn-accent" href="/teklif.html?urun=Tasar%C4%B1m%20incelemesi" data-burst>Teklif Al</a>
+          <a class="btn btn-ghost" href="/hizmetler.html" data-burst>Tüm hizmetler</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ ORTAK ALT BİLGİ ============ -->
+  <footer class="site-footer">
+    <!-- Footer üstündeki çizgi: sayfa sonuna yaklaşırken soldan sağa dolar -->
+    <div class="footer-line" aria-hidden="true"><span class="footer-line-fill"></span></div>
+    <div class="container footer-inner">
+      <a class="logo logo-sm" href="/index.html"><img src="/assets/logo/modware-logo-light.png" alt="ModWare" width="275" height="30"></a>
+      <p class="footer-meta"><span class="footer-location">İzmit, Kocaeli</span> <span class="footer-copy">© <span data-year>2026</span> ModWare Technology</span></p>
+      <!-- İletişim ikonları: e-posta ve LinkedIn -->
+      <div class="footer-contact">
+        <a class="footer-icon" href="mailto:info@modwaretechnology.com" aria-label="E-posta gönderin: info@modwaretechnology.com" title="info@modwaretechnology.com"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M4 7l8 6 8-6"/></svg></a>
+        <a class="footer-icon" href="https://www.linkedin.com/company/modware-technology1/" target="_blank" rel="noopener" aria-label="ModWare Technology LinkedIn sayfası (yeni sekmede açılır)" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 5a2 2 0 1 1-4-.002 2 2 0 0 1 4 .002zM7 8.48H3V21h4V8.48zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.72-2.91l.04-1.68z"/></svg></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Yukarı çık: sayfa sonuna gelince belirir (main.js) -->
+  <button class="to-top" id="to-top" type="button" aria-label="Sayfanın başına dön">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+
+  <!-- Kütüphaneler (CDN, sabit sürüm). main.js ve animations.js'den önce yüklenmeli.
+       GSAP + ScrollTrigger: animasyon · SplitType: harf bölme · Lenis: yumuşak kaydırma -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/split-type@0.3.4/umd/index.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
+  <script src="/js/main.js?v=28" defer></script>
+  <script src="/js/animations.js?v=28" defer></script>
+</body>
+</html>

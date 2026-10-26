@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>PCB Tasarım İncelemesi: En Sık Yapılan 15 Hata | ModWare</title>
+  <meta name="description" content="PCB&#x27;yi üretime göndermeden önce neler kontrol edilmeli? Şematik, footprint, yerleşim, üretilebilirlik ve dosyalarda en sık yapılan 15 hata ve çözümleri.">
+  <link rel="canonical" href="https://modwaretechnology.com/blog/pcb-tasarim-incelemesi-sik-yapilan-hatalar">
+
+  <!-- Paylaşım önizlemesi (LinkedIn, WhatsApp, X) -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="ModWare Technology">
+  <meta property="og:locale" content="tr_TR">
+  <meta property="og:title" content="PCB Tasarım İncelemesi: En Sık Yapılan 15 Hata | ModWare">
+  <meta property="og:description" content="PCB&#x27;yi üretime göndermeden önce neler kontrol edilmeli? Şematik, footprint, yerleşim, üretilebilirlik ve dosyalarda en sık yapılan 15 hata ve çözümleri.">
+  <meta property="og:url" content="https://modwaretechnology.com/blog/pcb-tasarim-incelemesi-sik-yapilan-hatalar">
+  <meta property="og:image" content="https://modwaretechnology.com/assets/og/modware-og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="article:published_time" content="2026-10-26">
+  <meta property="article:section" content="Tasarım incelemesi">
+
+  <!-- Arama motorları için yapılandırılmış veri (schema.org) -->
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "BlogPosting", "@id": "https://modwaretechnology.com/blog/pcb-tasarim-incelemesi-sik-yapilan-hatalar#yazi", "headline": "Üretim Öncesi Tasarım İncelemesi: En Sık Yapılan 15 Hata", "description": "PCB'yi üretime göndermeden önce neler kontrol edilmeli? Şematik, footprint, yerleşim, üretilebilirlik ve dosyalarda en sık yapılan 15 hata ve çözümleri.", "datePublished": "2026-10-26", "dateModified": "2026-10-26", "inLanguage": "tr-TR", "url": "https://modwaretechnology.com/blog/pcb-tasarim-incelemesi-sik-yapilan-hatalar", "mainEntityOfPage": "https://modwaretechnology.com/blog/pcb-tasarim-incelemesi-sik-yapilan-hatalar", "image": "https://modwaretechnology.com/assets/og/modware-og.png", "articleSection": "Tasarım incelemesi", "wordCount": 731, "author": {"@type": "Organization", "@id": "https://modwaretechnology.com/#org", "name": "ModWare Technology", "url": "https://modwaretechnology.com/"}, "publisher": {"@type": "Organization", "@id": "https://modwaretechnology.com/#org", "name": "ModWare Technology", "url": "https://modwaretechnology.com/", "logo": {"@type": "ImageObject", "url": "https://modwaretechnology.com/assets/logo/modware-icon-512.png"}}, "isPartOf": {"@type": "Blog", "@id": "https://modwaretechnology.com/blog/#blog", "url": "https://modwaretechnology.com/blog/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": "https://modwaretechnology.com/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://modwaretechnology.com/blog/"}, {"@type": "ListItem", "position": 3, "name": "Üretim Öncesi Tasarım İncelemesi: En Sık Yapılan 15 Hata"}]}]}</script>
+
+  <!-- Sekme ikonu -->
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/assets/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <meta name="theme-color" content="#0a0f1c">
+
+  <!-- Preloader yalnızca JS çalışıyorsa görünür. GSAP/animations.js
+       5 sn içinde devralmazsa güvenlik zamanlayıcısı onu kaldırır. -->
+  <script>
+    document.documentElement.classList.add('is-loading');
+    window.__preloaderSafety = setTimeout(function () {
+      document.documentElement.classList.remove('is-loading');
+    }, 5000);
+  </script>
+
+  <!-- Fontlar: Space Grotesk (başlıklar) + Inter (metin) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+
+  <link rel="stylesheet" href="/css/style.css?v=28">
+</head>
+<body data-page="blog">
+
+  <!-- ============ PRELOADER ============ -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader-inner">
+      <p class="preloader-word" data-preloader-word>MODWARE</p>
+      <div class="preloader-bar"><span class="preloader-bar-fill"></span></div>
+      <p class="preloader-count"><span data-preloader-count>0</span>%</p>
+    </div>
+  </div>
+
+  <!-- ============ ARKA PLAN KATMANI (sabit, içeriğin arkasında) ============ -->
+  <div class="bg-layer" aria-hidden="true">
+    <div class="bg-glow"></div>
+    <div class="bg-shade"></div>
+    <div class="bg-noise"></div>
+  </div>
+
+  <!-- ============ ÖZEL İMLEÇ (yalnızca fareli cihazlarda) ============ -->
+  <div class="cursor" aria-hidden="true">
+    <div class="cursor-frame"><i></i><i></i><i></i><i></i></div>
+    <div class="cursor-dot"></div>
+  </div>
+
+  <!-- ============ KAYDIRMA İLERLEME ÇUBUĞU ============ -->
+  <div class="scroll-progress" aria-hidden="true"><span class="scroll-progress-bar"></span></div>
+
+  <!-- Klavye kullanıcıları için içeriğe atlama bağlantısı -->
+  <a class="skip-link" href="#main">İçeriğe geç</a>
+
+  <!-- ============ ORTAK ÜST MENÜ ============
+       Bu blok her sayfada aynıdır. Aktif sayfa,
+       main.js tarafından <body data-page> değerine göre işaretlenir. -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="/index.html" aria-label="ModWare Technology ana sayfa">
+        <img src="/assets/logo/modware-logo-light.png" alt="ModWare" width="275" height="30">
+      </a>
+
+      <!-- Mobilde menüyü açıp kapatan buton -->
+      <button class="nav-toggle" id="nav-toggle" type="button"
+              aria-controls="site-nav" aria-expanded="false" aria-label="Menüyü aç">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="Ana menü">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="/index.html" data-nav="home">Ana Sayfa</a></li>
+          <li><a class="nav-link" href="/hizmetler.html" data-nav="hizmetler">Hizmetler</a></li>
+          <li><a class="nav-link" href="/urunler.html" data-nav="urunler">Ürünler</a></li>
+          <li><a class="nav-link" href="/hakkimizda.html" data-nav="hakkimizda">Hakkımızda</a></li>
+          <li><a class="nav-link" href="/blog/index.html" data-nav="blog">Blog</a></li>
+        </ul>
+        <a class="btn btn-accent nav-cta" href="/teklif.html">Teklif Al</a>
+      </nav>
+    </div>
+  </header>
+  <!-- ============ /ORTAK ÜST MENÜ ============ -->
+
+  <!-- Blog yazısı: pcb-tasarim-incelemesi-sik-yapilan-hatalar. Metin site-araclar/blog_yazilar.py dosyasından üretilir. -->
+  <main id="main">
+
+    <!-- ============ SAYFA BAŞLIĞI ============ -->
+    <section class="page-head page-head--yazi" aria-labelledby="page-title">
+      <div class="container page-head-inner">
+        <p class="eyebrow" data-anim="hero"><a href="/blog/index.html">Blog</a> · Tasarım incelemesi</p>
+        <h1 id="page-title" data-split-intro>Üretim Öncesi Tasarım İncelemesi: En Sık Yapılan 15 Hata</h1>
+        <p class="page-lede" data-anim="hero">Bir PCB&#x27;yi üretime göndermek kolaydır; hatalı bir kartı yeniden üretmek ise hem para hem zaman kaybıdır. Üretimden önce yapılan sistemli bir inceleme, hataların çoğunu daha ucuzken yakalar.</p>
+        <p class="post-meta" data-anim="hero"><time datetime="2026-10-26">26 Ekim 2026</time> <span aria-hidden="true">·</span> <span>4 dk okuma</span> <span aria-hidden="true">·</span> <span>ModWare Technology mühendislik ekibi</span></p>
+      </div>
+    </section>
+
+    <section class="section article-section">
+      <div class="container">
+        <article class="prose">
+<nav class="toc" aria-label="İçindekiler">
+<p class="toc-title">İçindekiler</p>
+<ol>
+  <li><a href="#sematikte">Şematikte</a></li>
+  <li><a href="#ayak-izi-ve-yerlesimde">Ayak İzi ve Yerleşimde</a></li>
+  <li><a href="#uretilebilirlikte-dfm">Üretilebilirlikte (DFM)</a></li>
+  <li><a href="#uretim-dosyalarinda">Üretim Dosyalarında</a></li>
+  <li><a href="#inceleme-nasil-yapilmali">İnceleme Nasıl Yapılmalı?</a></li>
+  <li><a href="#sonuc">Sonuç</a></li>
+</ol>
+</nav>
+<p>Tasarım programlarındaki elektriksel kural denetimi (ERC) ve tasarım kuralı denetimi (DRC) önemli araçlardır; ama yalnızca kendilerine tanımlanan kuralları kontrol ederler. Yanlış seçilmiş bir parça, ters çizilmiş bir konnektör ya da yetersiz bir soğutma alanı bu denetimlerden sorunsuz geçebilir. Bu yüzden üretimden önce kartı bir kontrol listesiyle ve mümkünse tasarımı yapmamış ikinci bir gözle incelemek gerekir.</p>
+<p>Aşağıda üretim öncesi incelemelerde en sık karşılaşılan 15 hatayı dört başlıkta topladık.</p>
+<aside class="callout"><p><strong>Kısaca:</strong> Önce şematiği, sonra parça ayak izlerini (footprint) ve yerleşimi, ardından üretilebilirliği ve en son üretim dosyalarını kontrol edin. Her bulguyu önem derecesiyle kaydedin.</p></aside>
+<h2 id="sematikte">Şematikte</h2>
+<h3>1. Eksik ya da Yanlış Çekme Dirençleri</h3>
+<p>I²C hatlarındaki çekme (pull-up) dirençleri, reset pini ve mikrodenetleyicinin açılış modunu belirleyen pinler (STM32&#x27;de BOOT0 gibi) en sık unutulan bağlantılardır. Tanımsız kalan bir pin, kartın bazen çalışıp bazen çalışmamasına yol açar.</p>
+<h3>2. Regülatör Hesap Hataları</h3>
+<p>Geri besleme bölücüsündeki yanlış bir direnç değeri çıkış gerilimini; yanlış bobin ya da çıkış kondansatörü seçimi ise regülatörün kararlılığını bozar. Değerler, üreticinin formülleri ve önerileriyle tek tek doğrulanmalıdır.</p>
+<h3>3. Isı Hesabının Yapılmaması</h3>
+<p>Doğrusal regülatörde giriş–çıkış farkı ile akımın çarpımı ısıya dönüşür. 24 V&#x27;tan 3,3 V&#x27;a 100 mA, yaklaşık 2 W demektir; küçük bir pakette bu ısıyı atmak mümkün değildir. Her güç elemanı için kayıp ve sıcaklık artışı hesaplanmalıdır.</p>
+<h3>4. Koruma Devrelerinin Eksik Olması</h3>
+<p>Ters bağlanan besleme, kablodan gelen ani gerilimler ve elektrostatik boşalma (ESD), sahadaki arızaların başlıca nedenleridir. Ters kutup koruması, TVS diyotlar ve sigorta ya da elektronik sigorta, sonradan eklenmesi zor olduğu için baştan düşünülmelidir.</p>
+<h3>5. Pin Atama Çakışmaları</h3>
+<p>Mikrodenetleyicide bir pinin birden fazla işlevi olabilir. Aynı pine hem bir UART hem bir zamanlayıcı kanalı atamak ya da kullanılmak istenen çevre biriminin seçilen pakette bulunmaması, ancak yazılım yazılırken fark edilir. Pin ataması, üreticinin yapılandırma aracıyla doğrulanmalıdır.</p>
+<h2 id="ayak-izi-ve-yerlesimde">Ayak İzi ve Yerleşimde</h2>
+<h3>6. Ayak İzinin Paketle Uyuşmaması</h3>
+<p>Aynı adı taşıyan paketlerin farklı varyantları olabilir: dar ve geniş SOIC, farklı ölçülerde QFN ya da pin sırası farklı SOT-23 sürümleri. Her ayak izi, satın alınacak parçanın veri sayfasındaki ölçülerle karşılaştırılmalıdır.</p>
+<h3>7. Pin 1 ve Kutup İşaretlerinin Eksik Olması</h3>
+<p>Diyot, LED, elektrolitik kondansatör ve entegrelerde yön işareti serigrafide açıkça görünmelidir. Bu işaretler hem dizgide hem de elle yapılan kontrollerde ters montajı önler.</p>
+<h3>8. Ters Çizilmiş Konnektörler</h3>
+<p>Konnektörlerin veri sayfalarında pin numaraları üstten ya da alttan görünüşe göre verilebilir. Karşılıklı bağlanan iki kartta ya da bir kabloda pin sırasının ayna görüntüsü olması, sık rastlanan ve pahalıya mal olan bir hatadır.</p>
+<h3>9. Dekuplaj Kondansatörlerinin Uzak Kalması</h3>
+<p>Pinlerden uzağa yerleştirilmiş ya da uzun yollarla bağlanmış dekuplaj kondansatörleri görevlerini yapamaz. Her kondansatör, beslediği pine en yakın konumda olmalıdır.</p>
+<h3>10. Mekanik Uyumun Kontrol Edilmemesi</h3>
+<p>Montaj delikleri, kutu içindeki yükseklik sınırları ve konnektörlerin kutudaki açıklıklarla hizası 3D modelle kontrol edilmelidir. Mekanik bir uyumsuzluk, elektriksel olarak kusursuz bir kartı kullanılamaz hâle getirir.</p>
+<h2 id="uretilebilirlikte-dfm">Üretilebilirlikte (DFM)</h2>
+<h3>11. Üretim Kabiliyetinin Dışında Kalan Değerler</h3>
+<p>Çok ince yollar, çok dar aralıklar ya da çok küçük delikler her üreticide yapılamaz ya da ek maliyet getirir. Tasarım kuralları, kartın üretileceği yerin kabiliyetlerine göre ayarlanmalıdır.</p>
+<h3>12. Pedlerin Üzerine Taşan Serigrafi ve Okunmayan Yazılar</h3>
+<p>Pedlerin üzerine taşan serigrafi lehimlemeyi bozar; çok küçük yazılar ise basılamaz. Referanslar okunabilir boyutta ve pedlerden uzak olmalıdır.</p>
+<h3>13. Dizgi İçin Gerekenlerin Unutulması</h3>
+<p>Otomatik dizgi için referans işaretleri (fiducial), kart kenarına yeterli mesafe ve gerekiyorsa panel kenarları gerekir. Kenara çok yakın parçalar, panel ayırma sırasında zarar görebilir.</p>
+<h3>14. Test ve Programlama Erişiminin Olmaması</h3>
+<p>Programlama konnektörü (ör. SWD) ve önemli sinyallerde test noktaları yoksa, kart üretildikten sonra hata ayıklamak ve üretim testi yapmak çok zorlaşır.</p>
+<h2 id="uretim-dosyalarinda">Üretim Dosyalarında</h2>
+<h3>15. Dosyalar Arasındaki Uyumsuzluklar</h3>
+<p>Malzeme listesindeki referansların PCB ile eşleşmemesi, takılmayacak parçaların işaretlenmemesi, dizgi dosyasındaki hatalı açılar ve farklı revizyonlara ait dosyaların karışması, doğru tasarlanmış bir kartı bile hatalı üretir. Hangi dosyaların gerektiğini <a href="/blog/pcb-uretimi-icin-gerekli-dosyalar.html">PCB üretimi için gerekli dosyalar</a> yazımızda anlattık.</p>
+<h2 id="inceleme-nasil-yapilmali">İnceleme Nasıl Yapılmalı?</h2>
+<ol>
+  <li>İncelemeyi bir kontrol listesiyle ve sabit bir sırayla yapın: şematik, ayak izleri, yerleşim, üretilebilirlik, dosyalar.</li>
+  <li>Her bulguyu kaydedin ve önem derecesi verin: üretimi durduran, düzeltilmesi gereken, iyileştirme önerisi.</li>
+  <li>Düzeltmelerden sonra yalnızca değişen yerleri değil, onlardan etkilenebilecek bölümleri de yeniden kontrol edin.</li>
+  <li>Mümkünse incelemeyi tasarımı yapmamış biri yapsın; tasarımcı kendi varsayımlarını görmekte zorlanır.</li>
+</ol>
+<h2 id="sonuc">Sonuç</h2>
+<p>Üretim öncesi inceleme, bir prototip turunun maliyetinin küçük bir kısmına mal olur ve çoğu zaman o turu tamamen gereksiz kılar.</p>
+<p><a href="/tasarim-incelemesi.html">Tasarım incelemesi</a> hizmetimizde şematik ve PCB dosyalarınızı üretime göndermeden önce inceliyor, bulguları önem sırasına göre raporluyoruz. Kartınızın sıfırdan tasarlanmasını isterseniz <a href="/elektronik-kart-tasarimi.html">elektronik kart tasarımı</a> sayfamıza göz atabilirsiniz.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section-alt" aria-labelledby="ilgili-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">İlgili hizmetler</p>
+          <h2 id="ilgili-title" data-split-reveal>Bu Konuda Desteğe mi İhtiyacınız Var?</h2>
+        </header>
+        <div class="values-grid">
+            <article class="value-card tilt-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span>
+              <h3>Tasarım İncelemesi</h3>
+              <p>Şematik ve PCB&#x27;nizi üretime göndermeden önce inceler, hataları ve riskleri raporlarız.</p>
+              <a class="link-u" href="/tasarim-incelemesi.html">Hizmeti inceleyin <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M9.5 3v4M14.5 3v4M9.5 17v4M14.5 17v4M3 9.5h4M3 14.5h4M17 9.5h4M17 14.5h4"/></svg></span>
+              <h3>Elektronik Kart ve Donanım Tasarımı</h3>
+              <p>Gereksinimden şematiğe, PCB tasarımından prototipe: kontrol, güç, sensör ve haberleşme kartları.</p>
+              <a class="link-u" href="/elektronik-kart-tasarimi.html">Hizmeti inceleyin <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/></svg></span>
+              <h3>PCB Üretimi</h3>
+              <p>Dosya kontrolünden teslimata; prototip ve küçük seri baskı devre kart üretimi.</p>
+              <a class="link-u" href="/pcb-uretimi.html">Hizmeti inceleyin <span aria-hidden="true">→</span></a>
+            </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="diger-yazilar-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Blog</p>
+          <h2 id="diger-yazilar-title" data-split-reveal>Diğer Yazılar</h2>
+        </header>
+        <div class="values-grid">
+            <article class="value-card tilt-card blog-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/></svg></span>
+              <p class="blog-meta">PCB üretimi · 4 dk okuma</p>
+              <h3>PCB Üretimi İçin Hangi Dosyalar Gerekir? Gerber, Delik, BOM ve Dizgi Dosyaları</h3>
+              <p>Gerber katmanları, delik dosyası, BOM ve dizgi dosyası: PCB&#x27;yi üretime göndermeden önce hazırlanması gerekenler ve sık yapılan hatalar.</p>
+              <a class="link-u" href="/blog/pcb-uretimi-icin-gerekli-dosyalar.html">Yazıyı okuyun <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card blog-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12h4l3-7 5 14 3-7h5"/></svg></span>
+              <p class="blog-meta">PCB tasarımı · 4 dk okuma</p>
+              <h3>PCB Tasarımında EMC: Gürültüyü Baştan Önlemenin 10 Kuralı</h3>
+              <p>Toprak düzlemi, akım döngüleri, dekuplaj, anahtarlamalı güç katı ve konnektör filtrelemesi: EMC sorunlarını baştan önleyen 10 kural.</p>
+              <a class="link-u" href="/blog/pcb-tasariminda-emc-kurallari.html">Yazıyı okuyun <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card blog-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg></span>
+              <p class="blog-meta">PCB üretimi · 4 dk okuma</p>
+              <h3>Prototip PCB Maliyetini Düşürmenin 9 Yolu</h3>
+              <p>Standart üretim değerleri, kart boyutu, yüzey kaplama, parça listesi ve revizyon sayısı: prototip bütçesini küçültmenin pratik yolları.</p>
+              <a class="link-u" href="/blog/prototip-pcb-maliyetini-dusurme.html">Yazıyı okuyun <span aria-hidden="true">→</span></a>
+            </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section cta-band" aria-labelledby="cta-title">
+      <div class="container cta-inner">
+        <h2 id="cta-title" data-cta-split>Kartınızı Üretime Göndermeden İnceleyelim.</h2>
+        <p class="cta-text">Projenizi kısaca anlatın; kapsam, süre ve tahmini bütçeyle dönelim.</p>
+        <div class="cta-actions">
+          <a class="btn btn-accent" href="/teklif.html?urun=Tasar%C4%B1m%20incelemesi" data-burst>Teklif Al</a>
+          <a class="btn btn-ghost" href="/hizmetler.html" data-burst>Tüm hizmetler</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ ORTAK ALT BİLGİ ============ -->
+  <footer class="site-footer">
+    <!-- Footer üstündeki çizgi: sayfa sonuna yaklaşırken soldan sağa dolar -->
+    <div class="footer-line" aria-hidden="true"><span class="footer-line-fill"></span></div>
+    <div class="container footer-inner">
+      <a class="logo logo-sm" href="/index.html"><img src="/assets/logo/modware-logo-light.png" alt="ModWare" width="275" height="30"></a>
+      <p class="footer-meta"><span class="footer-location">İzmit, Kocaeli</span> <span class="footer-copy">© <span data-year>2026</span> ModWare Technology</span></p>
+      <!-- İletişim ikonları: e-posta ve LinkedIn -->
+      <div class="footer-contact">
+        <a class="footer-icon" href="mailto:info@modwaretechnology.com" aria-label="E-posta gönderin: info@modwaretechnology.com" title="info@modwaretechnology.com"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M4 7l8 6 8-6"/></svg></a>
+        <a class="footer-icon" href="https://www.linkedin.com/company/modware-technology1/" target="_blank" rel="noopener" aria-label="ModWare Technology LinkedIn sayfası (yeni sekmede açılır)" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 5a2 2 0 1 1-4-.002 2 2 0 0 1 4 .002zM7 8.48H3V21h4V8.48zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.72-2.91l.04-1.68z"/></svg></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Yukarı çık: sayfa sonuna gelince belirir (main.js) -->
+  <button class="to-top" id="to-top" type="button" aria-label="Sayfanın başına dön">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+
+  <!-- Kütüphaneler (CDN, sabit sürüm). main.js ve animations.js'den önce yüklenmeli.
+       GSAP + ScrollTrigger: animasyon · SplitType: harf bölme · Lenis: yumuşak kaydırma -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/split-type@0.3.4/umd/index.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
+  <script src="/js/main.js?v=28" defer></script>
+  <script src="/js/animations.js?v=28" defer></script>
+</body>
+</html>

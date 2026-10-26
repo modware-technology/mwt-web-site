@@ -15,6 +15,7 @@
    11. Ürünler sayfası: başlık, filtre, galeri kartları, platform şeridi, detay penceresi
    12. Hakkımızda sayfası: fotoğraflı hero, cam kartlar, yapışık büyük cümle
    13. Teklif Al sayfası: form, özel seçim/radyo/onay kutuları, yan bilgi, başarı ekranı
+   14. Blog: yazı kartları, makale metni, içindekiler, tablo ve kod blokları
    ========================================================= */
 
 /* ---------- 1. Değişkenler ---------- */
@@ -2292,3 +2293,108 @@ html.modal-open { overflow: hidden; }
 /* 404 sayfası */
 .nf-actions { display: flex; flex-wrap: wrap; gap: 12px; }
 .not-found h1 { max-width: 14ch; }
+
+/* ---------- 14. Blog ---------- */
+/* Yazı kartı: kategori ve okuma süresi */
+.blog-meta {
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--color-primary);
+}
+.blog-card .link-u { justify-self: start; margin-top: 4px; }
+
+/* Yazı başlığının altı: tarih · okuma süresi · yazar */
+.post-meta { display: flex; flex-wrap: wrap; gap: 4px 10px; color: var(--color-text-muted); font-size: 0.92rem; }
+.post-meta [aria-hidden="true"] { opacity: 0.6; }
+.page-head .eyebrow a { color: inherit; }
+/* Yazı sayfası: uzun başlıklar daha küçük ve daha geniş */
+.page-head--yazi h1 { font-size: clamp(2rem, 4.2vw, 3.3rem); max-width: 26ch; }
+.page-head--yazi .page-lede { max-width: 68ch; }
+
+/* Makale metni: uzun okumada göz yormayan satır uzunluğu ve aralıklar */
+.article-section { padding-top: clamp(32px, 5vw, 64px); }
+.prose {
+  max-width: 74ch;
+  font-size: clamp(1rem, 1.1vw, 1.075rem);
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.86);
+}
+.prose > * + * { margin-top: 1.15em; }
+.prose h2 {
+  margin-top: 2.2em;
+  font-size: clamp(1.45rem, 2.4vw, 2rem);
+  color: var(--color-text);
+  scroll-margin-top: calc(var(--header-h) + 24px);
+}
+.prose h3 { margin-top: 1.8em; font-size: clamp(1.15rem, 1.6vw, 1.35rem); color: var(--color-text); }
+.prose h2 + *,
+.prose h3 + * { margin-top: 0.7em; }
+.prose ul,
+.prose ol { margin-bottom: 0; padding-left: 1.4em; }
+.prose li + li { margin-top: 0.45em; }
+.prose li::marker { color: var(--color-primary); }
+.prose strong { color: var(--color-text); font-weight: 600; }
+.prose a:not([class]) { color: var(--color-primary); }
+.prose code {
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  background: rgba(155, 143, 224, 0.12);
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+  font-size: 0.88em;
+}
+.prose pre {
+  margin-bottom: 0;
+  padding: 18px 20px;
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: rgba(12, 18, 34, 0.85);
+  line-height: 1.55;
+}
+.prose pre code { padding: 0; background: none; font-size: 0.85rem; }
+
+/* Vurgulu kutu ("Kısaca") */
+.prose .callout {
+  padding: 18px 22px;
+  border: 1px solid rgba(155, 143, 224, 0.3);
+  border-left: 3px solid var(--color-primary);
+  border-radius: var(--radius);
+  background: rgba(155, 143, 224, 0.06);
+}
+.prose .callout p + p { margin-top: 0.6em; }
+
+/* Tablolar: dar ekranda kutunun içinde yatay kayar */
+.prose .table-wrap { overflow-x: auto; border: 1px solid var(--color-border); border-radius: var(--radius); }
+.prose table { width: 100%; border-collapse: collapse; font-size: 0.94rem; }
+.prose th,
+.prose td { padding: 11px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--color-border); }
+.prose tbody tr:last-child td { border-bottom: 0; }
+.prose th {
+  background: rgba(155, 143, 224, 0.08);
+  color: var(--color-text);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* İçindekiler */
+.toc {
+  padding: 20px 24px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: rgba(12, 18, 34, 0.72);
+}
+.toc-title {
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+.toc ol { margin: 10px 0 0; padding-left: 1.3em; }
+.toc li + li { margin-top: 0.35em; }
+.toc a:not([class]) { color: var(--color-text-muted); }
+.toc a:not([class]):hover { color: var(--color-text); }

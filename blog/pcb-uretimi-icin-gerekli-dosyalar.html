@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>PCB Üretimi İçin Gerekli Dosyalar: Gerber, BOM, CPL | ModWare</title>
+  <meta name="description" content="PCB üretimi ve dizgi için hangi dosyalar gerekir? Gerber katmanları, delik dosyası, BOM ve dizgi (CPL) dosyasının içeriği ve sık yapılan hatalar.">
+  <link rel="canonical" href="https://modwaretechnology.com/blog/pcb-uretimi-icin-gerekli-dosyalar">
+
+  <!-- Paylaşım önizlemesi (LinkedIn, WhatsApp, X) -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="ModWare Technology">
+  <meta property="og:locale" content="tr_TR">
+  <meta property="og:title" content="PCB Üretimi İçin Gerekli Dosyalar: Gerber, BOM, CPL | ModWare">
+  <meta property="og:description" content="PCB üretimi ve dizgi için hangi dosyalar gerekir? Gerber katmanları, delik dosyası, BOM ve dizgi (CPL) dosyasının içeriği ve sık yapılan hatalar.">
+  <meta property="og:url" content="https://modwaretechnology.com/blog/pcb-uretimi-icin-gerekli-dosyalar">
+  <meta property="og:image" content="https://modwaretechnology.com/assets/og/modware-og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="article:published_time" content="2026-10-26">
+  <meta property="article:section" content="PCB üretimi">
+
+  <!-- Arama motorları için yapılandırılmış veri (schema.org) -->
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "BlogPosting", "@id": "https://modwaretechnology.com/blog/pcb-uretimi-icin-gerekli-dosyalar#yazi", "headline": "PCB Üretimi İçin Hangi Dosyalar Gerekir? Gerber, Delik, BOM ve Dizgi Dosyaları", "description": "PCB üretimi ve dizgi için hangi dosyalar gerekir? Gerber katmanları, delik dosyası, BOM ve dizgi (CPL) dosyasının içeriği ve sık yapılan hatalar.", "datePublished": "2026-10-26", "dateModified": "2026-10-26", "inLanguage": "tr-TR", "url": "https://modwaretechnology.com/blog/pcb-uretimi-icin-gerekli-dosyalar", "mainEntityOfPage": "https://modwaretechnology.com/blog/pcb-uretimi-icin-gerekli-dosyalar", "image": "https://modwaretechnology.com/assets/og/modware-og.png", "articleSection": "PCB üretimi", "wordCount": 673, "author": {"@type": "Organization", "@id": "https://modwaretechnology.com/#org", "name": "ModWare Technology", "url": "https://modwaretechnology.com/"}, "publisher": {"@type": "Organization", "@id": "https://modwaretechnology.com/#org", "name": "ModWare Technology", "url": "https://modwaretechnology.com/", "logo": {"@type": "ImageObject", "url": "https://modwaretechnology.com/assets/logo/modware-icon-512.png"}}, "isPartOf": {"@type": "Blog", "@id": "https://modwaretechnology.com/blog/#blog", "url": "https://modwaretechnology.com/blog/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": "https://modwaretechnology.com/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://modwaretechnology.com/blog/"}, {"@type": "ListItem", "position": 3, "name": "PCB Üretimi İçin Hangi Dosyalar Gerekir? Gerber, Delik, BOM ve Dizgi Dosyaları"}]}]}</script>
+
+  <!-- Sekme ikonu -->
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/assets/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <meta name="theme-color" content="#0a0f1c">
+
+  <!-- Preloader yalnızca JS çalışıyorsa görünür. GSAP/animations.js
+       5 sn içinde devralmazsa güvenlik zamanlayıcısı onu kaldırır. -->
+  <script>
+    document.documentElement.classList.add('is-loading');
+    window.__preloaderSafety = setTimeout(function () {
+      document.documentElement.classList.remove('is-loading');
+    }, 5000);
+  </script>
+
+  <!-- Fontlar: Space Grotesk (başlıklar) + Inter (metin) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+
+  <link rel="stylesheet" href="/css/style.css?v=28">
+</head>
+<body data-page="blog">
+
+  <!-- ============ PRELOADER ============ -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader-inner">
+      <p class="preloader-word" data-preloader-word>MODWARE</p>
+      <div class="preloader-bar"><span class="preloader-bar-fill"></span></div>
+      <p class="preloader-count"><span data-preloader-count>0</span>%</p>
+    </div>
+  </div>
+
+  <!-- ============ ARKA PLAN KATMANI (sabit, içeriğin arkasında) ============ -->
+  <div class="bg-layer" aria-hidden="true">
+    <div class="bg-glow"></div>
+    <div class="bg-shade"></div>
+    <div class="bg-noise"></div>
+  </div>
+
+  <!-- ============ ÖZEL İMLEÇ (yalnızca fareli cihazlarda) ============ -->
+  <div class="cursor" aria-hidden="true">
+    <div class="cursor-frame"><i></i><i></i><i></i><i></i></div>
+    <div class="cursor-dot"></div>
+  </div>
+
+  <!-- ============ KAYDIRMA İLERLEME ÇUBUĞU ============ -->
+  <div class="scroll-progress" aria-hidden="true"><span class="scroll-progress-bar"></span></div>
+
+  <!-- Klavye kullanıcıları için içeriğe atlama bağlantısı -->
+  <a class="skip-link" href="#main">İçeriğe geç</a>
+
+  <!-- ============ ORTAK ÜST MENÜ ============
+       Bu blok her sayfada aynıdır. Aktif sayfa,
+       main.js tarafından <body data-page> değerine göre işaretlenir. -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="/index.html" aria-label="ModWare Technology ana sayfa">
+        <img src="/assets/logo/modware-logo-light.png" alt="ModWare" width="275" height="30">
+      </a>
+
+      <!-- Mobilde menüyü açıp kapatan buton -->
+      <button class="nav-toggle" id="nav-toggle" type="button"
+              aria-controls="site-nav" aria-expanded="false" aria-label="Menüyü aç">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="Ana menü">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="/index.html" data-nav="home">Ana Sayfa</a></li>
+          <li><a class="nav-link" href="/hizmetler.html" data-nav="hizmetler">Hizmetler</a></li>
+          <li><a class="nav-link" href="/urunler.html" data-nav="urunler">Ürünler</a></li>
+          <li><a class="nav-link" href="/hakkimizda.html" data-nav="hakkimizda">Hakkımızda</a></li>
+          <li><a class="nav-link" href="/blog/index.html" data-nav="blog">Blog</a></li>
+        </ul>
+        <a class="btn btn-accent nav-cta" href="/teklif.html">Teklif Al</a>
+      </nav>
+    </div>
+  </header>
+  <!-- ============ /ORTAK ÜST MENÜ ============ -->
+
+  <!-- Blog yazısı: pcb-uretimi-icin-gerekli-dosyalar. Metin site-araclar/blog_yazilar.py dosyasından üretilir. -->
+  <main id="main">
+
+    <!-- ============ SAYFA BAŞLIĞI ============ -->
+    <section class="page-head page-head--yazi" aria-labelledby="page-title">
+      <div class="container page-head-inner">
+        <p class="eyebrow" data-anim="hero"><a href="/blog/index.html">Blog</a> · PCB üretimi</p>
+        <h1 id="page-title" data-split-intro>PCB Üretimi İçin Hangi Dosyalar Gerekir? Gerber, Delik, BOM ve Dizgi Dosyaları</h1>
+        <p class="page-lede" data-anim="hero">Bir PCB&#x27;yi üretime göndermek için tasarım programının kendi dosyası değil, üreticilerin okuyabildiği standart çıktılar gerekir. Eksik ya da hatalı bir dosya, haftalarca süren bir gecikmeye dönüşebilir.</p>
+        <p class="post-meta" data-anim="hero"><time datetime="2026-10-26">26 Ekim 2026</time> <span aria-hidden="true">·</span> <span>4 dk okuma</span> <span aria-hidden="true">·</span> <span>ModWare Technology mühendislik ekibi</span></p>
+      </div>
+    </section>
+
+    <section class="section article-section">
+      <div class="container">
+        <article class="prose">
+<nav class="toc" aria-label="İçindekiler">
+<p class="toc-title">İçindekiler</p>
+<ol>
+  <li><a href="#gerber-dosyalari">Gerber Dosyaları</a></li>
+  <li><a href="#delik-drill-dosyasi">Delik (Drill) Dosyası</a></li>
+  <li><a href="#uretim-notlari">Üretim Notları</a></li>
+  <li><a href="#malzeme-listesi-bom">Malzeme Listesi (BOM)</a></li>
+  <li><a href="#dizgi-konum-dosyasi-cpl">Dizgi Konum Dosyası (CPL)</a></li>
+  <li><a href="#montaj-cizimi-ve-diger-dosyalar">Montaj Çizimi ve Diğer Dosyalar</a></li>
+  <li><a href="#sik-yapilan-hatalar">Sık Yapılan Hatalar</a></li>
+  <li><a href="#gondermeden-once-kontrol-listesi">Göndermeden Önce Kontrol Listesi</a></li>
+  <li><a href="#sonuc">Sonuç</a></li>
+</ol>
+</nav>
+<p>PCB tasarımı bittiğinde kart henüz yalnızca bilgisayardadır. Üretim için tasarımın, üretim makinelerinin anladığı bir dosya setine dönüştürülmesi gerekir. Bu set iki gruba ayrılır: çıplak kartın üretimi için gerekenler ve parçaların kart üzerine dizilmesi (montaj) için gerekenler.</p>
+<aside class="callout"><p><strong>Kısaca:</strong> Çıplak kart için Gerber dosyaları, delik (drill) dosyası ve üretim notları; montaj için malzeme listesi (BOM), dizgi konum dosyası (CPL) ve montaj çizimi gerekir.</p></aside>
+<h2 id="gerber-dosyalari">Gerber Dosyaları</h2>
+<p>Gerber, PCB endüstrisinin ortak dilidir. Her katman ayrı bir dosyadır ve kartın o katmanda neye benzeyeceğini tarif eder. Günümüzde genişletilmiş Gerber (RS-274X) ya da katman bilgisini dosyanın içinde taşıyan Gerber X2 kullanılır.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Katman</th><th>Ne işe yarar?</th></tr></thead>
+<tbody>
+<tr><td>Üst ve alt bakır</td><td>Yollar, pedler ve bakır dökümler</td></tr>
+<tr><td>İç bakır katmanlar</td><td>Çok katmanlı kartlarda iç sinyal ve düzlem katmanları</td></tr>
+<tr><td>Lehim maskesi</td><td>Kartı kaplayan koruyucu boyanın açık kalacağı yerler (pedler)</td></tr>
+<tr><td>Serigrafi</td><td>Parça referansları, logolar ve işaretler</td></tr>
+<tr><td>Lehim pastası</td><td>Dizgide kullanılacak şablonun (stencil) açıklıkları</td></tr>
+<tr><td>Kart dış hattı</td><td>Kartın kesileceği sınır, iç kesimler ve yuvalar</td></tr>
+</tbody>
+</table></div>
+<p>Dosyaları göndermeden önce bir Gerber görüntüleyicide açıp katmanların eksiksiz ve doğru hizalı olduğunu görmek, en sık yapılan hataları baştan yakalar.</p>
+<h2 id="delik-drill-dosyasi">Delik (Drill) Dosyası</h2>
+<p>Deliklerin konumu ve çapı Gerber&#x27;de değil, genellikle Excellon biçimindeki ayrı bir delik dosyasında bulunur.</p>
+<ul>
+  <li><strong>Metalize (PTH) ve metalize olmayan (NPTH) delikler</strong> çoğunlukla ayrı dosyalarda verilir. Montaj delikleri ve bazı konnektör pimleri metalize olmamalıdır.</li>
+  <li><strong>Birim ve sayı biçimi</strong> (mm ya da inç, ondalık basamak sayısı) Gerber dosyalarıyla uyumlu olmalıdır; aksi hâlde delikler yanlış yere düşer.</li>
+  <li><strong>Yuvalar (slot)</strong> delik dosyasında ya da dış hat katmanında açıkça tanımlanmalıdır.</li>
+</ul>
+<h2 id="uretim-notlari">Üretim Notları</h2>
+<p>Bazı bilgiler Gerber&#x27;den okunamaz ve ayrıca belirtilmelidir. Kısa bir üretim notu şunları içermelidir:</p>
+<ul>
+  <li>Kart kalınlığı (standart 1,6 mm) ve malzeme (FR-4, gerekirse yüksek Tg)</li>
+  <li>Bakır kalınlığı (ör. 35 µm / 1 oz) ve katman dizilimi</li>
+  <li>Yüzey kaplama (HASL, kurşunsuz HASL ya da ENIG)</li>
+  <li>Lehim maskesi ve serigrafi rengi</li>
+  <li>Empedans kontrolü, panel ya da özel tolerans gibi özel istekler</li>
+</ul>
+<h2 id="malzeme-listesi-bom">Malzeme Listesi (BOM)</h2>
+<p>Kart dizgiye gidecekse en kritik dosya malzeme listesidir. İyi bir BOM, her satırda tek bir parçayı eksiksiz tanımlar:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Sütun</th><th>Örnek</th></tr></thead>
+<tbody>
+<tr><td>Referanslar</td><td>R1, R4, R7</td></tr>
+<tr><td>Adet</td><td>3</td></tr>
+<tr><td>Değer</td><td>10 kΩ, %1</td></tr>
+<tr><td>Paket</td><td>0603</td></tr>
+<tr><td>Üretici</td><td>Yageo</td></tr>
+<tr><td>Üretici parça numarası (MPN)</td><td>RC0603FR-0710KL</td></tr>
+<tr><td>Not</td><td>Muadil izni, takılmayacak (DNP) bilgisi</td></tr>
+</tbody>
+</table></div>
+<p>Üretici parça numarası olmayan bir BOM&#x27;da &quot;10 µF kondansatör&quot; gibi belirsiz satırlar kalır; bu da yanlış gerilim değerinde ya da yanlış malzemeden parça alınmasına yol açabilir.</p>
+<h2 id="dizgi-konum-dosyasi-cpl">Dizgi Konum Dosyası (CPL)</h2>
+<p>Pick-and-place ya da centroid dosyası olarak da bilinen bu dosya, her parçanın kart üzerindeki konumunu ve yönünü verir: referans, X ve Y koordinatı, dönüş açısı ve kartın hangi yüzünde olduğu.</p>
+<p>Tasarım programları ile dizgi makineleri dönüş açısı için farklı referanslar kullanabilir. Diyot, entegre ve elektrolitik kondansatör gibi yönlü parçaların ters dizilmesinin en sık nedeni budur. Dizgiden önce üreticinin hazırladığı yerleşim önizlemesini kontrol etmek bu riski büyük ölçüde azaltır.</p>
+<h2 id="montaj-cizimi-ve-diger-dosyalar">Montaj Çizimi ve Diğer Dosyalar</h2>
+<ul>
+  <li><strong>Montaj çizimi:</strong> Parça yerleşimini ve yön işaretlerini gösteren PDF; elle yapılacak işlerde ve kontrolde kullanılır.</li>
+  <li><strong>Netlist (IPC-D-356):</strong> Üreticinin kartları elektriksel testten geçirmesine yardımcı olur.</li>
+  <li><strong>3D model (STEP):</strong> Kutu ve mekanik uyum kontrolleri için.</li>
+</ul>
+<h2 id="sik-yapilan-hatalar">Sık Yapılan Hatalar</h2>
+<ul>
+  <li>Kart dış hattının eksik olması ya da farklı katmanlarda farklı çizilmesi</li>
+  <li>Lehim pastası katmanının unutulması</li>
+  <li>Delik dosyasının Gerber&#x27;den farklı birimde olması</li>
+  <li>BOM&#x27;daki referansların PCB ile eşleşmemesi, takılmayacak parçaların işaretlenmemesi</li>
+  <li>Dizgi dosyasında yönlü parçaların dönüş açılarının hatalı olması</li>
+  <li>Serigrafinin pedlerin üzerine taşması</li>
+  <li>Eski ve yeni revizyon dosyalarının karışması</li>
+</ul>
+<h2 id="gondermeden-once-kontrol-listesi">Göndermeden Önce Kontrol Listesi</h2>
+<ol>
+  <li>Tüm Gerber katmanlarını bir görüntüleyicide açın; katman sayısını ve hizayı kontrol edin.</li>
+  <li>Delik dosyasının Gerber ile aynı hizada ve aynı birimde olduğunu doğrulayın.</li>
+  <li>Kart kalınlığını, bakır kalınlığını, yüzey kaplamayı ve renkleri üretim notuna yazın.</li>
+  <li>BOM&#x27;daki her referansın PCB&#x27;de karşılığı olduğunu ve her satırda üretici parça numarası bulunduğunu kontrol edin.</li>
+  <li>Dizgi dosyasındaki yönlü parçaların açılarını önizlemede kontrol edin.</li>
+  <li>Dosya adlarına revizyon kodu ekleyin ve hepsini tek bir arşivde gönderin.</li>
+</ol>
+<h2 id="sonuc">Sonuç</h2>
+<p>Doğru hazırlanmış bir dosya seti, üretimin hızlı ve sürprizsiz ilerlemesinin ön koşuludur. <a href="/pcb-uretimi.html">PCB üretimi</a> hizmetimizde dosyalarınızı üretimden önce kontrol ediyor, uygun üretim seçeneklerini belirliyor ve süreci teslimata kadar takip ediyoruz. Tasarımınızın da gözden geçirilmesini isterseniz <a href="/tasarim-incelemesi.html">tasarım incelemesi</a> hizmetimize göz atabilirsiniz.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section-alt" aria-labelledby="ilgili-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">İlgili hizmetler</p>
+          <h2 id="ilgili-title" data-split-reveal>Bu Konuda Desteğe mi İhtiyacınız Var?</h2>
+        </header>
+        <div class="values-grid">
+            <article class="value-card tilt-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/></svg></span>
+              <h3>PCB Üretimi</h3>
+              <p>Dosya kontrolünden teslimata; prototip ve küçük seri baskı devre kart üretimi.</p>
+              <a class="link-u" href="/pcb-uretimi.html">Hizmeti inceleyin <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span>
+              <h3>Tasarım İncelemesi</h3>
+              <p>Şematik ve PCB&#x27;nizi üretime göndermeden önce inceler, hataları ve riskleri raporlarız.</p>
+              <a class="link-u" href="/tasarim-incelemesi.html">Hizmeti inceleyin <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M9.5 3v4M14.5 3v4M9.5 17v4M14.5 17v4M3 9.5h4M3 14.5h4M17 9.5h4M17 14.5h4"/></svg></span>
+              <h3>Elektronik Kart ve Donanım Tasarımı</h3>
+              <p>Gereksinimden şematiğe, PCB tasarımından prototipe: kontrol, güç, sensör ve haberleşme kartları.</p>
+              <a class="link-u" href="/elektronik-kart-tasarimi.html">Hizmeti inceleyin <span aria-hidden="true">→</span></a>
+            </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="diger-yazilar-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Blog</p>
+          <h2 id="diger-yazilar-title" data-split-reveal>Diğer Yazılar</h2>
+        </header>
+        <div class="values-grid">
+            <article class="value-card tilt-card blog-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg></span>
+              <p class="blog-meta">PCB üretimi · 4 dk okuma</p>
+              <h3>Prototip PCB Maliyetini Düşürmenin 9 Yolu</h3>
+              <p>Standart üretim değerleri, kart boyutu, yüzey kaplama, parça listesi ve revizyon sayısı: prototip bütçesini küçültmenin pratik yolları.</p>
+              <a class="link-u" href="/blog/prototip-pcb-maliyetini-dusurme.html">Yazıyı okuyun <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card blog-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span>
+              <p class="blog-meta">Tasarım incelemesi · 4 dk okuma</p>
+              <h3>Üretim Öncesi Tasarım İncelemesi: En Sık Yapılan 15 Hata</h3>
+              <p>Şematikten footprint&#x27;e, yerleşimden üretim dosyalarına: kartı üretime göndermeden önce yakalanması gereken 15 yaygın hata.</p>
+              <a class="link-u" href="/blog/pcb-tasarim-incelemesi-sik-yapilan-hatalar.html">Yazıyı okuyun <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card blog-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M9.5 3v4M14.5 3v4M9.5 17v4M14.5 17v4M3 9.5h4M3 14.5h4M17 9.5h4M17 14.5h4"/></svg></span>
+              <p class="blog-meta">Elektronik kart tasarımı · 5 dk okuma</p>
+              <h3>Elektronik Kart Tasarım Süreci: Fikirden Seri Üretime Adım Adım</h3>
+              <p>Gereksinimden şematiğe, PCB&#x27;den prototipe ve seri üretime: bir elektronik kartın geçtiği adımlar ve her adımda dikkat edilecekler.</p>
+              <a class="link-u" href="/blog/elektronik-kart-tasarim-sureci.html">Yazıyı okuyun <span aria-hidden="true">→</span></a>
+            </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section cta-band" aria-labelledby="cta-title">
+      <div class="container cta-inner">
+        <h2 id="cta-title" data-cta-split>PCB&#x27;nizi Birlikte Üretelim.</h2>
+        <p class="cta-text">Projenizi kısaca anlatın; kapsam, süre ve tahmini bütçeyle dönelim.</p>
+        <div class="cta-actions">
+          <a class="btn btn-accent" href="/teklif.html?urun=PCB%20%C3%BCretimi" data-burst>Teklif Al</a>
+          <a class="btn btn-ghost" href="/hizmetler.html" data-burst>Tüm hizmetler</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ ORTAK ALT BİLGİ ============ -->
+  <footer class="site-footer">
+    <!-- Footer üstündeki çizgi: sayfa sonuna yaklaşırken soldan sağa dolar -->
+    <div class="footer-line" aria-hidden="true"><span class="footer-line-fill"></span></div>
+    <div class="container footer-inner">
+      <a class="logo logo-sm" href="/index.html"><img src="/assets/logo/modware-logo-light.png" alt="ModWare" width="275" height="30"></a>
+      <p class="footer-meta"><span class="footer-location">İzmit, Kocaeli</span> <span class="footer-copy">© <span data-year>2026</span> ModWare Technology</span></p>
+      <!-- İletişim ikonları: e-posta ve LinkedIn -->
+      <div class="footer-contact">
+        <a class="footer-icon" href="mailto:info@modwaretechnology.com" aria-label="E-posta gönderin: info@modwaretechnology.com" title="info@modwaretechnology.com"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M4 7l8 6 8-6"/></svg></a>
+        <a class="footer-icon" href="https://www.linkedin.com/company/modware-technology1/" target="_blank" rel="noopener" aria-label="ModWare Technology LinkedIn sayfası (yeni sekmede açılır)" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 5a2 2 0 1 1-4-.002 2 2 0 0 1 4 .002zM7 8.48H3V21h4V8.48zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.72-2.91l.04-1.68z"/></svg></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Yukarı çık: sayfa sonuna gelince belirir (main.js) -->
+  <button class="to-top" id="to-top" type="button" aria-label="Sayfanın başına dön">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+
+  <!-- Kütüphaneler (CDN, sabit sürüm). main.js ve animations.js'den önce yüklenmeli.
+       GSAP + ScrollTrigger: animasyon · SplitType: harf bölme · Lenis: yumuşak kaydırma -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/split-type@0.3.4/umd/index.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
+  <script src="/js/main.js?v=28" defer></script>
+  <script src="/js/animations.js?v=28" defer></script>
+</body>
+</html>
