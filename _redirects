@@ -15,4 +15,5 @@
 # Google Search Console doğrulama dosyaları: Cloudflare .html adreslerini 308 ile uzantısız adrese
 # yönlendirir, Search Console ise bu dosyada yönlendirme izlemez. 200 kuralı dosyayı aynı adreste gösterir.
 /google15c7243daf595014.html  /google15c7243daf595014  200
+/google427ddac136d4e756.html  /google427ddac136d4e756  200
 /google9ae5025181fed89f.html  /google9ae5025181fed89f  200

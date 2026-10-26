@@ -51,7 +51,7 @@ Yeni yazı eklemek için mevcut bir yazının dosyasını kopyalayın; başlığ
 - `_redirects`: kaldırılan `guc-elektronigi` sayfası `hizmetler`e, `pcb-tasarimi` sayfası `elektronik-kart-tasarimi`ne yönlenir (301). Eski sitenin Google'da kayıtlı kalan adresleri de yeni karşılıklarına yönlenir: `mwhub` → `urunler`, `iletisim` → `teklif`, `hakkmzda` → `hakkimizda`.
 - `netlify.toml`: eski Netlify yayın ayarı (Cloudflare Pages kullanmaz; Netlify kapatılınca silinebilir)
 - `robots.txt`, `sitemap.xml`: arama motorları için; site haritasında bütün sayfalar var
-- `google9ae5025181fed89f.html` ve `google15c7243daf595014.html`: Google Search Console sahiplik doğrulamaları (ilki kişisel hesap, ikincisi Modware hesabı). **Silmeyin**; dosya kalkarsa o hesabın doğrulaması düşer.
+- `google9ae5025181fed89f.html`, `google15c7243daf595014.html` ve `google427ddac136d4e756.html`: Google Search Console sahiplik doğrulamaları (her biri ayrı bir Google hesabına ait). **Silmeyin**; dosya kalkarsa o hesabın doğrulaması düşer. Cloudflare bu dosyaları yönlendirmesiz göstersin diye `_redirects`'te 200 kuralları vardır (üretici ekler).
 - `assets/og/modware-og.png`: paylaşım önizlemesi görseli (1200 × 630; LinkedIn, WhatsApp, X)
 - Sekme ikonu: `assets/favicon.svg` (tarayıcı sekmesi), `assets/favicon-32.png`, `assets/favicon-192.png` ve kök dizinde `favicon.ico` (16/32/48 px). Google arama sonuçları SVG kullanmadığı için PNG ve ICO da var; dosya adlarını değiştirmeyin (Google ikonu bu adreslerden tanır).
 - `assets/logo/modware-icon-512.png`: arama motorlarına bildirilen firma logosu (ana sayfadaki yapılandırılmış veri)
