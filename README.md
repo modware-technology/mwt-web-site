@@ -12,7 +12,7 @@ modwaretechnology.com sitesinin kaynak dosyaları. Saf HTML + CSS + JavaScript; 
 | `teklif.html` | Teklif formu (Netlify Forms) |
 | `404.html` | Bulunamayan sayfa |
 
-**Hizmet sayfaları** (arama motorlarından gelen ziyaretçi için; ana menüde yok, `sitemap.xml` ile bulunur). Mevcut sayfaların bileşenlerini (sayfa başlığı, kart ızgarası, süreç adımları, kapanış bandı) kullanır. Her sayfanın "Teklif Al" düğmesi formu ilgili hizmet seçili açar (`teklif.html?urun=…`; değer formdaki bir seçenekle birebir aynı olmalı).
+**Hizmet sayfaları** (ana menüdeki "Hizmetler" bağlantısı `hizmetler.html`'e gider; hepsi `sitemap.xml`'de de var). Mevcut sayfaların bileşenlerini (sayfa başlığı, kart ızgarası, süreç adımları, kapanış bandı) kullanır; `<body data-page="hizmetler">` menüde "Hizmetler"i seçili gösterir. Her sayfanın "Teklif Al" düğmesi formu ilgili hizmet seçili açar (`teklif.html?urun=…`; değer formdaki bir seçenekle birebir aynı olmalı).
 
 | Dosya | Konu |
 |---|---|
