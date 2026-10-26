@@ -7,7 +7,7 @@ modwaretechnology.com sitesinin kaynak dosyaları. Saf HTML + CSS + JavaScript; 
 | Dosya | Sayfa |
 |---|---|
 | `index.html` | Ana sayfa: hero slaytı, "Nasıl çalışıyoruz" aşamaları, değerler |
-| `urunler.html` | Ürün galerisi, kategori filtresi, ürün detay penceresi, MW-PWR01 entegrasyon şeması, kaydırmayla açılan MW-PWR-BK |
+| `urunler.html` | Ürün galerisi, kategori filtresi, ürün detay penceresi, MW-PWR01 entegrasyon şeması, kaydırmayla açılan MODWARE PURE 5 |
 | `hakkimizda.html` | Hakkımızda: fotoğraflı hero, cam kartlar, kaydırmayla açılan cümle |
 | `teklif.html` | Teklif formu (Netlify Forms) |
 | `404.html` | Bulunamayan sayfa |
