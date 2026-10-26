@@ -1187,8 +1187,8 @@
 
   /* =======================================================
      9. Özel imleç
-     Nokta imleci hemen, halka gecikmeli takip eder (quickTo).
-     Bağlantı/buton üzerinde halka büyür (içinde yazı yok).
+     Via (uç) hemen, köşeli çerçeve gecikmeli takip eder (quickTo);
+     arkada kısa bakır iz söner. Bağlantı/buton üzerinde çerçeve elemanı sarar.
      Dokunmatik cihazlarda ve "hareketi azalt" tercihinde çalışmaz.
      ======================================================= */
   function initCursor() {
@@ -1196,40 +1196,106 @@
     const cursor = document.querySelector('.cursor');
     if (!cursor) return;
     const dot = cursor.querySelector('.cursor-dot');
-    const ring = cursor.querySelector('.cursor-ring');
+    const frame = cursor.querySelector('.cursor-frame');
+    const trail = cursor.querySelector('.cursor-trail');
 
     document.documentElement.classList.add('has-cursor');
-    gsap.set([dot, ring], { xPercent: -50, yPercent: -50 });
+    gsap.set(dot, { xPercent: -50, yPercent: -50 });
 
-    const dotX = gsap.quickTo(dot, 'x', { duration: 0.12, ease: 'power3.out' });
-    const dotY = gsap.quickTo(dot, 'y', { duration: 0.12, ease: 'power3.out' });
-    const ringX = gsap.quickTo(ring, 'x', { duration: 0.5, ease: 'power3.out' });
-    const ringY = gsap.quickTo(ring, 'y', { duration: 0.5, ease: 'power3.out' });
+    const SIZE = 30; // boştayken çerçeve boyu
+    const PAD = 6;   // eleman sarılırken çerçeve payı
+    const dotX = gsap.quickTo(dot, 'x', { duration: 0.08, ease: 'power3.out' });
+    const dotY = gsap.quickTo(dot, 'y', { duration: 0.08, ease: 'power3.out' });
+    const fX = gsap.quickTo(frame, 'x', { duration: 0.35, ease: 'power3.out' });
+    const fY = gsap.quickTo(frame, 'y', { duration: 0.35, ease: 'power3.out' });
+    const fW = gsap.quickTo(frame, 'width', { duration: 0.35, ease: 'power3.out' });
+    const fH = gsap.quickTo(frame, 'height', { duration: 0.35, ease: 'power3.out' });
+
+    const interactive = 'a, button, [role="button"], label[for], .slide-dot';
+    let target = null;
+    let mx = 0;
+    let my = 0;
+
+    // Çerçeve: elemanın üstündeyse onu sarar, değilse imlecin etrafında durur
+    function placeFrame() {
+      if (target && target.isConnected) {
+        const r = target.getBoundingClientRect();
+        fX(r.left - PAD); fY(r.top - PAD);
+        fW(r.width + PAD * 2); fH(r.height + PAD * 2);
+      } else {
+        fX(mx - SIZE / 2); fY(my - SIZE / 2);
+        fW(SIZE); fH(SIZE);
+      }
+    }
+
+    /* ----- Bakır iz: son ~0,35 s'lik yol, yaşlandıkça söner ----- */
+    const tctx = trail.getContext('2d');
+    const points = [];
+    const LIFE = 350;
+    let running = false;
+    function sizeTrail() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      trail.width = Math.round(window.innerWidth * dpr);
+      trail.height = Math.round(window.innerHeight * dpr);
+      tctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    function drawTrail() {
+      const now = performance.now();
+      while (points.length && now - points[0].t > LIFE) points.shift();
+      tctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      tctx.lineCap = 'round';
+      tctx.lineJoin = 'round';
+      for (let i = 1; i < points.length; i++) {
+        const k = 1 - (now - points[i].t) / LIFE;
+        tctx.strokeStyle = `rgba(155, 143, 224, ${(k * 0.55).toFixed(3)})`;
+        tctx.lineWidth = 0.6 + k * 1.4;
+        tctx.beginPath();
+        tctx.moveTo(points[i - 1].x, points[i - 1].y);
+        tctx.lineTo(points[i].x, points[i].y);
+        tctx.stroke();
+      }
+      if (!points.length) { gsap.ticker.remove(drawTrail); running = false; }
+    }
+    sizeTrail();
+    window.addEventListener('resize', sizeTrail);
 
     let shown = false;
     window.addEventListener('mousemove', (e) => {
-      dotX(e.clientX); dotY(e.clientY);
-      ringX(e.clientX); ringY(e.clientY);
+      mx = e.clientX; my = e.clientY;
+      dotX(mx); dotY(my);
+      placeFrame();
+      points.push({ x: mx, y: my, t: performance.now() });
+      if (!running) { running = true; gsap.ticker.add(drawTrail); }
       if (!shown) {
         shown = true;
-        gsap.set([dot, ring], { x: e.clientX, y: e.clientY });
-        gsap.to([dot, ring], { opacity: 1, duration: 0.3 });
+        gsap.set(dot, { x: mx, y: my });
+        gsap.set(frame, { x: mx - SIZE / 2, y: my - SIZE / 2 });
+        gsap.to([dot, frame], { opacity: 1, duration: 0.3 });
       }
     });
+    // Kaydırınca sarılan eleman yer değiştirir; çerçeve onu izlesin
+    window.addEventListener('scroll', () => { if (target) placeFrame(); }, { passive: true });
 
     // Pencereden çıkınca gizle, girince göster
-    document.documentElement.addEventListener('mouseleave', () => gsap.to([dot, ring], { opacity: 0, duration: 0.2 }));
-    document.documentElement.addEventListener('mouseenter', () => { if (shown) gsap.to([dot, ring], { opacity: 1, duration: 0.2 }); });
+    document.documentElement.addEventListener('mouseleave', () => gsap.to([dot, frame], { opacity: 0, duration: 0.2 }));
+    document.documentElement.addEventListener('mouseenter', () => { if (shown) gsap.to([dot, frame], { opacity: 1, duration: 0.2 }); });
 
-    // Bağlantı ve butonlar üzerinde büyü
-    const interactive = 'a, button, [role="button"], label[for], .slide-dot';
     document.addEventListener('mouseover', (e) => {
-      if (e.target.closest(interactive)) cursor.classList.add('is-hover');
+      const el = e.target.closest(interactive);
+      if (el && el !== target) {
+        target = el;
+        cursor.classList.add('is-hover');
+        placeFrame();
+      }
     });
     document.addEventListener('mouseout', (e) => {
       const from = e.target.closest(interactive);
       const to = e.relatedTarget && e.relatedTarget.closest ? e.relatedTarget.closest(interactive) : null;
-      if (from && from !== to) cursor.classList.remove('is-hover');
+      if (from && from !== to) {
+        target = to;
+        cursor.classList.toggle('is-hover', Boolean(to));
+        placeFrame();
+      }
     });
     window.addEventListener('mousedown', () => cursor.classList.add('is-down'));
     window.addEventListener('mouseup', () => cursor.classList.remove('is-down'));
