@@ -49,7 +49,6 @@ Yeni yazı eklemek için mevcut bir yazının dosyasını kopyalayın; başlığ
 - `assets/sequence/pwr-bk/` (114 kare) ve `pwr-bk-sm/` (57 kare, mobil): Ürünler sayfasındaki kart patlatma kareleri
 - `_headers`: önbellek ve güvenlik başlıkları; `README.md` arama motorlarına kapalı (`X-Robots-Tag: noindex`)
 - `_redirects`: kaldırılan `guc-elektronigi` sayfası `hizmetler`e, `pcb-tasarimi` sayfası `elektronik-kart-tasarimi`ne yönlenir (301). Eski sitenin Google'da kayıtlı kalan adresleri de yeni karşılıklarına yönlenir: `mwhub` → `urunler`, `iletisim` → `teklif`, `hakkmzda` → `hakkimizda`.
-- `netlify.toml`: eski Netlify yayın ayarı (Cloudflare Pages kullanmaz; Netlify kapatılınca silinebilir)
 - `robots.txt`, `sitemap.xml`: arama motorları için; site haritasında bütün sayfalar var
 - `google15c7243daf595014.html` ve `google427ddac136d4e756.html`: Google Search Console sahiplik doğrulamaları (her biri ayrı bir Google hesabına ait). **Silmeyin**; dosya kalkarsa o hesabın doğrulaması düşer. Cloudflare bu dosyaları yönlendirmesiz göstersin diye `_redirects`'te 200 kuralları vardır (üretici ekler). Bir hesabı sahiplikten çıkarmak için önce Search Console'da (Ayarlar → Kullanıcılar ve izinler → Erişimi kaldır) erişimi kaldırılır, sonra o hesabın dosyası silinir ve üretici yeniden çalıştırılır; dosya kalırsa hesap kendini yeniden doğrulayabilir. (26.10.2026: ilk hesabın `google9ae5025181fed89f.html` dosyası bu şekilde kaldırıldı.)
 - `assets/og/modware-og.png`: paylaşım önizlemesi görseli (1200 × 630; LinkedIn, WhatsApp, X)

@@ -1,4 +1,4 @@
-# Başlık ayarları (Cloudflare Pages ve Netlify aynı biçimi okur).
+# Başlık ayarları (Cloudflare Pages).
 # Aynı adrese uyan iki kural aynı başlığı iki kez gönderir; önbellek kuralları bu yüzden çakışmayacak biçimde klasörlere ayrıldı.
 
 # Kart patlatma kareleri ?v= ile çağrılır: bir yıl önbellekte kalabilir

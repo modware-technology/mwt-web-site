@@ -1,4 +1,0 @@
-# Netlify ayarları: derleme adımı yok, site doğrudan depo kökünden yayınlanır.
-[build]
-  publish = "."
-  command = ""
