@@ -629,7 +629,7 @@ def md(metin):
 
 def mutlak(s):
     """/blog/ altındaki sayfalarda göreli bağlantıları kökten başlayan yollara çevirir
-    (Netlify yayında .html bağlantılarını sayfanın klasörüne göre çözer)."""
+    (tarayıcı göreli bağlantıyı sayfanın klasörüne göre çözer)."""
     return re.sub(r'\b(href|src)="(?!https?:|mailto:|tel:|data:|#|/)([^"]+)"', r'\1="/\2"', s)
 
 

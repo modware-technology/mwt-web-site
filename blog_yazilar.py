@@ -9,7 +9,7 @@ Gövde biçimi (küçük bir Markdown alt kümesi):
   | a | b |        → tablo (ilk satır başlık, ikinci satır |---|)
   ```c … ```       → kod bloğu
   **kalın**, `kod`, [metin](/adres.html)
-Site içi bağlantılar kökten başlar ve .html ile biter (Netlify yayında uzantısız adrese çevirir).
+Site içi bağlantılar kökten başlar ve .html ile biter (üretici uzantısız adrese çevirir: /hizmetler.html → /hizmetler).
 
 Yeni yazı: listeye ekleyin ve `python seo_uret.py <site>` çalıştırın; sayfa, blog listesi ve site haritası güncellenir.
 """
