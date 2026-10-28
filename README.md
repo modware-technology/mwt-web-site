@@ -4,9 +4,9 @@ Bu dal (`site-araclari`) yalnızca sitenin bazı sayfalarını üreten yardımc�
 
 | Dosya | Ne yapar? |
 |---|---|
-| `seo_uret.py` | Hizmet sayfalarını (`hizmetler.html`, `elektronik-kart-tasarimi.html` …), blog sayfalarını (`blog/`), sekme başlıklarını, açıklamaları, paylaşım önizlemelerini, yapılandırılmış veriyi, menüdeki Blog bağlantısını, `robots.txt`, `sitemap.xml` ve `_redirects` dosyalarını üretir. Hizmet metinleri dosyanın içindeki `HIZMETLER` ve `SAYFALAR` bölümlerindedir. |
-| `blog_yazilar.py` | Blog yazılarının metinleri. Yeni yazı için listeye ekleyip `seo_uret.py`'yi çalıştırın; yazı sayfası, blog listesi ve site haritası birlikte güncellenir. |
-| `seo_kontrol.py` | Üretilen sayfaları denetler: kapanmamış etiket, tekrarlanan kimlik, tek `h1`, yapılandırılmış veri, kırık iç bağlantı, teklif formu seçenekleri, site haritası. Sonunda `SORUN YOK` yazmalı. |
+| `seo_uret.py` | Hizmet sayfalarını (`hizmetler.html`, `elektronik-kart-tasarimi.html` …), blog sayfalarını (`blog/`), sekme başlıklarını, açıklamaları, paylaşım önizlemelerini, yapılandırılmış veriyi, menüdeki Blog bağlantısını, `robots.txt`, `sitemap.xml`, `llms.txt` ve `_redirects` dosyalarını üretir. Hizmet metinleri dosyanın içindeki `HIZMETLER` ve `SAYFALAR` bölümlerindedir. |
+| `blog_yazilar.py` | Blog yazılarının metinleri. Yeni yazı için listeye ekleyip `seo_uret.py`'yi çalıştırın; yazı sayfası, blog listesi, site haritası ve `llms.txt` birlikte güncellenir. |
+| `seo_kontrol.py` | Üretilen sayfaları denetler: kapanmamış etiket, tekrarlanan kimlik, tek `h1`, yapılandırılmış veri, kırık iç bağlantı, teklif formu seçenekleri, site haritası ve `llms.txt` (bağlantılar çalışıyor mu, site haritasındaki her sayfa listede mi). Sonunda `SORUN YOK` yazmalı. |
 | `lh_ozet.py` | Lighthouse hız ölçümü raporlarını (JSON) kısaca özetler. |
 | `onizleme.py` | Yerel önizleme sunucusu: temiz adresleri (`/hizmetler` → `hizmetler.html`) Cloudflare Pages gibi açar. `python onizleme.py <site-klasörü>` → `http://127.0.0.1:8765/` |
 

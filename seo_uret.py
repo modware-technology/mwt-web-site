@@ -1,7 +1,7 @@
 """modwaretechnology.com — arama motoru görünürlüğü.
 
 Mevcut sayfaların görünüşüne dokunmadan: sekme başlıkları, açıklamalar, canonical, paylaşım önizlemesi,
-yapılandırılmış veri, robots.txt, sitemap.xml. Her hizmet için sitenin aynı bileşenleriyle ayrı bir sayfa.
+yapılandırılmış veri, robots.txt, sitemap.xml, llms.txt. Her hizmet için sitenin aynı bileşenleriyle ayrı bir sayfa.
 Kullanım: python seo_uret.py <site-klasörü>
 """
 import html
@@ -804,3 +804,40 @@ yaz("_redirects", "# Kalıcı (301) yönlendirmeler. README.md arama motorların
                  "# yönlendirir, Search Console ise bu dosyada yönlendirme izlemez. 200 kuralı dosyayı aynı adreste gösterir.\n"
                  + "".join(f"/{f}  /{f[:-5]}  200\n" for f in sorted(os.listdir(SITE)) if re.fullmatch(r"google[0-9a-f]+\.html", f)))
 print("robots.txt, sitemap.xml (", len(yollar), "adres), _redirects")
+
+# ---------------------------------------------------------------- llms.txt (yapay zekâ araçları için site özeti; llmstxt.org)
+# Sayfalar site haritasıyla aynı listelerden gelir: yeni hizmet ya da blog yazısı eklenince kendiliğinden güncellenir.
+def llms_satir(yol, ad, aciklama):
+    return f"- [{ad}]({ALAN}/{yol}): {aciklama}"
+
+
+llms = [
+    "# ModWare Technology",
+    "",
+    "> İzmit, Kocaeli merkezli elektronik Ar-Ge ekibi. Elektronik kart ve donanım tasarımı, PCB tasarımı ve üretimi, "
+    "gömülü yazılım, tasarım incelemesi, prototip ve Ar-Ge hizmetleri verir; STM32 kartları, sensör kartları, "
+    "LoRa haberleşme modülü ve 12–48 V PRISM güç platformu gibi kendi modüler ürünlerini geliştirir.",
+    "",
+    "- Dil: Türkçe",
+    "- Konum: İzmit, Kocaeli, Türkiye; Türkiye geneline hizmet",
+    f"- E-posta: {ORG_JSONLD['@graph'][0]['email']}",
+    f"- LinkedIn: {ORG_JSONLD['@graph'][0]['sameAs'][0]}",
+    "",
+    "## Hizmetler",
+    "",
+    *[llms_satir(h["slug"], baslik_bicimi(h["ad"]), h["ozet"]) for h in HIZMETLER],
+    llms_satir("hizmetler", "Tüm Hizmetler", HUB["desc"]),
+    "",
+    "## Ürünler ve Firma",
+    "",
+    llms_satir("urunler", "Ürünler", MEVCUT["urunler.html"][1]),
+    llms_satir("hakkimizda", "Hakkımızda", MEVCUT["hakkimizda.html"][1]),
+    llms_satir("teklif", "Teklif Al", MEVCUT["teklif.html"][1]),
+    "",
+    "## Blog",
+    "",
+    *[llms_satir(f"blog/{y['slug']}", baslik_bicimi(y["baslik"]), y["ozet"]) for y in YAZILAR],
+    llms_satir("blog/", "Tüm Yazılar", BLOG["desc"]),
+]
+yaz("llms.txt", "\n".join(llms) + "\n")
+print("llms.txt (", sum(s.startswith("- [") for s in llms), "sayfa)")

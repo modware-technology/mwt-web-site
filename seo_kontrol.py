@@ -70,8 +70,22 @@ for fn in sayfalar:
         print(f"{fn:30s} başlık {len(t):3d} · açıklama {len(d):3d} · canonical {p.meta.get('canonical')} · og:image {'var' if p.meta.get('og:image') else 'YOK'} · JSON-LD {len(p.ld)}")
 if len(set(basliklar.values())) != len(basliklar): sorun.append("tekrarlanan başlık")
 sm = open(os.path.join(site, "sitemap.xml"), encoding="utf-8").read()
-for loc in re.findall(r"<loc>https://modwaretechnology\.com/([^<]*)</loc>", sm):
-    f = "index.html" if loc == "" else (loc + "index.html" if loc.endswith("/") else loc + ".html")
-    if not os.path.exists(os.path.join(site, f)): sorun.append(f"sitemap: dosya yok {loc}")
+def dosya(loc):
+    return "index.html" if loc == "" else (loc + "index.html" if loc.endswith("/") else loc + ".html")
+sm_loc = re.findall(r"<loc>https://modwaretechnology\.com/([^<]*)</loc>", sm)
+for loc in sm_loc:
+    if not os.path.exists(os.path.join(site, dosya(loc))): sorun.append(f"sitemap: dosya yok {loc}")
 print("site haritası adres sayısı:", sm.count("<loc>"))
+llms_yol = os.path.join(site, "llms.txt")
+if os.path.exists(llms_yol):
+    lt = open(llms_yol, encoding="utf-8").read()
+    if not lt.startswith("# "): sorun.append("llms.txt: ilk satır '# Başlık' değil")
+    ll = re.findall(r"\]\(https://modwaretechnology\.com/([^)]*)\)", lt)
+    for loc in ll:
+        if not os.path.exists(os.path.join(site, dosya(loc))): sorun.append(f"llms.txt: dosya yok {loc}")
+    eksik = set(sm_loc) - set(ll) - {""}
+    if eksik: sorun.append(f"llms.txt: site haritasındaki sayfalar eksik {sorted(eksik)}")
+    print("llms.txt sayfa sayısı:", len(ll))
+else:
+    sorun.append("llms.txt yok")
 print("\nSORUN YOK" if not sorun else "\n".join(["SORUNLAR:"] + sorun))
