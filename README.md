@@ -37,7 +37,7 @@ modwaretechnology.com sitesinin kaynak dosyaları. Saf HTML + CSS + JavaScript; 
 
 Blog sayfaları alt klasörde olduğu için içlerindeki bütün bağlantılar ve dosya yolları kökten başlar (`/css/style.css`, `/hizmetler`). Göreli yol (`css/style.css`) yayında `/blog/css/…` olarak çözülür ve sayfa bozulur.
 
-Yeni yazı eklemek için mevcut bir yazının dosyasını kopyalayın; başlığı (`<title>`, `h1`), açıklamayı, `canonical` adresini, paylaşım önizlemesini, yapılandırılmış veriyi (BlogPosting ve BreadcrumbList) ve metni değiştirin. Ardından `blog/index.html`'deki listeye bir kart, `sitemap.xml`'e de adresi ekleyin.
+Yeni yazı `site-araclari` dalındaki `blog_yazilar.py`'ye eklenir ve `seo_uret.py` çalıştırılır; yazı sayfası, blog listesi, `sitemap.xml` ve `llms.txt` birlikte güncellenir.
 
 ## Klasörler
 
@@ -50,6 +50,7 @@ Yeni yazı eklemek için mevcut bir yazının dosyasını kopyalayın; başlığ
 - `_headers`: önbellek ve güvenlik başlıkları; `README.md` arama motorlarına kapalı (`X-Robots-Tag: noindex`)
 - `_redirects`: kaldırılan `guc-elektronigi` sayfası `hizmetler`e, `pcb-tasarimi` sayfası `elektronik-kart-tasarimi`ne yönlenir (301). Eski sitenin Google'da kayıtlı kalan adresleri de yeni karşılıklarına yönlenir: `mwhub` → `urunler`, `iletisim` → `teklif`, `hakkmzda` → `hakkimizda`.
 - `robots.txt`, `sitemap.xml`: arama motorları için; site haritasında bütün sayfalar var
+- `llms.txt`: yapay zekâ araçları (ChatGPT, Claude vb.) için sitenin kısa özeti ve sayfa listesi ([llmstxt.org](https://llmstxt.org) biçimi). Üretici yazar, elle düzenlemeyin. Google bu dosyayı kullanmaz; arama sıralamasına etkisi yoktur.
 - `google15c7243daf595014.html` ve `google427ddac136d4e756.html`: Google Search Console sahiplik doğrulamaları (her biri ayrı bir Google hesabına ait). **Silmeyin**; dosya kalkarsa o hesabın doğrulaması düşer. Cloudflare bu dosyaları yönlendirmesiz göstersin diye `_redirects`'te 200 kuralları vardır (üretici ekler). Bir hesabı sahiplikten çıkarmak için önce Search Console'da (Ayarlar → Kullanıcılar ve izinler → Erişimi kaldır) erişimi kaldırılır, sonra o hesabın dosyası silinir ve üretici yeniden çalıştırılır; dosya kalırsa hesap kendini yeniden doğrulayabilir. (26.10.2026: ilk hesabın `google9ae5025181fed89f.html` dosyası bu şekilde kaldırıldı.)
 - `assets/og/modware-og.png`: paylaşım önizlemesi görseli (1200 × 630; LinkedIn, WhatsApp, X)
 - Sekme ikonu: `assets/favicon.svg` (tarayıcı sekmesi), `assets/favicon-32.png`, `assets/favicon-192.png` ve kök dizinde `favicon.ico` (16/32/48 px). Google arama sonuçları SVG kullanmadığı için PNG ve ICO da var; dosya adlarını değiştirmeyin (Google ikonu bu adreslerden tanır).
@@ -71,6 +72,7 @@ Yerel önizleme için `site-araclari` dalındaki `onizleme.py` temiz adresleri (
 ## Güncelleme notları
 
 - CSS/JS değiştirdiğinizde HTML'deki `?v=…` sürüm numarasını artırın (tüm sayfalarda), yoksa ziyaretçiler eski dosyayı önbellekten görebilir.
+- Mobil menü ve ürün penceresi açıkken sayfa kaydırması `html` öğesinden kilitlenir (`html.nav-open`, `html.modal-open`). `body`'ye `overflow: hidden` vermeyin: Lenis de `html`'i kilitlediği için `body` kendi kaydırma kutusu olur, yapışkan üst menü sayfayla birlikte kayar ve aşağıdayken açılan menüde logo ile kapat butonu görünmez.
 - Ürün metinleri `urunler.html` içindeki kartlarda ve sayfanın altındaki `product-data` JSON bloğunda bulunur; ikisini birlikte güncelleyin.
 - Kartlar kategori gruplarında durur (`<section class="product-group" data-group="…">`: gelistirme, sensor, haberlesme, guc). Yeni kartı doğru grubun içine koyun; kartın `data-category` değeri grubuyla aynı olsun. Filtre grupları gösterip gizler.
 - Değiştirilecek metinler HTML'de `<!-- METİN -->` yorumlarıyla işaretlidir (özellikle Hakkımızda sayfası).
@@ -80,6 +82,6 @@ Yerel önizleme için `site-araclari` dalındaki `onizleme.py` temiz adresleri (
 ## Arama motoru notları
 
 - Her sayfanın `<head>` bölümünde: anahtar kelimeli `<title>` (≈ 70 karakterden kısa), `description` (≈ 160 karakter), `canonical` (uzantısız adres, ör. `https://modwaretechnology.com/urunler`) ve paylaşım önizlemesi (`og:*`). Ana sayfada firma ve web sitesi, hizmet sayfalarında hizmet, blog yazılarında yazı ve sayfa yolu için yapılandırılmış veri (`application/ld+json`, schema.org) var.
-- Yeni sayfa eklerken: başlık ve açıklamayı benzersiz yazın, `canonical` ekleyin ve `sitemap.xml`'e adresini ekleyin.
+- Yeni sayfa eklerken: başlık ve açıklamayı benzersiz yazın, `canonical` ekleyin; adresini `site-araclari` dalındaki `seo_uret.py`'de site haritası ve `llms.txt` listelerine ekleyin (iki dosyayı da üretici yazar).
 - Google Search Console ve Bing Webmaster Tools'a site haritası olarak `https://modwaretechnology.com/sitemap.xml` gönderilir.
 - Görünmeyen metne anahtar kelime doldurmayın (Google bunu cezalandırır); bir konuda görünmek için o konuyu anlatan görünür bir sayfa gerekir.

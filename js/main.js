@@ -38,7 +38,7 @@
     if (open === wasOpen) return;
 
     nav.classList.toggle('is-open', open);
-    document.body.classList.toggle('nav-open', open);
+    document.documentElement.classList.toggle('nav-open', open);
     toggle.setAttribute('aria-expanded', String(open));
     toggle.setAttribute('aria-label', open ? 'Menüyü kapat' : 'Menüyü aç');
 
@@ -130,15 +130,18 @@
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update);
 
-    toTop.addEventListener('click', () => {
+    toTop.addEventListener('click', (e) => {
       if (window.lenis) {
         window.lenis.scrollTo(0, { duration: 1.6 });
       } else {
         window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
       }
-      // Odağı sayfanın başına taşı (klavye kullanıcıları için)
-      const skip = document.querySelector('.skip-link');
-      if (skip) skip.focus({ preventScroll: true });
+      // Klavyeyle basıldıysa (detail 0) odak sayfanın başındaki logoya geçer;
+      // dokunma ve fare tıklamasında odak değişmez, ekranda çerçeve belirmez.
+      if (e.detail === 0) {
+        const logo = document.querySelector('.site-header .logo');
+        if (logo) logo.focus({ preventScroll: true });
+      }
     });
   }
 

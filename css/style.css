@@ -65,8 +65,10 @@ body {
 /* hidden özniteliği her zaman kazansın (bileşenlerin display değerlerine rağmen) */
 [hidden] { display: none !important; }
 
-/* Mobil menü açıkken arka plan kaymasın */
-body.nav-open { overflow: hidden; }
+/* Mobil menü açıkken arka plan kaymasın. Kilit body'ye değil html'e konur: Lenis de html'i
+   kilitler; ikisi birden kilitliyken body kendi kaydırma kutusu olur ve yapışkan üst menü
+   sayfayla birlikte kayar (aşağıdayken açılan menüde logo ve kapat butonu görünmez). */
+html.nav-open { overflow: hidden; }
 
 h1, h2, h3, h4 {
   font-family: var(--font-heading);
@@ -84,20 +86,6 @@ img { max-width: 100%; height: auto; display: block; }
   outline: 2px solid var(--color-primary);
   outline-offset: 3px;
 }
-
-/* Klavye kullanıcıları için "içeriğe geç" bağlantısı */
-.skip-link {
-  position: absolute;
-  left: 16px;
-  top: -100px;
-  z-index: 200;
-  padding: 10px 16px;
-  background: var(--color-primary);
-  color: var(--color-bg);
-  border-radius: 6px;
-  font-weight: 600;
-}
-.skip-link:focus { top: 12px; }
 
 /* ---------- 3. Yardımcılar ---------- */
 .container {
@@ -202,7 +190,7 @@ img { max-width: 100%; height: auto; display: block; }
 /* Sayfa kaydırılınca main.js .is-scrolled ekler: zemin koyulaşır, alt çizgi belirir */
 .site-header.is-scrolled { border-bottom-color: var(--color-border); }
 .site-header.is-scrolled::before,
-body.nav-open .site-header::before { background: rgba(10, 15, 28, 0.9); }
+html.nav-open .site-header::before { background: rgba(10, 15, 28, 0.9); }
 
 /* Telefonun üst çentik alanını menüyle aynı renge boya */
 body::before {
@@ -1144,6 +1132,8 @@ html:not(.has-st) .footer-line-fill { transform: none; }
   transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1.4), visibility 0.35s, border-color 0.2s ease;
 }
 .to-top.is-visible { opacity: 1; visibility: visible; transform: scale(1); }
+/* Mobil menü açıkken menünün üstünde durmasın */
+html.nav-open .to-top { opacity: 0; visibility: hidden; }
 .to-top:hover { border-color: var(--color-primary); }
 .to-top svg {
   width: 20px;

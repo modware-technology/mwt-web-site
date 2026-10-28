@@ -1,0 +1,33 @@
+# ModWare Technology
+
+> İzmit, Kocaeli merkezli elektronik Ar-Ge ekibi. Elektronik kart ve donanım tasarımı, PCB tasarımı ve üretimi, gömülü yazılım, tasarım incelemesi, prototip ve Ar-Ge hizmetleri verir; STM32 kartları, sensör kartları, LoRa haberleşme modülü ve 12–48 V PRISM güç platformu gibi kendi modüler ürünlerini geliştirir.
+
+- Dil: Türkçe
+- Konum: İzmit, Kocaeli, Türkiye; Türkiye geneline hizmet
+- E-posta: info@modwaretechnology.com
+- LinkedIn: https://www.linkedin.com/company/modware-technology1/
+
+## Hizmetler
+
+- [Elektronik Kart ve Donanım Tasarımı](https://modwaretechnology.com/elektronik-kart-tasarimi): Gereksinimden şematiğe, PCB tasarımından prototipe: kontrol, güç, sensör ve haberleşme kartları.
+- [PCB Üretimi](https://modwaretechnology.com/pcb-uretimi): Dosya kontrolünden teslimata; prototip ve küçük seri baskı devre kart üretimi.
+- [Gömülü Yazılım Geliştirme](https://modwaretechnology.com/gomulu-yazilim): Donanımınıza özel, sahada güvenilir çalışan gömülü yazılım: sıfırdan geliştirme ya da mevcut yazılımın iyileştirilmesi.
+- [Tasarım İncelemesi](https://modwaretechnology.com/tasarim-incelemesi): Şematik ve PCB'nizi üretime göndermeden önce inceler, hataları ve riskleri raporlarız.
+- [Prototip ve Ar-Ge](https://modwaretechnology.com/prototip-ar-ge): Fikirden çalışan prototipe, prototipten üretime; test planı ve dokümantasyon.
+- [Tüm Hizmetler](https://modwaretechnology.com/hizmetler): Elektronik kart ve donanım tasarımı, PCB tasarımı ve üretimi, gömülü yazılım, tasarım incelemesi, prototip ve Ar-Ge. İzmit, Kocaeli'den Türkiye geneline.
+
+## Ürünler ve Firma
+
+- [Ürünler](https://modwaretechnology.com/urunler): STM32 geliştirme ve kontrol kartları, akım ve basınç sensörü kartları, LoRa haberleşme modülü ve 12–48 V PRISM modüler güç platformu. ModWare Technology, Kocaeli.
+- [Hakkımızda](https://modwaretechnology.com/hakkimizda): Bir TEKNOFEST takımından doğan, İzmit, Kocaeli merkezli mühendislik ekibi: donanım ve PCB tasarımı, gömülü yazılım, proje yönetimi ve makine mühendisliği.
+- [Teklif Al](https://modwaretechnology.com/teklif): Elektronik kart ve donanım tasarımı, PCB tasarımı ve üretimi, gömülü yazılım ya da ürünlerimiz için teklif alın. Kapsam, süre ve tahmini bütçeyle dönüyoruz.
+
+## Blog
+
+- [Elektronik Kart Tasarım Süreci: Fikirden Seri Üretime Adım Adım](https://modwaretechnology.com/blog/elektronik-kart-tasarim-sureci): Gereksinimden şematiğe, PCB'den prototipe ve seri üretime: bir elektronik kartın geçtiği adımlar ve her adımda dikkat edilecekler.
+- [PCB Üretimi İçin Hangi Dosyalar Gerekir? Gerber, Delik, BOM ve Dizgi Dosyaları](https://modwaretechnology.com/blog/pcb-uretimi-icin-gerekli-dosyalar): Gerber katmanları, delik dosyası, BOM ve dizgi dosyası: PCB'yi üretime göndermeden önce hazırlanması gerekenler ve sık yapılan hatalar.
+- [PCB Tasarımında EMC: Gürültüyü Baştan Önlemenin 10 Kuralı](https://modwaretechnology.com/blog/pcb-tasariminda-emc-kurallari): Toprak düzlemi, akım döngüleri, dekuplaj, anahtarlamalı güç katı ve konnektör filtrelemesi: EMC sorunlarını baştan önleyen 10 kural.
+- [STM32 ile Modbus RTU (RS-485): Donanımda ve Yazılımda Dikkat Edilecekler](https://modwaretechnology.com/blog/stm32-modbus-rtu-rs485): RS-485 sürücü seçimi, sonlandırma, yön kontrolü, çerçeve zamanlaması ve CRC: STM32 ile sahada sorunsuz çalışan Modbus RTU için kontrol listesi.
+- [Üretim Öncesi Tasarım İncelemesi: En Sık Yapılan 15 Hata](https://modwaretechnology.com/blog/pcb-tasarim-incelemesi-sik-yapilan-hatalar): Şematikten footprint'e, yerleşimden üretim dosyalarına: kartı üretime göndermeden önce yakalanması gereken 15 yaygın hata.
+- [Prototip PCB Maliyetini Düşürmenin 9 Yolu](https://modwaretechnology.com/blog/prototip-pcb-maliyetini-dusurme): Standart üretim değerleri, kart boyutu, yüzey kaplama, parça listesi ve revizyon sayısı: prototip bütçesini küçültmenin pratik yolları.
+- [Tüm Yazılar](https://modwaretechnology.com/blog/): Elektronik kart tasarımı, PCB üretimi, EMC ve gömülü yazılım üzerine pratik teknik yazılar: süreçler, üretim dosyaları, sık yapılan hatalar ve maliyet ipuçları.

@@ -1082,7 +1082,6 @@
       e.preventDefault();
       const header = document.getElementById('site-header');
       lenis.scrollTo(target, { offset: -(header ? header.offsetHeight : 0) - 16 });
-      if (target.matches('#main')) target.focus({ preventScroll: true });
     });
 
     window.lenis = lenis; // main.js mobil menü açılınca kaydırmayı durdurmak için kullanır
