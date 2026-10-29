@@ -798,8 +798,8 @@ yaz("_redirects", "# Kalıcı (301) yönlendirmeler. README.md arama motorların
                  "# (Cloudflare Pages yönlendirmede 404 durumunu desteklemez).\n\n"
                  "# Kaldırılan hizmet sayfası (26.10.2026)\n/guc-elektronigi       /hizmetler  301\n/guc-elektronigi.html  /hizmetler  301\n"
                  "/pcb-tasarimi          /elektronik-kart-tasarimi  301\n/pcb-tasarimi.html     /elektronik-kart-tasarimi  301\n\n"
-                 "# Eski sitenin Google'da kayıtlı kalan adresleri (26.10.2026)\n"
-                 "/mwhub     /urunler     301\n/iletisim  /teklif      301\n/hakkmzda  /hakkimizda  301\n"
+                 "# Eski sitenin Google ve Bing'de kayıtlı kalan adresleri (26.10.2026; mwspark 29.10.2026)\n"
+                 "/mwhub     /urunler     301\n/mwspark   /urunler     301\n/iletisim  /teklif      301\n/hakkmzda  /hakkimizda  301\n"
                  "\n# Google Search Console doğrulama dosyaları: Cloudflare .html adreslerini 308 ile uzantısız adrese\n"
                  "# yönlendirir, Search Console ise bu dosyada yönlendirme izlemez. 200 kuralı dosyayı aynı adreste gösterir.\n"
                  + "".join(f"/{f}  /{f[:-5]}  200\n" for f in sorted(os.listdir(SITE)) if re.fullmatch(r"google[0-9a-f]+\.html", f)))
