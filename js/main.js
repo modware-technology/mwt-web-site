@@ -19,6 +19,9 @@
   const nav = document.getElementById('site-nav');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const gsap = window.gsap;
+  // Sayfa dili: /en/ altındaki sayfalar <html lang="en"> taşır; kullanıcıya görünen metinler buna göre seçilir
+  const EN = document.documentElement.lang === 'en';
+  const T = (tr, en) => (EN ? en : tr);
 
   /* ---------- Aktif sayfa ----------
      <body data-page="urunler"> ile eşleşen menü bağlantısına
@@ -31,7 +34,7 @@
   });
 
   /* ---------- Mobil menü ---------- */
-  const navItems = nav ? nav.querySelectorAll('.nav-list li, .nav-cta') : [];
+  const navItems = nav ? nav.querySelectorAll('.nav-list li, .nav-cta, .lang-switch') : [];
 
   function setMenu(open) {
     const wasOpen = nav.classList.contains('is-open');
@@ -40,7 +43,7 @@
     nav.classList.toggle('is-open', open);
     document.documentElement.classList.toggle('nav-open', open);
     toggle.setAttribute('aria-expanded', String(open));
-    toggle.setAttribute('aria-label', open ? 'Menüyü kapat' : 'Menüyü aç');
+    toggle.setAttribute('aria-label', open ? T('Menüyü kapat', 'Close menu') : T('Menüyü aç', 'Open menu'));
 
     // Lenis (yumuşak kaydırma, animations.js) varsa menü açıkken sayfayı kaydırmasın
     if (window.lenis) {
@@ -252,12 +255,12 @@
         });
 
         field('pm-note').hidden = !p.platform;
-        field('pm-quote').href = `/teklif?urun=${encodeURIComponent(p.code)}`; // formda ürün seçili gelir
+        field('pm-quote').href = `${T('/teklif', '/en/quote')}?urun=${encodeURIComponent(p.code)}`; // formda ürün seçili gelir
 
-        // Görseller: ikinci görsel varsa küçük resimlerle seçilebilir
+        // Görseller: ikinci görsel varsa küçük resimlerle seçilebilir (kökten yol: /en/ altındaki sayfada da çalışır)
         img.removeAttribute('src');
-        const images = [p.img, p.img2].filter(Boolean).map((f) => `assets/urunler/${f}`);
-        setImage(images[0], `${p.title} kartı`);
+        const images = [p.img, p.img2].filter(Boolean).map((f) => `/assets/urunler/${f}`);
+        setImage(images[0], T(`${p.title} kartı`, `${p.title} board`));
         thumbs.innerHTML = '';
         thumbs.hidden = images.length < 2;
         if (images.length > 1) {
@@ -265,7 +268,7 @@
             const b = document.createElement('button');
             b.type = 'button';
             b.className = 'pm-thumb';
-            b.setAttribute('aria-label', `${n + 1}. görsel`);
+            b.setAttribute('aria-label', T(`${n + 1}. görsel`, `Image ${n + 1}`));
             b.setAttribute('aria-pressed', String(n === 0));
             const t = document.createElement('img');
             t.src = src;
@@ -273,7 +276,7 @@
             b.appendChild(t);
             b.addEventListener('click', () => {
               thumbs.querySelectorAll('.pm-thumb').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
-              setImage(src, `${p.title} kartı, ${n + 1}. görsel`);
+              setImage(src, T(`${p.title} kartı, ${n + 1}. görsel`, `${p.title} board, image ${n + 1}`));
             });
             thumbs.appendChild(b);
           });
@@ -387,7 +390,7 @@
     const topics = Array.from(quote.querySelectorAll('input[name="konu"]'));
     const isQuote = () => {
       const t = topics.find((r) => r.checked);
-      return !t || t.value === 'Teklif / proje';
+      return !t || t.value === 'Teklif / proje' || t.value === 'Quote / project';
     };
     function syncTopic() {
       const need = isQuote();
@@ -398,23 +401,23 @@
 
     // Kurallar: [alan, hata kutusu, kontrol → hata metni ya da '']
     const rules = [
-      [product, 'q-product-error', () => (!isQuote() || product.value ? '' : 'Lütfen bir ürün veya hizmet seçin.')],
+      [product, 'q-product-error', () => (!isQuote() || product.value ? '' : T('Lütfen bir ürün veya hizmet seçin.', 'Please choose a product or service.'))],
       [msg, 'q-msg-error', () => {
         const n = msg.value.trim().length;
-        if (!n) return 'Lütfen projenizi kısaca anlatın.';
-        return n < 20 ? `Biraz daha ayrıntı yazın (en az 20 karakter, şu an ${n}).` : '';
+        if (!n) return T('Lütfen projenizi kısaca anlatın.', 'Please describe your project briefly.');
+        return n < 20 ? T(`Biraz daha ayrıntı yazın (en az 20 karakter, şu an ${n}).`, `Please add a little more detail (at least 20 characters, currently ${n}).`) : '';
       }],
-      [name, 'q-name-error', () => (name.value.trim().length >= 2 ? '' : 'Lütfen adınızı ve soyadınızı yazın.')],
+      [name, 'q-name-error', () => (name.value.trim().length >= 2 ? '' : T('Lütfen adınızı ve soyadınızı yazın.', 'Please enter your full name.'))],
       [email, 'q-email-error', () => {
         const v = email.value.trim();
-        if (!v) return 'Lütfen e-posta adresinizi yazın.';
-        return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? '' : 'E-posta adresi geçerli görünmüyor (ör. ad@firma.com).';
+        if (!v) return T('Lütfen e-posta adresinizi yazın.', 'Please enter your e-mail address.');
+        return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? '' : T('E-posta adresi geçerli görünmüyor (ör. ad@firma.com).', 'This e-mail address does not look valid (e.g. name@company.com).');
       }],
-      [consent, 'q-consent-error', () => (consent.checked ? '' : 'Devam etmek için onay kutusunu işaretleyin.')],
+      [consent, 'q-consent-error', () => (consent.checked ? '' : T('Devam etmek için onay kutusunu işaretleyin.', 'Please tick the consent box to continue.'))],
     ];
     // Opsiyonel ama doldurulduysa geçerli olmalı
     const optional = [
-      [ref, 'q-ref-error', () => (!ref.value.trim() || /^https?:\/\/\S+\.\S+/.test(ref.value.trim()) ? '' : 'Bağlantı https:// ile başlamalı.')],
+      [ref, 'q-ref-error', () => (!ref.value.trim() || /^https?:\/\/\S+\.\S+/.test(ref.value.trim()) ? '' : T('Bağlantı https:// ile başlamalı.', 'The link must start with https://.'))],
     ];
 
     function check([el, errId, test], show) {
@@ -432,7 +435,7 @@
     function updateProgress() {
       const done = rules.filter((r) => check(r, false)).length;
       $('quote-progress-bar').style.transform = `scaleX(${done / rules.length})`;
-      $('quote-progress-text').textContent = `Zorunlu alanlar: ${done} / ${rules.length}`;
+      $('quote-progress-text').textContent = T(`Zorunlu alanlar: ${done} / ${rules.length}`, `Required fields: ${done} / ${rules.length}`);
     }
 
     // Karakter sayacı
@@ -462,13 +465,13 @@
       const firstBad = results.find(([, ok]) => !ok);
       if (firstBad) {
         status.className = 'quote-status is-error';
-        status.textContent = 'Lütfen işaretli alanları kontrol edin.';
+        status.textContent = T('Lütfen işaretli alanları kontrol edin.', 'Please check the highlighted fields.');
         firstBad[0].focus();
         return;
       }
 
       submit.disabled = true;
-      submitLabel.textContent = 'Gönderiliyor…';
+      submitLabel.textContent = T('Gönderiliyor…', 'Sending…');
       status.className = 'quote-status';
       status.textContent = '';
 
@@ -494,9 +497,10 @@
         if (window.ScrollTrigger) window.ScrollTrigger.refresh();
       } catch (err) {
         status.className = 'quote-status is-error';
-        status.textContent = 'Form şu an gönderilemedi. Lütfen info@modwaretechnology.com adresine e-posta gönderin.';
+        status.textContent = T('Form şu an gönderilemedi. Lütfen info@modwaretechnology.com adresine e-posta gönderin.',
+          'The form could not be sent right now. Please e-mail us at info@modwaretechnology.com.');
         submit.disabled = false;
-        submitLabel.textContent = 'Teklif iste';
+        submitLabel.textContent = T('Teklif iste', 'Request a quote');
       }
     });
   }
@@ -507,7 +511,7 @@
     btn.addEventListener('click', () => {
       const text = btn.dataset.copy;
       const done = (ok) => {
-        btn.textContent = ok ? 'Kopyalandı' : 'Seçildi';
+        btn.textContent = ok ? T('Kopyalandı', 'Copied') : T('Seçildi', 'Selected');
         setTimeout(() => { btn.textContent = label; }, 1800);
       };
       if (navigator.clipboard && navigator.clipboard.writeText) {

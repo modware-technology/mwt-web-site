@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Electronics Design Process: Idea to Mass Production | ModWare</title>
+  <meta name="description" content="How is an electronic board designed? Every step from requirements and schematic to PCB layout, prototype testing and mass production, and what to watch for.">
+  <link rel="canonical" href="https://modwaretechnology.com/en/blog/electronics-design-process">
+  <link rel="alternate" hreflang="tr" href="https://modwaretechnology.com/blog/elektronik-kart-tasarim-sureci">
+  <link rel="alternate" hreflang="en" href="https://modwaretechnology.com/en/blog/electronics-design-process">
+  <link rel="alternate" hreflang="x-default" href="https://modwaretechnology.com/blog/elektronik-kart-tasarim-sureci">
+
+  <!-- Paylaşım önizlemesi (LinkedIn, WhatsApp, X) -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="ModWare Technology">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="tr_TR">
+  <meta property="og:title" content="Electronics Design Process: Idea to Mass Production | ModWare">
+  <meta property="og:description" content="How is an electronic board designed? Every step from requirements and schematic to PCB layout, prototype testing and mass production, and what to watch for.">
+  <meta property="og:url" content="https://modwaretechnology.com/en/blog/electronics-design-process">
+  <meta property="og:image" content="https://modwaretechnology.com/assets/og/modware-og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="article:published_time" content="2026-11-04">
+  <meta property="article:section" content="Electronics design">
+
+  <!-- Arama motorları için yapılandırılmış veri (schema.org) -->
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "BlogPosting", "@id": "https://modwaretechnology.com/en/blog/electronics-design-process#yazi", "headline": "The Electronics Design Process: From Idea to Mass Production, Step by Step", "description": "How is an electronic board designed? Every step from requirements and schematic to PCB layout, prototype testing and mass production, and what to watch for.", "datePublished": "2026-11-04", "dateModified": "2026-11-04", "inLanguage": "en-US", "url": "https://modwaretechnology.com/en/blog/electronics-design-process", "mainEntityOfPage": "https://modwaretechnology.com/en/blog/electronics-design-process", "image": "https://modwaretechnology.com/assets/og/modware-og.png", "articleSection": "Electronics design", "wordCount": 1269, "author": {"@type": "Organization", "@id": "https://modwaretechnology.com/#org", "name": "ModWare Technology", "url": "https://modwaretechnology.com/"}, "publisher": {"@type": "Organization", "@id": "https://modwaretechnology.com/#org", "name": "ModWare Technology", "url": "https://modwaretechnology.com/", "logo": {"@type": "ImageObject", "url": "https://modwaretechnology.com/assets/logo/modware-icon-512.png"}}, "isPartOf": {"@type": "Blog", "@id": "https://modwaretechnology.com/en/blog/#blog", "url": "https://modwaretechnology.com/en/blog/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://modwaretechnology.com/en/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://modwaretechnology.com/en/blog/"}, {"@type": "ListItem", "position": 3, "name": "The Electronics Design Process: From Idea to Mass Production, Step by Step"}]}]}</script>
+
+  <!-- Sekme ikonu -->
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/assets/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <meta name="theme-color" content="#0a0f1c">
+
+  <!-- Preloader yalnızca JS çalışıyorsa görünür. GSAP/animations.js
+       5 sn içinde devralmazsa güvenlik zamanlayıcısı onu kaldırır. -->
+  <script>
+    document.documentElement.classList.add('is-loading');
+    window.__preloaderSafety = setTimeout(function () {
+      document.documentElement.classList.remove('is-loading');
+    }, 5000);
+  </script>
+
+  <!-- Fontlar: Space Grotesk (başlıklar) + Inter (metin) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+
+  <link rel="stylesheet" href="/css/style.css?v=31">
+</head>
+<body data-page="blog">
+
+  <!-- ============ PRELOADER ============ -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader-inner">
+      <p class="preloader-word" data-preloader-word>MODWARE</p>
+      <div class="preloader-bar"><span class="preloader-bar-fill"></span></div>
+      <p class="preloader-count"><span data-preloader-count>0</span>%</p>
+    </div>
+  </div>
+
+  <!-- ============ ARKA PLAN KATMANI (sabit, içeriğin arkasında) ============ -->
+  <div class="bg-layer" aria-hidden="true">
+    <div class="bg-glow"></div>
+    <div class="bg-shade"></div>
+    <div class="bg-noise"></div>
+  </div>
+
+  <!-- ============ ÖZEL İMLEÇ (yalnızca fareli cihazlarda) ============ -->
+  <div class="cursor" aria-hidden="true">
+    <div class="cursor-frame"><i></i><i></i><i></i><i></i></div>
+    <div class="cursor-dot"></div>
+  </div>
+
+  <!-- ============ KAYDIRMA İLERLEME ÇUBUĞU ============ -->
+  <div class="scroll-progress" aria-hidden="true"><span class="scroll-progress-bar"></span></div>
+
+  <!-- ============ ORTAK ÜST MENÜ ============
+       Bu blok her sayfada aynıdır. Aktif sayfa,
+       main.js tarafından <body data-page> değerine göre işaretlenir. -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="/en/" aria-label="ModWare Technology home">
+        <img src="/assets/logo/modware-logo-light.png" alt="ModWare" width="275" height="30">
+      </a>
+
+      <!-- Mobilde menüyü açıp kapatan buton -->
+      <button class="nav-toggle" id="nav-toggle" type="button"
+              aria-controls="site-nav" aria-expanded="false" aria-label="Open menu">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="Main menu">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="/en/" data-nav="home">Home</a></li>
+          <li><a class="nav-link" href="/en/services" data-nav="hizmetler">Services</a></li>
+          <li><a class="nav-link" href="/en/products" data-nav="urunler">Products</a></li>
+          <li><a class="nav-link" href="/en/about" data-nav="hakkimizda">About</a></li>
+          <li><a class="nav-link" href="/en/blog/" data-nav="blog">Blog</a></li>
+        </ul>
+        <a class="btn btn-accent nav-cta" href="/en/quote">Get a Quote</a>
+        <a class="lang-switch" href="/blog/elektronik-kart-tasarim-sureci" hreflang="tr" lang="tr" aria-label="Türkçe" title="Türkçe">TR</a>
+      </nav>
+    </div>
+  </header>
+  <!-- ============ /ORTAK ÜST MENÜ ============ -->
+
+  <!-- Blog yazısı: electronics-design-process. Metin site-araclar/blog_en_1.py / blog_en_2.py dosyasından üretilir. -->
+  <main id="main">
+
+    <!-- ============ SAYFA BAŞLIĞI ============ -->
+    <section class="page-head page-head--yazi" aria-labelledby="page-title">
+      <div class="container page-head-inner">
+        <p class="eyebrow" data-anim="hero"><a href="/en/blog/">Blog</a> · Electronics design</p>
+        <h1 id="page-title" data-split-intro>The Electronics Design Process: From Idea to Mass Production, Step by Step</h1>
+        <p class="page-lede" data-anim="hero">Getting an electronic board from an idea on the table to mass production takes a few clear steps. Knowing what each step solves has a direct impact on both the timeline and the cost of the project.</p>
+        <p class="post-meta" data-anim="hero"><time datetime="2026-11-04">November 4, 2026</time> <span aria-hidden="true">·</span> <span>7 min read</span> <span aria-hidden="true">·</span> <span>ModWare Technology engineering team</span></p>
+      </div>
+    </section>
+
+    <section class="section article-section">
+      <div class="container">
+        <article class="prose">
+<nav class="toc" aria-label="Contents">
+<p class="toc-title">Contents</p>
+<ol>
+  <li><a href="#1-put-the-requirements-in-writing">1. Put the Requirements in Writing</a></li>
+  <li><a href="#2-architecture-and-component-selection">2. Architecture and Component Selection</a></li>
+  <li><a href="#3-schematic-design-and-calculations">3. Schematic Design and Calculations</a></li>
+  <li><a href="#4-pcb-placement-and-routing">4. PCB Placement and Routing</a></li>
+  <li><a href="#5-manufacturing-files-and-prototype">5. Manufacturing Files and Prototype</a></li>
+  <li><a href="#6-testing-and-verification">6. Testing and Verification</a></li>
+  <li><a href="#7-moving-to-mass-production">7. Moving to Mass Production</a></li>
+  <li><a href="#what-determines-the-timeline-and-cost">What Determines the Timeline and Cost?</a></li>
+  <li><a href="#conclusion">Conclusion</a></li>
+</ol>
+</nav>
+<p>Electronic board design is often summed up as &quot;draw the schematic, draw the PCB, get it made.&quot; In practice, whether the board runs reliably in the field depends on decisions made before the schematic is even started. Below, we describe the steps a board goes through from idea to mass production, along with the points that are often overlooked at each step.</p>
+<aside class="callout"><p><strong>In short:</strong> Requirements → architecture and component selection → schematic and calculations → PCB layout → manufacturing files and prototype → testing and verification → transition to mass production. Putting a checkpoint at the end of each step lets you catch errors while they are still cheapest to fix.</p></aside>
+<h2 id="1-put-the-requirements-in-writing">1. Put the Requirements in Writing</h2>
+<p>This is the cheapest and most effective step in the design. It must be clear not only what the board will do, but also where and under what conditions it will operate. A short requirements document should answer at least the following questions:</p>
+<ul>
+  <li><strong>Function:</strong> What will the board measure, what will it drive, and what decisions will it make?</li>
+  <li><strong>Power supply:</strong> What is the input voltage, and how much can it fluctuate; is it a battery or an adapter? In 12, 24 or 48 V systems, sudden voltage spikes must also be taken into account.</li>
+  <li><strong>Interfaces:</strong> RS-485, CAN, USB, Ethernet or wireless communication; sensor and actuator connections.</li>
+  <li><strong>Environment:</strong> Operating temperature, humidity, dust and vibration. An industrial control panel and an office environment do not call for the same design.</li>
+  <li><strong>Mechanical:</strong> Board dimensions, enclosure, connector positions and mounting holes.</li>
+  <li><strong>Quantity and target cost:</strong> 10 units and 10,000 units call for different component and manufacturing decisions.</li>
+  <li><strong>Regulations:</strong> EMC and safety requirements for CE marking; the rules of the market where the product will be sold.</li>
+</ul>
+<p>This document also prevents the &quot;let&#x27;s add this feature too&quot; kind of scope creep later on. When a new request comes in, its impact is assessed against the document.</p>
+<h2 id="2-architecture-and-component-selection">2. Architecture and Component Selection</h2>
+<p>Once the requirements are clear, the block diagram of the board is drawn: power stage, microcontroller, sensor inputs, driver outputs and communication interfaces. The decisions made at this stage largely determine the board&#x27;s cost and supply risk.</p>
+<ul>
+  <li><strong>Microcontroller:</strong> The required peripherals (ADC, timers, UART, CAN), memory and software ecosystem are evaluated together. Broad families such as STM32 make it easier to move to a more powerful or a cheaper model later on.</li>
+  <li><strong>Power architecture:</strong> A linear regulator (LDO) is simple and quiet, but if the difference between input and output is large, so is the power turned into heat. With 24 V in, 3.3 V out and a 100 mA load, an LDO produces about 2 W of heat; here a switching (buck) converter is the better choice.</li>
+  <li><strong>Availability:</strong> Parts that are end-of-life (EOL) or not recommended for new designs (NRND) are avoided. Equivalent alternatives for critical parts are identified from the start.</li>
+</ul>
+<h2 id="3-schematic-design-and-calculations">3. Schematic Design and Calculations</h2>
+<p>The schematic is the electrical definition of the board. A good schematic carries not only the correct connections but also the reasoning behind the design decisions.</p>
+<ul>
+  <li>Inductor, capacitor and feedback values for the regulators are calculated using the manufacturer&#x27;s formulas.</li>
+  <li>Protection against reverse connection, overvoltage and short circuits (reverse-polarity protection, a TVS diode, a fuse or an electronic fuse) is added.</li>
+  <li>Every supply pin gets a decoupling capacitor; the required resistors are added to the I²C lines and to the reset and boot pins.</li>
+  <li>The programming and debug connector (for example, SWD for STM32) and the test points must not be forgotten.</li>
+</ul>
+<p>Once the schematic is finished, having a second pair of eyes review it before moving on to the PCB is the cheapest form of debugging. On this topic, you can also read our article on <a href="/en/blog/pcb-design-review-common-mistakes">the most common mistakes found in a pre-production design review</a>.</p>
+<h2 id="4-pcb-placement-and-routing">4. PCB Placement and Routing</h2>
+<p>Order matters in PCB design: placement first, then routing. Connectors and mounting holes are locked in position according to the mechanical drawing; then the power stage, the microcontroller and the sensitive analog sections are placed.</p>
+<ul>
+  <li><strong>Layer stackup:</strong> The layer count is chosen based on circuit density, current and noise requirements. A continuous ground plane improves both signal quality and EMC performance.</li>
+  <li><strong>Current-carrying traces:</strong> Trace widths are calculated from the current they will carry and the allowed temperature rise. IPC-2152 is the standard used for this calculation.</li>
+  <li><strong>Noise:</strong> The current loops of the switching power stage are kept small, and sensitive signals are kept away from this area. For details, see our article on <a href="/en/blog/pcb-emc-design-rules">EMC rules in PCB design</a>.</li>
+  <li><strong>Checks:</strong> The design rule check (DRC) is run against the manufacturer&#x27;s capabilities, and the 3D model is used to check for enclosure and connector clashes.</li>
+</ul>
+<h2 id="5-manufacturing-files-and-prototype">5. Manufacturing Files and Prototype</h2>
+<p>Having the PCB made requires standard manufacturing outputs, not the design tool&#x27;s native file: Gerber files, the drill file, the bill of materials (BOM) and the pick-and-place file for assembly. We explain what each file is for in detail in our article on <a href="/en/blog/pcb-manufacturing-files">the files required for PCB manufacturing</a>.</p>
+<p>The first prototype batch is usually 5–10 boards. That is enough to use several boards in different tests and to keep work going if a board gets damaged.</p>
+<h2 id="6-testing-and-verification">6. Testing and Verification</h2>
+<p>When the prototype arrives, the first job is to bring the board up in a controlled way:</p>
+<ol>
+  <li>Power is applied from a current-limited power supply, and the current drawn at first power-up is monitored.</li>
+  <li>All voltage rails are measured; the regulator outputs and their ripple are checked.</li>
+  <li>The microcontroller is programmed and the peripherals are tested one by one.</li>
+  <li>Functional tests are run against the items in the requirements document, and the results are recorded.</li>
+  <li>Temperature, long-term operation and, if needed, EMC pre-compliance tests are carried out.</li>
+</ol>
+<p>It is normal for the first prototype to need a few minor fixes. The goal is to close them out in the second revision and move into mass production with a clean design.</p>
+<h2 id="7-moving-to-mass-production">7. Moving to Mass Production</h2>
+<p>A board that works as a prototype must also be manufacturable without problems in mass production. At this stage:</p>
+<ul>
+  <li>Manufacturability (DFM) and testability (DFT) are reviewed one last time.</li>
+  <li>A test procedure is prepared for production testing, along with a test fixture if needed.</li>
+  <li>The bill of materials is streamlined for cost and supply.</li>
+  <li>Assembly drawings, firmware programming instructions and revision records are completed.</li>
+</ul>
+<p>A small pre-series run (pilot production) is the safest way to spot issues in the process before a large order.</p>
+<h2 id="what-determines-the-timeline-and-cost">What Determines the Timeline and Cost?</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Factor</th><th>Impact</th></tr></thead>
+<tbody>
+<tr><td>Clarity of requirements</td><td>Ambiguity increases the number of revisions and lengthens the timeline.</td></tr>
+<tr><td>Board complexity</td><td>Part count, layer count and layout time go up.</td></tr>
+<tr><td>Prototype rounds</td><td>Each additional revision means extra manufacturing and test time.</td></tr>
+<tr><td>Certification</td><td>EMC and safety testing require separate planning.</td></tr>
+<tr><td>Component sourcing</td><td>Parts with long lead times drive the schedule.</td></tr>
+</tbody>
+</table></div>
+<h2 id="conclusion">Conclusion</h2>
+<p>A good electronic board is the sum of clear requirements, the right component selection, careful layout and planned testing. Skipping these steps may seem to save time in the short term, but it usually comes back as an extra prototype round.</p>
+<p>At ModWare Technology, we run the <a href="/en/electronics-pcb-design">electronics and PCB design</a>, <a href="/en/prototyping-rd">prototyping and R&amp;D</a> and <a href="/en/pcb-manufacturing">PCB manufacturing</a> stages within a single team. Tell us where your project stands, and let&#x27;s map out the right roadmap for you together.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section-alt" aria-labelledby="ilgili-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Related services</p>
+          <h2 id="ilgili-title" data-split-reveal>Need Help with This?</h2>
+        </header>
+        <div class="values-grid">
+            <article class="value-card tilt-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M9.5 3v4M14.5 3v4M9.5 17v4M14.5 17v4M3 9.5h4M3 14.5h4M17 9.5h4M17 14.5h4"/></svg></span>
+              <h3>Electronics and Hardware Design</h3>
+              <p>From requirements to schematic, from PCB design to prototype: control, power, sensor and communication boards.</p>
+              <a class="link-u" href="/en/electronics-pcb-design">Learn more <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 3h5M10.5 3v6.2L5.2 18.4A1.8 1.8 0 0 0 6.8 21h10.4a1.8 1.8 0 0 0 1.6-2.6L13.5 9.2V3"/><path d="M7.5 15h9"/></svg></span>
+              <h3>Prototyping and R&amp;D</h3>
+              <p>From idea to working prototype and from prototype to production, with a test plan and documentation.</p>
+              <a class="link-u" href="/en/prototyping-rd">Learn more <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/></svg></span>
+              <h3>PCB Manufacturing</h3>
+              <p>From file check to delivery: prototype and small-batch printed circuit board manufacturing.</p>
+              <a class="link-u" href="/en/pcb-manufacturing">Learn more <span aria-hidden="true">→</span></a>
+            </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="diger-yazilar-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Blog</p>
+          <h2 id="diger-yazilar-title" data-split-reveal>More Articles</h2>
+        </header>
+        <div class="values-grid">
+            <article class="value-card tilt-card blog-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/></svg></span>
+              <p class="blog-meta">PCB manufacturing · 5 min read</p>
+              <h3>Which Files Do You Need for PCB Manufacturing? Gerber, Drill, BOM and Pick-and-Place Files</h3>
+              <p>Gerber layers, drill file, BOM and pick-and-place file: what needs to be prepared before sending a PCB to manufacturing, and common mistakes.</p>
+              <a class="link-u" href="/en/blog/pcb-manufacturing-files">Read the article <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card blog-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span>
+              <p class="blog-meta">Design review · 5 min read</p>
+              <h3>Pre-production Design Review: The 15 Most Common Mistakes</h3>
+              <p>From schematic to footprints, from layout to manufacturing files: 15 common mistakes to catch before you send a board to production.</p>
+              <a class="link-u" href="/en/blog/pcb-design-review-common-mistakes">Read the article <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card blog-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg></span>
+              <p class="blog-meta">PCB manufacturing · 5 min read</p>
+              <h3>9 Ways to Reduce Prototype PCB Costs</h3>
+              <p>Standard manufacturing specs, board size, surface finish, the bill of materials and the number of revisions: practical ways to shrink your prototype budget.</p>
+              <a class="link-u" href="/en/blog/reduce-prototype-pcb-cost">Read the article <span aria-hidden="true">→</span></a>
+            </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section cta-band" aria-labelledby="cta-title">
+      <div class="container cta-inner">
+        <h2 id="cta-title" data-cta-split>Let&#x27;s Design Your Board Together.</h2>
+        <p class="cta-text">Tell us briefly about your project; we&#x27;ll get back to you with the scope, timeline and an estimated budget.</p>
+        <div class="cta-actions">
+          <a class="btn btn-accent" href="/en/quote?urun=Custom%20hardware%20design" data-burst>Get a Quote</a>
+          <a class="btn btn-ghost" href="/en/services" data-burst>All services</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ ORTAK ALT BİLGİ ============ -->
+  <footer class="site-footer">
+    <!-- Footer üstündeki çizgi: sayfa sonuna yaklaşırken soldan sağa dolar -->
+    <div class="footer-line" aria-hidden="true"><span class="footer-line-fill"></span></div>
+    <div class="container footer-inner">
+      <a class="logo logo-sm" href="/en/"><img src="/assets/logo/modware-logo-light.png" alt="ModWare" width="275" height="30"></a>
+      <p class="footer-meta"><span class="footer-location">İzmit, Kocaeli</span> <span class="footer-copy">© <span data-year>2026</span> ModWare Technology</span></p>
+      <!-- İletişim ikonları: e-posta ve LinkedIn -->
+      <div class="footer-contact">
+        <a class="footer-icon" href="mailto:info@modwaretechnology.com" aria-label="Send us an e-mail: info@modwaretechnology.com" title="info@modwaretechnology.com"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M4 7l8 6 8-6"/></svg></a>
+        <a class="footer-icon" href="https://www.linkedin.com/company/modware-technology1/" target="_blank" rel="noopener" aria-label="ModWare Technology on LinkedIn (opens in a new tab)" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 5a2 2 0 1 1-4-.002 2 2 0 0 1 4 .002zM7 8.48H3V21h4V8.48zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.72-2.91l.04-1.68z"/></svg></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Yukarı çık: sayfa sonuna gelince belirir (main.js) -->
+  <button class="to-top" id="to-top" type="button" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+
+  <!-- Kütüphaneler (CDN, sabit sürüm). main.js ve animations.js'den önce yüklenmeli.
+       GSAP + ScrollTrigger: animasyon · SplitType: harf bölme · Lenis: yumuşak kaydırma -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/split-type@0.3.4/umd/index.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
+  <script src="/js/main.js?v=31" defer></script>
+  <script src="/js/animations.js?v=31" defer></script>
+</body>
+</html>

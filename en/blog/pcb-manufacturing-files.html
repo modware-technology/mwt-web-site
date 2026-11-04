@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Files Needed for PCB Manufacturing: Gerber, BOM, CPL | ModWare</title>
+  <meta name="description" content="Which files do you need for PCB manufacturing and assembly? What the Gerber layers, drill file, BOM and pick-and-place (CPL) file contain, and common mistakes.">
+  <link rel="canonical" href="https://modwaretechnology.com/en/blog/pcb-manufacturing-files">
+  <link rel="alternate" hreflang="tr" href="https://modwaretechnology.com/blog/pcb-uretimi-icin-gerekli-dosyalar">
+  <link rel="alternate" hreflang="en" href="https://modwaretechnology.com/en/blog/pcb-manufacturing-files">
+  <link rel="alternate" hreflang="x-default" href="https://modwaretechnology.com/blog/pcb-uretimi-icin-gerekli-dosyalar">
+
+  <!-- Paylaşım önizlemesi (LinkedIn, WhatsApp, X) -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="ModWare Technology">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="tr_TR">
+  <meta property="og:title" content="Files Needed for PCB Manufacturing: Gerber, BOM, CPL | ModWare">
+  <meta property="og:description" content="Which files do you need for PCB manufacturing and assembly? What the Gerber layers, drill file, BOM and pick-and-place (CPL) file contain, and common mistakes.">
+  <meta property="og:url" content="https://modwaretechnology.com/en/blog/pcb-manufacturing-files">
+  <meta property="og:image" content="https://modwaretechnology.com/assets/og/modware-og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="article:published_time" content="2026-11-04">
+  <meta property="article:section" content="PCB manufacturing">
+
+  <!-- Arama motorları için yapılandırılmış veri (schema.org) -->
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "BlogPosting", "@id": "https://modwaretechnology.com/en/blog/pcb-manufacturing-files#yazi", "headline": "Which Files Do You Need for PCB Manufacturing? Gerber, Drill, BOM and Pick-and-Place Files", "description": "Which files do you need for PCB manufacturing and assembly? What the Gerber layers, drill file, BOM and pick-and-place (CPL) file contain, and common mistakes.", "datePublished": "2026-11-04", "dateModified": "2026-11-04", "inLanguage": "en-US", "url": "https://modwaretechnology.com/en/blog/pcb-manufacturing-files", "mainEntityOfPage": "https://modwaretechnology.com/en/blog/pcb-manufacturing-files", "image": "https://modwaretechnology.com/assets/og/modware-og.png", "articleSection": "PCB manufacturing", "wordCount": 869, "author": {"@type": "Organization", "@id": "https://modwaretechnology.com/#org", "name": "ModWare Technology", "url": "https://modwaretechnology.com/"}, "publisher": {"@type": "Organization", "@id": "https://modwaretechnology.com/#org", "name": "ModWare Technology", "url": "https://modwaretechnology.com/", "logo": {"@type": "ImageObject", "url": "https://modwaretechnology.com/assets/logo/modware-icon-512.png"}}, "isPartOf": {"@type": "Blog", "@id": "https://modwaretechnology.com/en/blog/#blog", "url": "https://modwaretechnology.com/en/blog/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://modwaretechnology.com/en/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://modwaretechnology.com/en/blog/"}, {"@type": "ListItem", "position": 3, "name": "Which Files Do You Need for PCB Manufacturing? Gerber, Drill, BOM and Pick-and-Place Files"}]}]}</script>
+
+  <!-- Sekme ikonu -->
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/assets/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <meta name="theme-color" content="#0a0f1c">
+
+  <!-- Preloader yalnızca JS çalışıyorsa görünür. GSAP/animations.js
+       5 sn içinde devralmazsa güvenlik zamanlayıcısı onu kaldırır. -->
+  <script>
+    document.documentElement.classList.add('is-loading');
+    window.__preloaderSafety = setTimeout(function () {
+      document.documentElement.classList.remove('is-loading');
+    }, 5000);
+  </script>
+
+  <!-- Fontlar: Space Grotesk (başlıklar) + Inter (metin) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+
+  <link rel="stylesheet" href="/css/style.css?v=31">
+</head>
+<body data-page="blog">
+
+  <!-- ============ PRELOADER ============ -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader-inner">
+      <p class="preloader-word" data-preloader-word>MODWARE</p>
+      <div class="preloader-bar"><span class="preloader-bar-fill"></span></div>
+      <p class="preloader-count"><span data-preloader-count>0</span>%</p>
+    </div>
+  </div>
+
+  <!-- ============ ARKA PLAN KATMANI (sabit, içeriğin arkasında) ============ -->
+  <div class="bg-layer" aria-hidden="true">
+    <div class="bg-glow"></div>
+    <div class="bg-shade"></div>
+    <div class="bg-noise"></div>
+  </div>
+
+  <!-- ============ ÖZEL İMLEÇ (yalnızca fareli cihazlarda) ============ -->
+  <div class="cursor" aria-hidden="true">
+    <div class="cursor-frame"><i></i><i></i><i></i><i></i></div>
+    <div class="cursor-dot"></div>
+  </div>
+
+  <!-- ============ KAYDIRMA İLERLEME ÇUBUĞU ============ -->
+  <div class="scroll-progress" aria-hidden="true"><span class="scroll-progress-bar"></span></div>
+
+  <!-- ============ ORTAK ÜST MENÜ ============
+       Bu blok her sayfada aynıdır. Aktif sayfa,
+       main.js tarafından <body data-page> değerine göre işaretlenir. -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="/en/" aria-label="ModWare Technology home">
+        <img src="/assets/logo/modware-logo-light.png" alt="ModWare" width="275" height="30">
+      </a>
+
+      <!-- Mobilde menüyü açıp kapatan buton -->
+      <button class="nav-toggle" id="nav-toggle" type="button"
+              aria-controls="site-nav" aria-expanded="false" aria-label="Open menu">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="Main menu">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="/en/" data-nav="home">Home</a></li>
+          <li><a class="nav-link" href="/en/services" data-nav="hizmetler">Services</a></li>
+          <li><a class="nav-link" href="/en/products" data-nav="urunler">Products</a></li>
+          <li><a class="nav-link" href="/en/about" data-nav="hakkimizda">About</a></li>
+          <li><a class="nav-link" href="/en/blog/" data-nav="blog">Blog</a></li>
+        </ul>
+        <a class="btn btn-accent nav-cta" href="/en/quote">Get a Quote</a>
+        <a class="lang-switch" href="/blog/pcb-uretimi-icin-gerekli-dosyalar" hreflang="tr" lang="tr" aria-label="Türkçe" title="Türkçe">TR</a>
+      </nav>
+    </div>
+  </header>
+  <!-- ============ /ORTAK ÜST MENÜ ============ -->
+
+  <!-- Blog yazısı: pcb-manufacturing-files. Metin site-araclar/blog_en_1.py / blog_en_2.py dosyasından üretilir. -->
+  <main id="main">
+
+    <!-- ============ SAYFA BAŞLIĞI ============ -->
+    <section class="page-head page-head--yazi" aria-labelledby="page-title">
+      <div class="container page-head-inner">
+        <p class="eyebrow" data-anim="hero"><a href="/en/blog/">Blog</a> · PCB manufacturing</p>
+        <h1 id="page-title" data-split-intro>Which Files Do You Need for PCB Manufacturing? Gerber, Drill, BOM and Pick-and-Place Files</h1>
+        <p class="page-lede" data-anim="hero">Sending a PCB to manufacturing requires standard outputs that manufacturers can read, not the design tool&#x27;s native file. A missing or incorrect file can turn into a delay lasting weeks.</p>
+        <p class="post-meta" data-anim="hero"><time datetime="2026-11-04">November 4, 2026</time> <span aria-hidden="true">·</span> <span>5 min read</span> <span aria-hidden="true">·</span> <span>ModWare Technology engineering team</span></p>
+      </div>
+    </section>
+
+    <section class="section article-section">
+      <div class="container">
+        <article class="prose">
+<nav class="toc" aria-label="Contents">
+<p class="toc-title">Contents</p>
+<ol>
+  <li><a href="#gerber-files">Gerber Files</a></li>
+  <li><a href="#drill-file">Drill File</a></li>
+  <li><a href="#fabrication-notes">Fabrication Notes</a></li>
+  <li><a href="#bill-of-materials-bom">Bill of Materials (BOM)</a></li>
+  <li><a href="#pick-and-place-file-cpl">Pick-and-Place File (CPL)</a></li>
+  <li><a href="#assembly-drawing-and-other-files">Assembly Drawing and Other Files</a></li>
+  <li><a href="#common-mistakes">Common Mistakes</a></li>
+  <li><a href="#checklist-before-you-send-the-files">Checklist Before You Send the Files</a></li>
+  <li><a href="#conclusion">Conclusion</a></li>
+</ol>
+</nav>
+<p>When the PCB design is finished, the board still exists only on the computer. For manufacturing, the design has to be converted into a set of files that production machines can understand. This set falls into two groups: what is needed to manufacture the bare board, and what is needed to place the components on the board (assembly).</p>
+<aside class="callout"><p><strong>In short:</strong> The bare board needs Gerber files, a drill file and fabrication notes; assembly needs a bill of materials (BOM), a pick-and-place file (CPL) and an assembly drawing.</p></aside>
+<h2 id="gerber-files">Gerber Files</h2>
+<p>Gerber is the common language of the PCB industry. Each layer is a separate file that describes what the board will look like on that layer. The formats in use today are Extended Gerber (RS-274X) and Gerber X2, which carries the layer information inside the file itself.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Layer</th><th>What is it for?</th></tr></thead>
+<tbody>
+<tr><td>Top and bottom copper</td><td>Traces, pads and copper pours</td></tr>
+<tr><td>Inner copper layers</td><td>Inner signal and plane layers on multilayer boards</td></tr>
+<tr><td>Solder mask</td><td>Where the protective coating over the board is left open (pads)</td></tr>
+<tr><td>Silkscreen</td><td>Reference designators, logos and markings</td></tr>
+<tr><td>Solder paste</td><td>Openings of the stencil used in assembly</td></tr>
+<tr><td>Board outline</td><td>The boundary the board is cut along, internal cutouts and slots</td></tr>
+</tbody>
+</table></div>
+<p>Before sending the files, opening them in a Gerber viewer and checking that all layers are present and correctly aligned catches the most common mistakes up front.</p>
+<h2 id="drill-file">Drill File</h2>
+<p>The positions and diameters of the holes are not in the Gerber files; they are usually in a separate drill file in Excellon format.</p>
+<ul>
+  <li><strong>Plated (PTH) and non-plated (NPTH) holes</strong> are usually supplied in separate files. Mounting holes and the holes for some connector pins should be non-plated.</li>
+  <li><strong>Units and number format</strong> (mm or inch, number of decimal places) must match the Gerber files; otherwise the holes end up in the wrong place.</li>
+  <li><strong>Slots</strong> must be clearly defined in the drill file or on the outline layer.</li>
+</ul>
+<h2 id="fabrication-notes">Fabrication Notes</h2>
+<p>Some information cannot be read from the Gerber files and has to be specified separately. A short fabrication note should include:</p>
+<ul>
+  <li>Board thickness (standard 1.6 mm) and material (FR-4, high-Tg if needed)</li>
+  <li>Copper thickness (e.g., 35 µm / 1 oz) and layer stackup</li>
+  <li>Surface finish (HASL, lead-free HASL or ENIG)</li>
+  <li>Solder mask and silkscreen colors</li>
+  <li>Special requests such as impedance control, panelization or custom tolerances</li>
+</ul>
+<h2 id="bill-of-materials-bom">Bill of Materials (BOM)</h2>
+<p>If the board is going to assembly, the most critical file is the bill of materials. A good BOM fully defines a single part on each line:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Column</th><th>Example</th></tr></thead>
+<tbody>
+<tr><td>Reference designators</td><td>R1, R4, R7</td></tr>
+<tr><td>Quantity</td><td>3</td></tr>
+<tr><td>Value</td><td>10 kΩ, 1%</td></tr>
+<tr><td>Package</td><td>0603</td></tr>
+<tr><td>Manufacturer</td><td>Yageo</td></tr>
+<tr><td>Manufacturer part number (MPN)</td><td>RC0603FR-0710KL</td></tr>
+<tr><td>Note</td><td>Alternates allowed, do-not-populate (DNP) flag</td></tr>
+</tbody>
+</table></div>
+<p>A BOM without manufacturer part numbers is left with vague lines such as &quot;10 µF capacitor&quot;; this can lead to parts being bought with the wrong voltage rating or made of the wrong material.</p>
+<h2 id="pick-and-place-file-cpl">Pick-and-Place File (CPL)</h2>
+<p>Also known as the position or centroid file, this file gives the location and orientation of every part on the board: reference designator, X and Y coordinates, rotation angle and which side of the board the part is on.</p>
+<p>Design tools and pick-and-place machines may use different references for the rotation angle. This is the most common reason polarized parts such as diodes, ICs and electrolytic capacitors are placed backwards. Checking the placement preview prepared by the manufacturer before assembly greatly reduces this risk.</p>
+<h2 id="assembly-drawing-and-other-files">Assembly Drawing and Other Files</h2>
+<ul>
+  <li><strong>Assembly drawing:</strong> A PDF showing component placement and orientation marks; used for manual work and for inspection.</li>
+  <li><strong>Netlist (IPC-D-356):</strong> Helps the manufacturer put the boards through electrical testing.</li>
+  <li><strong>3D model (STEP):</strong> For enclosure and mechanical fit checks.</li>
+</ul>
+<h2 id="common-mistakes">Common Mistakes</h2>
+<ul>
+  <li>A missing board outline, or an outline drawn differently on different layers</li>
+  <li>Forgetting the solder paste layer</li>
+  <li>A drill file in different units from the Gerber files</li>
+  <li>BOM reference designators that don&#x27;t match the PCB, and do-not-populate parts that are not marked</li>
+  <li>Wrong rotation angles for polarized parts in the pick-and-place file</li>
+  <li>Silkscreen overlapping the pads</li>
+  <li>Mixing up files from old and new revisions</li>
+</ul>
+<h2 id="checklist-before-you-send-the-files">Checklist Before You Send the Files</h2>
+<ol>
+  <li>Open all Gerber layers in a viewer; check the layer count and alignment.</li>
+  <li>Verify that the drill file is aligned with the Gerber files and uses the same units.</li>
+  <li>Write the board thickness, copper thickness, surface finish and colors in the fabrication notes.</li>
+  <li>Check that every reference designator in the BOM has a counterpart on the PCB and that every line has a manufacturer part number.</li>
+  <li>In the preview, check the rotation of polarized parts from the pick-and-place file.</li>
+  <li>Add a revision code to the file names and send them all in a single archive.</li>
+</ol>
+<h2 id="conclusion">Conclusion</h2>
+<p>A correctly prepared file set is a prerequisite for manufacturing to run quickly and without surprises. In our <a href="/en/pcb-manufacturing">PCB manufacturing</a> service, we check your files before production, determine the right manufacturing options and follow the process through to delivery. If you would also like your design reviewed, take a look at our <a href="/en/design-review">design review</a> service.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section-alt" aria-labelledby="ilgili-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Related services</p>
+          <h2 id="ilgili-title" data-split-reveal>Need Help with This?</h2>
+        </header>
+        <div class="values-grid">
+            <article class="value-card tilt-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/></svg></span>
+              <h3>PCB Manufacturing</h3>
+              <p>From file check to delivery: prototype and small-batch printed circuit board manufacturing.</p>
+              <a class="link-u" href="/en/pcb-manufacturing">Learn more <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span>
+              <h3>Design Review</h3>
+              <p>We review your schematic and PCB before they go into production and report errors and risks.</p>
+              <a class="link-u" href="/en/design-review">Learn more <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M9.5 3v4M14.5 3v4M9.5 17v4M14.5 17v4M3 9.5h4M3 14.5h4M17 9.5h4M17 14.5h4"/></svg></span>
+              <h3>Electronics and Hardware Design</h3>
+              <p>From requirements to schematic, from PCB design to prototype: control, power, sensor and communication boards.</p>
+              <a class="link-u" href="/en/electronics-pcb-design">Learn more <span aria-hidden="true">→</span></a>
+            </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="diger-yazilar-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Blog</p>
+          <h2 id="diger-yazilar-title" data-split-reveal>More Articles</h2>
+        </header>
+        <div class="values-grid">
+            <article class="value-card tilt-card blog-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg></span>
+              <p class="blog-meta">PCB manufacturing · 5 min read</p>
+              <h3>9 Ways to Reduce Prototype PCB Costs</h3>
+              <p>Standard manufacturing specs, board size, surface finish, the bill of materials and the number of revisions: practical ways to shrink your prototype budget.</p>
+              <a class="link-u" href="/en/blog/reduce-prototype-pcb-cost">Read the article <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card blog-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span>
+              <p class="blog-meta">Design review · 5 min read</p>
+              <h3>Pre-production Design Review: The 15 Most Common Mistakes</h3>
+              <p>From schematic to footprints, from layout to manufacturing files: 15 common mistakes to catch before you send a board to production.</p>
+              <a class="link-u" href="/en/blog/pcb-design-review-common-mistakes">Read the article <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card blog-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M9.5 3v4M14.5 3v4M9.5 17v4M14.5 17v4M3 9.5h4M3 14.5h4M17 9.5h4M17 14.5h4"/></svg></span>
+              <p class="blog-meta">Electronics design · 7 min read</p>
+              <h3>The Electronics Design Process: From Idea to Mass Production, Step by Step</h3>
+              <p>From requirements to schematic, from PCB to prototype and mass production: the steps an electronic board goes through and what to watch for at each one.</p>
+              <a class="link-u" href="/en/blog/electronics-design-process">Read the article <span aria-hidden="true">→</span></a>
+            </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section cta-band" aria-labelledby="cta-title">
+      <div class="container cta-inner">
+        <h2 id="cta-title" data-cta-split>Let&#x27;s Manufacture Your PCBs Together.</h2>
+        <p class="cta-text">Tell us briefly about your project; we&#x27;ll get back to you with the scope, timeline and an estimated budget.</p>
+        <div class="cta-actions">
+          <a class="btn btn-accent" href="/en/quote?urun=PCB%20manufacturing" data-burst>Get a Quote</a>
+          <a class="btn btn-ghost" href="/en/services" data-burst>All services</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ ORTAK ALT BİLGİ ============ -->
+  <footer class="site-footer">
+    <!-- Footer üstündeki çizgi: sayfa sonuna yaklaşırken soldan sağa dolar -->
+    <div class="footer-line" aria-hidden="true"><span class="footer-line-fill"></span></div>
+    <div class="container footer-inner">
+      <a class="logo logo-sm" href="/en/"><img src="/assets/logo/modware-logo-light.png" alt="ModWare" width="275" height="30"></a>
+      <p class="footer-meta"><span class="footer-location">İzmit, Kocaeli</span> <span class="footer-copy">© <span data-year>2026</span> ModWare Technology</span></p>
+      <!-- İletişim ikonları: e-posta ve LinkedIn -->
+      <div class="footer-contact">
+        <a class="footer-icon" href="mailto:info@modwaretechnology.com" aria-label="Send us an e-mail: info@modwaretechnology.com" title="info@modwaretechnology.com"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M4 7l8 6 8-6"/></svg></a>
+        <a class="footer-icon" href="https://www.linkedin.com/company/modware-technology1/" target="_blank" rel="noopener" aria-label="ModWare Technology on LinkedIn (opens in a new tab)" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 5a2 2 0 1 1-4-.002 2 2 0 0 1 4 .002zM7 8.48H3V21h4V8.48zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.72-2.91l.04-1.68z"/></svg></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Yukarı çık: sayfa sonuna gelince belirir (main.js) -->
+  <button class="to-top" id="to-top" type="button" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+
+  <!-- Kütüphaneler (CDN, sabit sürüm). main.js ve animations.js'den önce yüklenmeli.
+       GSAP + ScrollTrigger: animasyon · SplitType: harf bölme · Lenis: yumuşak kaydırma -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/split-type@0.3.4/umd/index.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
+  <script src="/js/main.js?v=31" defer></script>
+  <script src="/js/animations.js?v=31" defer></script>
+</body>
+</html>

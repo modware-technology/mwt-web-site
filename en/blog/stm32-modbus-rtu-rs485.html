@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Modbus RTU and RS-485 with STM32: What to Watch For | ModWare</title>
+  <meta name="description" content="Modbus RTU with STM32: RS-485 transceiver choice, termination and biasing, direction control, the 3.5-character gap, CRC calculation and common field issues.">
+  <link rel="canonical" href="https://modwaretechnology.com/en/blog/stm32-modbus-rtu-rs485">
+  <link rel="alternate" hreflang="tr" href="https://modwaretechnology.com/blog/stm32-modbus-rtu-rs485">
+  <link rel="alternate" hreflang="en" href="https://modwaretechnology.com/en/blog/stm32-modbus-rtu-rs485">
+  <link rel="alternate" hreflang="x-default" href="https://modwaretechnology.com/blog/stm32-modbus-rtu-rs485">
+
+  <!-- Paylaşım önizlemesi (LinkedIn, WhatsApp, X) -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="ModWare Technology">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="tr_TR">
+  <meta property="og:title" content="Modbus RTU and RS-485 with STM32: What to Watch For | ModWare">
+  <meta property="og:description" content="Modbus RTU with STM32: RS-485 transceiver choice, termination and biasing, direction control, the 3.5-character gap, CRC calculation and common field issues.">
+  <meta property="og:url" content="https://modwaretechnology.com/en/blog/stm32-modbus-rtu-rs485">
+  <meta property="og:image" content="https://modwaretechnology.com/assets/og/modware-og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="article:published_time" content="2026-11-04">
+  <meta property="article:section" content="Embedded software">
+
+  <!-- Arama motorları için yapılandırılmış veri (schema.org) -->
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "BlogPosting", "@id": "https://modwaretechnology.com/en/blog/stm32-modbus-rtu-rs485#yazi", "headline": "Modbus RTU (RS-485) with STM32: What to Watch for in Hardware and Firmware", "description": "Modbus RTU with STM32: RS-485 transceiver choice, termination and biasing, direction control, the 3.5-character gap, CRC calculation and common field issues.", "datePublished": "2026-11-04", "dateModified": "2026-11-04", "inLanguage": "en-US", "url": "https://modwaretechnology.com/en/blog/stm32-modbus-rtu-rs485", "mainEntityOfPage": "https://modwaretechnology.com/en/blog/stm32-modbus-rtu-rs485", "image": "https://modwaretechnology.com/assets/og/modware-og.png", "articleSection": "Embedded software", "wordCount": 1320, "author": {"@type": "Organization", "@id": "https://modwaretechnology.com/#org", "name": "ModWare Technology", "url": "https://modwaretechnology.com/"}, "publisher": {"@type": "Organization", "@id": "https://modwaretechnology.com/#org", "name": "ModWare Technology", "url": "https://modwaretechnology.com/", "logo": {"@type": "ImageObject", "url": "https://modwaretechnology.com/assets/logo/modware-icon-512.png"}}, "isPartOf": {"@type": "Blog", "@id": "https://modwaretechnology.com/en/blog/#blog", "url": "https://modwaretechnology.com/en/blog/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://modwaretechnology.com/en/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://modwaretechnology.com/en/blog/"}, {"@type": "ListItem", "position": 3, "name": "Modbus RTU (RS-485) with STM32: What to Watch for in Hardware and Firmware"}]}]}</script>
+
+  <!-- Sekme ikonu -->
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/assets/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <meta name="theme-color" content="#0a0f1c">
+
+  <!-- Preloader yalnızca JS çalışıyorsa görünür. GSAP/animations.js
+       5 sn içinde devralmazsa güvenlik zamanlayıcısı onu kaldırır. -->
+  <script>
+    document.documentElement.classList.add('is-loading');
+    window.__preloaderSafety = setTimeout(function () {
+      document.documentElement.classList.remove('is-loading');
+    }, 5000);
+  </script>
+
+  <!-- Fontlar: Space Grotesk (başlıklar) + Inter (metin) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+
+  <link rel="stylesheet" href="/css/style.css?v=31">
+</head>
+<body data-page="blog">
+
+  <!-- ============ PRELOADER ============ -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader-inner">
+      <p class="preloader-word" data-preloader-word>MODWARE</p>
+      <div class="preloader-bar"><span class="preloader-bar-fill"></span></div>
+      <p class="preloader-count"><span data-preloader-count>0</span>%</p>
+    </div>
+  </div>
+
+  <!-- ============ ARKA PLAN KATMANI (sabit, içeriğin arkasında) ============ -->
+  <div class="bg-layer" aria-hidden="true">
+    <div class="bg-glow"></div>
+    <div class="bg-shade"></div>
+    <div class="bg-noise"></div>
+  </div>
+
+  <!-- ============ ÖZEL İMLEÇ (yalnızca fareli cihazlarda) ============ -->
+  <div class="cursor" aria-hidden="true">
+    <div class="cursor-frame"><i></i><i></i><i></i><i></i></div>
+    <div class="cursor-dot"></div>
+  </div>
+
+  <!-- ============ KAYDIRMA İLERLEME ÇUBUĞU ============ -->
+  <div class="scroll-progress" aria-hidden="true"><span class="scroll-progress-bar"></span></div>
+
+  <!-- ============ ORTAK ÜST MENÜ ============
+       Bu blok her sayfada aynıdır. Aktif sayfa,
+       main.js tarafından <body data-page> değerine göre işaretlenir. -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="/en/" aria-label="ModWare Technology home">
+        <img src="/assets/logo/modware-logo-light.png" alt="ModWare" width="275" height="30">
+      </a>
+
+      <!-- Mobilde menüyü açıp kapatan buton -->
+      <button class="nav-toggle" id="nav-toggle" type="button"
+              aria-controls="site-nav" aria-expanded="false" aria-label="Open menu">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="Main menu">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="/en/" data-nav="home">Home</a></li>
+          <li><a class="nav-link" href="/en/services" data-nav="hizmetler">Services</a></li>
+          <li><a class="nav-link" href="/en/products" data-nav="urunler">Products</a></li>
+          <li><a class="nav-link" href="/en/about" data-nav="hakkimizda">About</a></li>
+          <li><a class="nav-link" href="/en/blog/" data-nav="blog">Blog</a></li>
+        </ul>
+        <a class="btn btn-accent nav-cta" href="/en/quote">Get a Quote</a>
+        <a class="lang-switch" href="/blog/stm32-modbus-rtu-rs485" hreflang="tr" lang="tr" aria-label="Türkçe" title="Türkçe">TR</a>
+      </nav>
+    </div>
+  </header>
+  <!-- ============ /ORTAK ÜST MENÜ ============ -->
+
+  <!-- Blog yazısı: stm32-modbus-rtu-rs485. Metin site-araclar/blog_en_1.py / blog_en_2.py dosyasından üretilir. -->
+  <main id="main">
+
+    <!-- ============ SAYFA BAŞLIĞI ============ -->
+    <section class="page-head page-head--yazi" aria-labelledby="page-title">
+      <div class="container page-head-inner">
+        <p class="eyebrow" data-anim="hero"><a href="/en/blog/">Blog</a> · Embedded software</p>
+        <h1 id="page-title" data-split-intro>Modbus RTU (RS-485) with STM32: What to Watch for in Hardware and Firmware</h1>
+        <p class="page-lede" data-anim="hero">Modbus RTU is still one of the most widely used fieldbus protocols in industry. It looks simple on paper, but a device that works reliably in the field depends on getting a few critical details right in both hardware and firmware.</p>
+        <p class="post-meta" data-anim="hero"><time datetime="2026-11-04">November 4, 2026</time> <span aria-hidden="true">·</span> <span>7 min read</span> <span aria-hidden="true">·</span> <span>ModWare Technology engineering team</span></p>
+      </div>
+    </section>
+
+    <section class="section article-section">
+      <div class="container">
+        <article class="prose">
+<nav class="toc" aria-label="Contents">
+<p class="toc-title">Contents</p>
+<ol>
+  <li><a href="#hardware-the-rs-485-side">Hardware: The RS-485 Side</a></li>
+  <li><a href="#firmware-the-stm32-side">Firmware: The STM32 Side</a></li>
+  <li><a href="#common-problems-in-the-field">Common Problems in the Field</a></li>
+  <li><a href="#testing-tips">Testing Tips</a></li>
+  <li><a href="#conclusion">Conclusion</a></li>
+</ol>
+</nav>
+<p>Modbus RTU is a simple serial communication protocol widely used to exchange data between PLCs, drives, energy analyzers and sensors. The physical layer is usually RS-485. A bus has one client (formerly called the master) and server devices (formerly called slaves) with addresses from 1 to 247; the client queries and the server responds.</p>
+<p>Because the protocol is simple, it is easy to assume it will &quot;just work&quot;; yet most problems in the field come from hardware details and timing. Below, we have grouped what to watch for when designing an STM32-based device under two headings: hardware and firmware.</p>
+<aside class="callout"><p><strong>In short:</strong> Terminate both ends of the bus, bias the bus at a single point, release the driver only after the last bit has been sent, separate frames with a 3.5-character silent interval and append the CRC in the correct byte order.</p></aside>
+<h2 id="hardware-the-rs-485-side">Hardware: The RS-485 Side</h2>
+<h3>Transceiver Selection</h3>
+<ul>
+  <li>Since the STM32 runs from 3.3 V, an RS-485 transceiver powered from 3.3 V removes the need for level shifting.</li>
+  <li>Transceivers with a <strong>fail-safe</strong> receiver keep it from outputting random characters when the bus is idle or disconnected.</li>
+  <li>The <strong>unit load</strong> rating determines how many devices can be connected to the bus. The standard specifies 32 unit loads per bus; with 1/8 unit-load transceivers, many more devices can share the same bus.</li>
+  <li>On long cable runs, <strong>slew-rate-limited</strong> transceivers reduce reflections and radiated noise.</li>
+</ul>
+<h3>Termination and Biasing</h3>
+<ul>
+  <li><strong>Termination:</strong> A resistor close to the cable&#x27;s characteristic impedance (typically 120 Ω) goes only at the two physical ends of the bus. Fitting a termination resistor on every device overloads the bus. Making termination selectable on the board with a jumper or a switch is a big help in the field.</li>
+  <li><strong>Biasing:</strong> When the bus is idle, there must be a defined voltage difference between A and B. To achieve this, A is pulled up to the supply and B is pulled down to ground through resistors at one point on the bus. Fail-safe transceivers reduce this need, but do not always eliminate it completely.</li>
+</ul>
+<h3>Protection and Isolation</h3>
+<p>Field cables are long and exposed to external disturbances. The bus is protected with TVS diodes (asymmetric types that suit the RS-485 common-mode range of −7 V to +12 V) and, where needed, series resistors or PTC fuses. In industrial environments where there may be a ground potential difference between devices, isolating the bus with a digital isolator and an isolated DC-DC converter is the safest solution.</p>
+<h3>Cabling</h3>
+<ul>
+  <li>Use twisted-pair cable; with shielded cable, ground the shield at a single point.</li>
+  <li>Connect devices in a daisy chain; avoid star topologies and long stubs.</li>
+  <li>Run a common reference (GND) conductor alongside A and B.</li>
+</ul>
+<h2 id="firmware-the-stm32-side">Firmware: The STM32 Side</h2>
+<h3>Direction Control (DE/RE)</h3>
+<p>RS-485 is half-duplex: only one device talks at a time. The driver is enabled (DE) before transmitting and released once transmission is complete. The most common mistake is releasing the driver while the last byte is still being sent; the end of that byte is then corrupted and the other side sees a CRC error.</p>
+<ul>
+  <li>Release the driver when the USART&#x27;s <strong>transmission complete (TC)</strong> flag is set. The transmit buffer empty (TXE) flag is set while the last byte is still on the bus.</li>
+  <li>The USART peripherals of many newer series, such as the STM32F0, F3, G0, G4, L4 and H7, have a hardware <strong>driver enable (DE)</strong> output. This makes direction control independent of software timing; check the reference manual for the series you are using.</li>
+</ul>
+<h3>Character Format</h3>
+<p>The default character format in the Modbus specification is 8 data bits, even parity and 1 stop bit (8E1). If no parity is used, 2 stop bits are specified (8N2). Devices using 8N1 are also common in the field; what matters is that all devices on the bus use the same setting. Making this setting adjustable from the device menu or the configuration software is very useful in the field.</p>
+<h3>Frame Timing</h3>
+<p>In Modbus RTU, frames must be separated by at least <strong>3.5 character times</strong> of silence (the inter-frame gap, t3.5), and the gap between characters within a frame must not exceed <strong>1.5 character times</strong> (t1.5). For an 11-bit character (start bit, 8 data bits, parity bit and stop bit), one character time is 11 / baud rate:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Baud rate</th><th>1 character</th><th>3.5 characters</th></tr></thead>
+<tbody>
+<tr><td>9600</td><td>≈ 1.15 ms</td><td>≈ 4.0 ms</td></tr>
+<tr><td>19200</td><td>≈ 0.57 ms</td><td>≈ 2.0 ms</td></tr>
+<tr><td>38400 and above</td><td>≈ 0.29 ms or less</td><td>1.75 ms (recommended fixed value)</td></tr>
+</tbody>
+</table></div>
+<p>For baud rates above 19200, the specification recommends fixed values of 750 µs for 1.5 characters and 1.75 ms for 3.5 characters.</p>
+<h3>Detecting the End of a Frame</h3>
+<p>An efficient approach on the STM32 is to receive into a buffer with DMA and detect the end of the frame separately:</p>
+<ul>
+  <li>The <strong>idle line (IDLE) interrupt</strong> is a common and practical method; however, it fires after a gap of about one character time and does not guarantee 3.5 characters.</li>
+  <li>For full compliance with the specification, the 3.5-character silence is measured with a <strong>timer (TIM)</strong> that is restarted on every received byte.</li>
+  <li>The <strong>receiver timeout</strong> feature of the USART peripherals in some STM32 series lets the hardware count this interval in bit times.</li>
+</ul>
+<h3>CRC Calculation</h3>
+<p>Every frame ends with a 16-bit CRC. The Modbus CRC is calculated with an initial value of 0xFFFF and the polynomial 0xA001 (0x8005 bit-reversed); the <strong>low byte goes first</strong> in the frame. A simple C implementation:</p>
+<pre><code>uint16_t modbus_crc16(const uint8_t *buf, uint16_t len)
+{
+    uint16_t crc = 0xFFFF;
+    for (uint16_t i = 0; i &lt; len; i++) {
+        crc ^= buf[i];
+        for (uint8_t b = 0; b &lt; 8; b++)
+            crc = (crc &amp; 1u) ? (uint16_t)((crc &gt;&gt; 1) ^ 0xA001u) : (uint16_t)(crc &gt;&gt; 1);
+    }
+    return crc; /* the low byte goes into the frame first, then the high byte */
+}</code></pre>
+<p>At high baud rates or under heavy load, a table-driven implementation is faster. The hardware CRC unit in some STM32 series can also be used once its polynomial and bit order are configured.</p>
+<h3>Function Codes and the Register Map</h3>
+<p>The most commonly used function codes:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Code</th><th>Function</th></tr></thead>
+<tbody>
+<tr><td>03</td><td>Read Holding Registers</td></tr>
+<tr><td>04</td><td>Read Input Registers</td></tr>
+<tr><td>06</td><td>Write Single Register</td></tr>
+<tr><td>16 (0x10)</td><td>Write Multiple Registers</td></tr>
+</tbody>
+</table></div>
+<p>When an unsupported request arrives, the device should return an exception code with the most significant bit of the function code set (code + 0x80): 01 Illegal Function, 02 Illegal Data Address, 03 Illegal Data Value. Documenting two points in the register map prevents most of the confusion in the field: whether addresses start at 0 or 1 (e.g., the 40001 notation) and in which order 32-bit values are written to the two registers.</p>
+<h2 id="common-problems-in-the-field">Common Problems in the Field</h2>
+<ul>
+  <li><strong>A and B swapped:</strong> Manufacturers may use the A/B and +/− labels differently; this is the first thing to check.</li>
+  <li><strong>Missing or excess termination:</strong> Signal reflections and random errors.</li>
+  <li><strong>No biasing:</strong> The receiver sees random characters while the bus is idle.</li>
+  <li><strong>Driver released too early:</strong> The last byte is corrupted, causing a CRC error.</li>
+  <li><strong>Parity and baud rate mismatch:</strong> The device does not respond at all.</li>
+  <li><strong>Response timeout too short:</strong> The client sends a new request without waiting for the server&#x27;s response.</li>
+  <li><strong>Ground potential difference:</strong> On long runs without isolation, errors and even hardware failures.</li>
+</ul>
+<h2 id="testing-tips">Testing Tips</h2>
+<p>During development, the fastest method is to test the device end to end with a USB–RS485 converter and Modbus client software running on a PC. A logic analyzer&#x27;s Modbus decoder lets you see the frames and their timing, while looking at the A–B differential voltage on an oscilloscope reveals termination and reflection problems.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>A robust Modbus RTU device is the combination of correctly selected and protected RS-485 hardware, correct direction control, specification-compliant timing and a well-documented register map.</p>
+<p>As part of our <a href="/en/embedded-software">embedded software development</a> service, we develop Modbus RTU and RS-485 communication for STM32-based devices together with the team that designs the hardware. If you need a communication board, take a look at our <a href="/en/electronics-pcb-design">electronics and PCB design</a> page as well.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section-alt" aria-labelledby="ilgili-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Related services</p>
+          <h2 id="ilgili-title" data-split-reveal>Need Help with This?</h2>
+        </header>
+        <div class="values-grid">
+            <article class="value-card tilt-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/></svg></span>
+              <h3>Embedded Software Development</h3>
+              <p>Embedded software tailored to your hardware and reliable in the field: written from scratch, or your existing software improved.</p>
+              <a class="link-u" href="/en/embedded-software">Learn more <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M9.5 3v4M14.5 3v4M9.5 17v4M14.5 17v4M3 9.5h4M3 14.5h4M17 9.5h4M17 14.5h4"/></svg></span>
+              <h3>Electronics and Hardware Design</h3>
+              <p>From requirements to schematic, from PCB design to prototype: control, power, sensor and communication boards.</p>
+              <a class="link-u" href="/en/electronics-pcb-design">Learn more <span aria-hidden="true">→</span></a>
+            </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="diger-yazilar-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Blog</p>
+          <h2 id="diger-yazilar-title" data-split-reveal>More Articles</h2>
+        </header>
+        <div class="values-grid">
+            <article class="value-card tilt-card blog-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12h4l3-7 5 14 3-7h5"/></svg></span>
+              <p class="blog-meta">PCB design · 6 min read</p>
+              <h3>EMC in PCB Design: 10 Rules for Preventing Noise from the Start</h3>
+              <p>Ground plane, current loops, decoupling, the switching power stage and connector filtering: 10 rules that prevent EMC problems from the start.</p>
+              <a class="link-u" href="/en/blog/pcb-emc-design-rules">Read the article <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card blog-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M9.5 3v4M14.5 3v4M9.5 17v4M14.5 17v4M3 9.5h4M3 14.5h4M17 9.5h4M17 14.5h4"/></svg></span>
+              <p class="blog-meta">Electronics design · 7 min read</p>
+              <h3>The Electronics Design Process: From Idea to Mass Production, Step by Step</h3>
+              <p>From requirements to schematic, from PCB to prototype and mass production: the steps an electronic board goes through and what to watch for at each one.</p>
+              <a class="link-u" href="/en/blog/electronics-design-process">Read the article <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card blog-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span>
+              <p class="blog-meta">Design review · 5 min read</p>
+              <h3>Pre-production Design Review: The 15 Most Common Mistakes</h3>
+              <p>From schematic to footprints, from layout to manufacturing files: 15 common mistakes to catch before you send a board to production.</p>
+              <a class="link-u" href="/en/blog/pcb-design-review-common-mistakes">Read the article <span aria-hidden="true">→</span></a>
+            </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section cta-band" aria-labelledby="cta-title">
+      <div class="container cta-inner">
+        <h2 id="cta-title" data-cta-split>Let&#x27;s Write Your Board&#x27;s Firmware Together.</h2>
+        <p class="cta-text">Tell us briefly about your project; we&#x27;ll get back to you with the scope, timeline and an estimated budget.</p>
+        <div class="cta-actions">
+          <a class="btn btn-accent" href="/en/quote?urun=Embedded%20software" data-burst>Get a Quote</a>
+          <a class="btn btn-ghost" href="/en/services" data-burst>All services</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ ORTAK ALT BİLGİ ============ -->
+  <footer class="site-footer">
+    <!-- Footer üstündeki çizgi: sayfa sonuna yaklaşırken soldan sağa dolar -->
+    <div class="footer-line" aria-hidden="true"><span class="footer-line-fill"></span></div>
+    <div class="container footer-inner">
+      <a class="logo logo-sm" href="/en/"><img src="/assets/logo/modware-logo-light.png" alt="ModWare" width="275" height="30"></a>
+      <p class="footer-meta"><span class="footer-location">İzmit, Kocaeli</span> <span class="footer-copy">© <span data-year>2026</span> ModWare Technology</span></p>
+      <!-- İletişim ikonları: e-posta ve LinkedIn -->
+      <div class="footer-contact">
+        <a class="footer-icon" href="mailto:info@modwaretechnology.com" aria-label="Send us an e-mail: info@modwaretechnology.com" title="info@modwaretechnology.com"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M4 7l8 6 8-6"/></svg></a>
+        <a class="footer-icon" href="https://www.linkedin.com/company/modware-technology1/" target="_blank" rel="noopener" aria-label="ModWare Technology on LinkedIn (opens in a new tab)" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 5a2 2 0 1 1-4-.002 2 2 0 0 1 4 .002zM7 8.48H3V21h4V8.48zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.72-2.91l.04-1.68z"/></svg></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Yukarı çık: sayfa sonuna gelince belirir (main.js) -->
+  <button class="to-top" id="to-top" type="button" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+
+  <!-- Kütüphaneler (CDN, sabit sürüm). main.js ve animations.js'den önce yüklenmeli.
+       GSAP + ScrollTrigger: animasyon · SplitType: harf bölme · Lenis: yumuşak kaydırma -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/split-type@0.3.4/umd/index.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
+  <script src="/js/main.js?v=31" defer></script>
+  <script src="/js/animations.js?v=31" defer></script>
+</body>
+</html>

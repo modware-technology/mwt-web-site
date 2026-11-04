@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Products: STM32 Boards, Sensors, LoRa and PRISM Power Modules | ModWare</title>
+  <meta name="description" content="STM32 development and control boards, current and pressure sensor boards, a LoRa module and the 12–48 V PRISM modular power platform. ModWare Technology, Türkiye.">
+  <link rel="canonical" href="https://modwaretechnology.com/en/products">
+  <link rel="alternate" hreflang="tr" href="https://modwaretechnology.com/urunler">
+  <link rel="alternate" hreflang="en" href="https://modwaretechnology.com/en/products">
+  <link rel="alternate" hreflang="x-default" href="https://modwaretechnology.com/urunler">
+
+  <!-- Paylaşım önizlemesi (LinkedIn, WhatsApp, X) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ModWare Technology">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="tr_TR">
+  <meta property="og:title" content="Products: STM32 Boards, Sensors, LoRa and PRISM Power Modules | ModWare">
+  <meta property="og:description" content="STM32 development and control boards, current and pressure sensor boards, a LoRa module and the 12–48 V PRISM modular power platform. ModWare Technology, Türkiye.">
+  <meta property="og:url" content="https://modwaretechnology.com/en/products">
+  <meta property="og:image" content="https://modwaretechnology.com/assets/og/modware-og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Sekme ikonu -->
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/assets/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <meta name="theme-color" content="#0a0f1c">
+
+  <!-- Preloader yalnızca JS çalışıyorsa görünür. GSAP/animations.js
+       5 sn içinde devralmazsa güvenlik zamanlayıcısı onu kaldırır. -->
+  <script>
+    document.documentElement.classList.add('is-loading');
+    window.__preloaderSafety = setTimeout(function () {
+      document.documentElement.classList.remove('is-loading');
+    }, 5000);
+  </script>
+
+  <!-- Fontlar: Space Grotesk (başlıklar) + Inter (metin) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+
+  <link rel="stylesheet" href="/css/style.css?v=31">
+</head>
+<body data-page="urunler">
+
+  <!-- ============ PRELOADER ============ -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader-inner">
+      <p class="preloader-word" data-preloader-word>MODWARE</p>
+      <div class="preloader-bar"><span class="preloader-bar-fill"></span></div>
+      <p class="preloader-count"><span data-preloader-count>0</span>%</p>
+    </div>
+  </div>
+
+  <!-- ============ ARKA PLAN KATMANI (sabit, içeriğin arkasında) ============ -->
+  <div class="bg-layer" aria-hidden="true">
+    <div class="bg-glow"></div>
+    <div class="bg-shade"></div>
+    <div class="bg-noise"></div>
+  </div>
+
+  <!-- ============ ÖZEL İMLEÇ (yalnızca fareli cihazlarda) ============ -->
+  <div class="cursor" aria-hidden="true">
+    <div class="cursor-frame"><i></i><i></i><i></i><i></i></div>
+    <div class="cursor-dot"></div>
+  </div>
+
+  <!-- ============ KAYDIRMA İLERLEME ÇUBUĞU ============ -->
+  <div class="scroll-progress" aria-hidden="true"><span class="scroll-progress-bar"></span></div>
+
+  <!-- ============ ORTAK ÜST MENÜ ============
+       Bu blok her sayfada aynıdır. Aktif sayfa,
+       main.js tarafından <body data-page> değerine göre işaretlenir. -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="/en/" aria-label="ModWare Technology home">
+        <img src="/assets/logo/modware-logo-light.png" alt="ModWare" width="275" height="30">
+      </a>
+
+      <!-- Mobilde menüyü açıp kapatan buton -->
+      <button class="nav-toggle" id="nav-toggle" type="button"
+              aria-controls="site-nav" aria-expanded="false" aria-label="Open menu">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="Main menu">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="/en/" data-nav="home">Home</a></li>
+          <li><a class="nav-link" href="/en/services" data-nav="hizmetler">Services</a></li>
+          <li><a class="nav-link" href="/en/products" data-nav="urunler">Products</a></li>
+          <li><a class="nav-link" href="/en/about" data-nav="hakkimizda">About</a></li>
+          <li><a class="nav-link" href="/en/blog/" data-nav="blog">Blog</a></li>
+        </ul>
+        <a class="btn btn-accent nav-cta" href="/en/quote">Get a Quote</a>
+        <a class="lang-switch" href="/urunler" hreflang="tr" lang="tr" aria-label="Türkçe" title="Türkçe">TR</a>
+      </nav>
+    </div>
+  </header>
+  <!-- ============ /ORTAK ÜST MENÜ ============ -->
+
+  <main id="main">
+
+    <!-- ============ ÜRÜNLER: SAYFA BAŞLIĞI ============ -->
+    <section class="page-head" aria-labelledby="products-title">
+      <div class="container page-head-inner">
+        <p class="eyebrow" data-anim="hero">Products</p>
+        <h1 id="products-title" data-split-intro>Modules That Work Together</h1>
+        <p class="page-lede" data-anim="hero">Development boards, sensors, communication and power modules. Click a card for technical details.</p>
+
+        <!-- Kategori filtresi (main.js) -->
+        <div class="product-filters" role="group" aria-label="Filter by category" data-anim="hero">
+          <button class="filter-chip" type="button" data-filter="all" aria-pressed="true">All</button><button class="filter-chip" type="button" data-filter="gelistirme" aria-pressed="false">Development & Control</button><button class="filter-chip" type="button" data-filter="sensor" aria-pressed="false">Sensors</button><button class="filter-chip" type="button" data-filter="haberlesme" aria-pressed="false">Communication</button><button class="filter-chip" type="button" data-filter="guc" aria-pressed="false">Power</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ÜRÜN GALERİSİ ============
+         Kartlar ve pencere (modal) içeriği aynı ürün listesinden üretildi.
+         Kartlar filtre başlıklarıyla aynı dört grupta durur (data-group); filtre grupları
+         gösterip gizler (main.js). Kartın data-category'si grubuyla aynı olmalı.
+         Görseller: assets/urunler/*.webp (şeffaf arka planlı). -->
+    <section class="section product-gallery" aria-label="Product list">
+      <div class="container">
+        <div class="product-groups" id="product-grid">
+
+          <section class="product-group" data-group="gelistirme" aria-labelledby="grup-gelistirme">
+            <header class="product-group-head">
+              <h2 class="product-group-title" id="grup-gelistirme" data-split-reveal>Development &amp; Control</h2>
+            </header>
+            <div class="product-grid">
+
+              <article class="product-card" data-category="gelistirme" data-product="spark">
+                <div class="product-image-wrapper">
+              
+                  <img src="/assets/urunler/spark.webp?v=2" alt="ModWare Spark board" width="642" height="430" loading="lazy" decoding="async">
+                </div>
+                <div class="product-body">
+                  <p class="product-code">MW-SPARK · Development &amp; Control</p>
+                  <h3 class="product-title">MODWARE SPARK</h3>
+                  <p class="product-slogan">The shortest path from idea to working prototype.</p>
+                  <p class="product-desc">Compact STM32-based development board. Designed for testing communication protocols, developing new firmware and rapid prototyping.</p>
+                  <ul class="product-tags" aria-label="Highlights"><li>STM32</li><li>Rapid prototyping</li></ul>
+                  <button class="product-more" type="button" aria-haspopup="dialog">
+                    Take a look
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                  </button>
+                </div>
+              </article>
+
+              <article class="product-card" data-category="gelistirme" data-product="axis">
+                <div class="product-image-wrapper">
+              
+                  <img src="/assets/urunler/axis.webp" alt="ModWare Axis board" width="640" height="642" loading="lazy" decoding="async">
+                </div>
+                <div class="product-body">
+                  <p class="product-code">MW-AXIS · Development &amp; Control</p>
+                  <h3 class="product-title">MODWARE AXIS</h3>
+                  <p class="product-slogan">Buttons, joysticks, vehicles: all from one controller.</p>
+                  <p class="product-desc">Versatile control platform with a microcontroller and digital and analog interfaces. Connect buttons, switches and joysticks to control land and air vehicles or simulations.</p>
+                  <ul class="product-tags" aria-label="Highlights"><li>Digital I/O</li><li>Analog I/O</li><li>Joystick</li><li>Simulation</li></ul>
+                  <button class="product-more" type="button" aria-haspopup="dialog">
+                    Take a look
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                  </button>
+                </div>
+              </article>
+
+              <article class="product-card" data-category="gelistirme" data-product="pwr01-ctl">
+                <div class="product-image-wrapper">
+                  <span class="product-badge">PRISM</span>
+                  <img src="/assets/urunler/pwr01-ctl.webp" alt="ModWare Pilot board" width="1265" height="841" loading="lazy" decoding="async">
+                </div>
+                <div class="product-body">
+                  <p class="product-code">MW-PILOT · Control and interface</p>
+                  <h3 class="product-title">MODWARE PILOT</h3>
+                  <p class="product-slogan">Displays, manages, logs, communicates.</p>
+                  <p class="product-desc">STM32G474-based control and interface board. Managed on site with a 2.0&quot; color display, encoder and keys, and remotely over isolated USB-C and RS-485 (Modbus RTU).</p>
+                  <ul class="product-tags" aria-label="Highlights"><li>STM32G474</li><li>Modbus RTU</li><li>Isolated USB-C</li><li>FRAM</li></ul>
+                  <button class="product-more" type="button" aria-haspopup="dialog">
+                    Take a look
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                  </button>
+                </div>
+              </article>
+
+            </div>
+          </section>
+
+          <section class="product-group" data-group="sensor" aria-labelledby="grup-sensor">
+            <header class="product-group-head">
+              <h2 class="product-group-title" id="grup-sensor" data-split-reveal>Sensors</h2>
+            </header>
+            <div class="product-grid">
+
+              <article class="product-card" data-category="sensor" data-product="sense">
+                <div class="product-image-wrapper">
+              
+                  <img src="/assets/urunler/sense.webp" alt="ModWare Sense board" width="1014" height="642" loading="lazy" decoding="async">
+                </div>
+                <div class="product-body">
+                  <p class="product-code">MW-SENSE · Sensors</p>
+                  <h3 class="product-title">MODWARE SENSE</h3>
+                  <p class="product-slogan">Accurate measurement, safe systems.</p>
+                  <p class="product-desc">Precisely measures current via current sensors. Provides real-time current tracking for motor drivers and energy monitoring projects.</p>
+                  <ul class="product-tags" aria-label="Highlights"><li>Current measurement</li><li>Real-time</li><li>Motor drivers</li><li>Energy monitoring</li></ul>
+                  <button class="product-more" type="button" aria-haspopup="dialog">
+                    Take a look
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                  </button>
+                </div>
+              </article>
+
+              <article class="product-card" data-category="sensor" data-product="aero">
+                <div class="product-image-wrapper">
+              
+                  <img src="/assets/urunler/aero.webp" alt="ModWare Aero board" width="952" height="660" loading="lazy" decoding="async">
+                </div>
+                <div class="product-body">
+                  <p class="product-code">MW-AERO · Sensors</p>
+                  <h3 class="product-title">MODWARE AERO</h3>
+                  <p class="product-slogan">Airspeed and altitude on one board.</p>
+                  <p class="product-desc">Measures airspeed and altitude simultaneously with high precision using a dual pressure sensor. Optimized for flight control in UAV, drone and aviation projects.</p>
+                  <ul class="product-tags" aria-label="Highlights"><li>Dual pressure sensor</li><li>Airspeed</li><li>Altitude</li><li>I²C</li></ul>
+                  <button class="product-more" type="button" aria-haspopup="dialog">
+                    Take a look
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                  </button>
+                </div>
+              </article>
+
+            </div>
+          </section>
+
+          <section class="product-group" data-group="haberlesme" aria-labelledby="grup-haberlesme">
+            <header class="product-group-head">
+              <h2 class="product-group-title" id="grup-haberlesme" data-split-reveal>Communication</h2>
+            </header>
+            <div class="product-grid">
+
+              <article class="product-card" data-category="haberlesme" data-product="link">
+                <div class="product-image-wrapper">
+              
+                  <img src="/assets/urunler/link.webp?v=2" alt="ModWare Link board" width="760" height="542" loading="lazy" decoding="async">
+                </div>
+                <div class="product-body">
+                  <p class="product-code">MW-LINK · Communication</p>
+                  <h3 class="product-title">MODWARE LINK</h3>
+                  <p class="product-slogan">Long range, low power, uninterrupted data.</p>
+                  <p class="product-desc">Reliable data transfer for IoT applications with an STM32 microcontroller and an integrated LoRa module. Programmed over USB/UART, debugged over SWD.</p>
+                  <ul class="product-tags" aria-label="Highlights"><li>STM32</li><li>LoRa</li><li>USB/UART</li><li>SWD</li></ul>
+                  <button class="product-more" type="button" aria-haspopup="dialog">
+                    Take a look
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                  </button>
+                </div>
+              </article>
+
+            </div>
+          </section>
+
+          <section class="product-group" data-group="guc" aria-labelledby="grup-guc">
+            <header class="product-group-head">
+              <h2 class="product-group-title" id="grup-guc" data-split-reveal>Power</h2>
+            </header>
+            <div class="product-grid">
+
+              <article class="product-card" data-category="guc" data-product="energy">
+                <div class="product-image-wrapper">
+              
+                  <img src="/assets/urunler/energy.webp" alt="ModWare Energy board" width="780" height="560" loading="lazy" decoding="async">
+                </div>
+                <div class="product-body">
+                  <p class="product-code">MW-ENERGY · Power</p>
+                  <h3 class="product-title">MODWARE ENERGY</h3>
+                  <p class="product-slogan">The energy backbone of the ecosystem.</p>
+                  <p class="product-desc">Buck converter architecture that consolidates complex wiring onto a single board. Noise filtering provides stable, clean voltage for sensitive sensors.</p>
+                  <ul class="product-tags" aria-label="Highlights"><li>Buck converter</li><li>Noise filtering</li></ul>
+                  <button class="product-more" type="button" aria-haspopup="dialog">
+                    Take a look
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                  </button>
+                </div>
+              </article>
+
+              <article class="product-card" data-category="guc" data-product="power">
+                <div class="product-image-wrapper">
+              
+                  <img src="/assets/urunler/power.webp" alt="ModWare Power board" width="870" height="576" loading="lazy" decoding="async">
+                </div>
+                <div class="product-body">
+                  <p class="product-code">MW-POWER · Power</p>
+                  <h3 class="product-title">MODWARE POWER</h3>
+                  <p class="product-slogan">Fixed 5 V and 15 V from inputs up to 75 V.</p>
+                  <p class="product-desc">Safely accepts input voltages up to 75 V and delivers fixed 5 V and 15 V outputs. Powers many modules at once, from motor drivers to sensor boards.</p>
+                  <ul class="product-tags" aria-label="Highlights"><li>75 V input</li><li>5 V output</li><li>15 V output</li></ul>
+                  <button class="product-more" type="button" aria-haspopup="dialog">
+                    Take a look
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                  </button>
+                </div>
+              </article>
+
+              <article class="product-card" data-category="guc" data-product="pwr01-base">
+                <div class="product-image-wrapper">
+                  <span class="product-badge">PRISM</span>
+                  <img src="/assets/urunler/pwr01-base.webp" alt="ModWare Guard board" width="1400" height="758" loading="lazy" decoding="async">
+                </div>
+                <div class="product-body">
+                  <p class="product-code">MW-GUARD · Carrier and protection</p>
+                  <h3 class="product-title">MODWARE GUARD</h3>
+                  <p class="product-slogan">Protects the input, distributes power, measures everything.</p>
+                  <p class="product-desc">Carrier and protection board for the PRISM platform. Takes the 12–48 V input at a single point, connects three power modules to a common bus and shuts off all outputs in hardware if a fault occurs.</p>
+                  <ul class="product-tags" aria-label="Highlights"><li>12–48 V</li><li>3 module slots</li><li>Reverse-polarity protection</li><li>Power measurement</li></ul>
+                  <button class="product-more" type="button" aria-haspopup="dialog">
+                    Take a look
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                  </button>
+                </div>
+              </article>
+
+              <article class="product-card" data-category="guc" data-product="pwr-bb">
+                <div class="product-image-wrapper">
+                  <span class="product-badge">PRISM</span>
+                  <img src="/assets/urunler/pwr-bb.webp" alt="ModWare Shift 24 / 12 board" width="1400" height="1031" loading="lazy" decoding="async">
+                </div>
+                <div class="product-body">
+                  <p class="product-code">MW-SHIFT · Buck-boost power module</p>
+                  <h3 class="product-title">MODWARE SHIFT 24 / 12</h3>
+                  <p class="product-slogan">Steady output whether the input rises or falls.</p>
+                  <p class="product-desc">Four-switch buck-boost power module. Delivers a fixed 24 V or 12 V across the full 12–48 V input range; with a few part changes, the same board becomes SHIFT 24 or SHIFT 12.</p>
+                  <ul class="product-tags" aria-label="Highlights"><li>Buck-boost</li><li>24 V / 12 V</li><li>eFuse</li><li>Power measurement</li></ul>
+                  <button class="product-more" type="button" aria-haspopup="dialog">
+                    Take a look
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                  </button>
+                </div>
+              </article>
+
+              <article class="product-card" data-category="guc" data-product="pwr-bk">
+                <div class="product-image-wrapper">
+                  <span class="product-badge">PRISM</span>
+                  <img src="/assets/urunler/pwr-bk.webp" alt="ModWare Pure 5 board" width="1400" height="984" loading="lazy" decoding="async">
+                </div>
+                <div class="product-body">
+                  <p class="product-code">MW-PURE · 5 V power module</p>
+                  <h3 class="product-title">MODWARE PURE 5</h3>
+                  <p class="product-slogan">Clean 5 V directly from 48 V.</p>
+                  <p class="product-desc">5 V / 3 A power module with a 100 V class synchronous buck controller. A monitored, protected 5 V channel for logic, sensor, communication and embedded computer loads.</p>
+                  <ul class="product-tags" aria-label="Highlights"><li>5 V / 3 A</li><li>100 V class</li><li>eFuse</li><li>Temperature measurement</li></ul>
+                  <button class="product-more" type="button" aria-haspopup="dialog">
+                    Take a look
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                  </button>
+                </div>
+              </article>
+
+            </div>
+          </section>
+        </div>
+        <p class="product-empty" id="product-empty" hidden>No products in this category.</p>
+      </div>
+    </section>
+
+    <!-- ============ PRISM PLATFORMU (model kodu MW-PWR01) ============
+         Kartlar birbirine nasıl bağlanıyor: güç yolu + kontrol yolu.
+         Şemadaki kartlara tıklanınca ürün penceresi açılır (main.js, data-open-product). -->
+    <section class="section section-alt platform" id="mw-pwr01" aria-labelledby="platform-title">
+      <div class="container">
+        <header class="section-head platform-head">
+          <p class="eyebrow">Platform</p>
+          <h2 id="platform-title" data-split-reveal>How Do the PRISM Boards Work Together?</h2>
+          <p>GUARD protects the input and distributes power, plug-in SHIFT and PURE modules generate the required voltages, and PILOT manages them all and connects them to external systems.</p>
+        </header>
+
+        <div class="pf">
+          <div class="pf-lane">
+            <p class="pf-lane-title">Power path</p>
+            <div class="pf-row">
+              <div class="pf-node pf-node-text">
+                <span class="pf-big">12–48 V</span>
+                <span class="pf-role">DC input · battery / power supply</span>
+              </div>
+              <svg class="pf-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              <button class="pf-node" type="button" data-open-product="pwr01-base">
+                <img src="/assets/urunler/pwr01-base.webp" alt="" width="1400" height="758" loading="lazy" decoding="async">
+                <span class="pf-code">GUARD</span>
+                <span class="pf-role">Protection, measurement and 3 module slots</span>
+              </button>
+              <svg class="pf-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              <div class="pf-stack">
+                <button class="pf-node" type="button" data-open-product="pwr-bb">
+                <img src="/assets/urunler/pwr-bb.webp" alt="" width="1400" height="1031" loading="lazy" decoding="async">
+                <span class="pf-code">SHIFT 24 / 12</span>
+                <span class="pf-role">SHIFT 24 · 24 V / 2 A<br>SHIFT 12 · 12 V / 5 A</span>
+              </button>
+                <button class="pf-node" type="button" data-open-product="pwr-bk">
+                <img src="/assets/urunler/pwr-bk.webp" alt="" width="1400" height="984" loading="lazy" decoding="async">
+                <span class="pf-code">PURE 5</span>
+                <span class="pf-role">5 V / 3 A</span>
+              </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="pf-lane">
+            <p class="pf-lane-title">Control path</p>
+            <div class="pf-row">
+              <div class="pf-node pf-node-text">
+                <span class="pf-big">GUARD</span>
+                <span class="pf-role">Measurement and fault signals</span>
+              </div>
+              <svg class="pf-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              <button class="pf-node" type="button" data-open-product="pwr01-ctl">
+                <img src="/assets/urunler/pwr01-ctl.webp" alt="" width="1265" height="841" loading="lazy" decoding="async">
+                <span class="pf-code">PILOT</span>
+                <span class="pf-role">Display, control and event logging</span>
+              </button>
+              <svg class="pf-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              <div class="pf-node pf-node-text">
+                <span class="pf-big">PC · PLC · SCADA</span>
+                <span class="pf-role">Isolated USB-C · RS-485 Modbus RTU</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kartın içine bakın: kaydırdıkça PURE 5 (kart kodu MW-PWR-BK) açılır, yukarı çıkınca birleşir -->
+        <div class="bk-explode"
+             data-seq-path="/assets/sequence/pwr-bk/" data-seq-count="114"
+             data-seq-path-sm="/assets/sequence/pwr-bk-sm/" data-seq-count-sm="57"
+             data-seq-version="2">
+          <div class="bk-stage">
+            <div class="bk-frame">
+              <img class="seq-poster" src="/assets/sequence/pwr-bk/001.webp?v=2" alt="ModWare Pure 5 power module board" width="1252" height="882" loading="lazy" decoding="async">
+              <canvas class="seq-canvas" aria-hidden="true" hidden></canvas>
+            </div>
+          </div>
+          <ol class="bk-steps">
+            <li class="bk-step">
+              <p class="eyebrow">Look inside the board</p>
+              <h3>MODWARE PURE 5</h3>
+              <p>56 × 45 mm. 5 V / 3 A from a 12–48 V input in a single step; no intermediate voltage stage needed.</p>
+            </li>
+            <li class="bk-step">
+              <span class="bk-part">Conversion</span>
+              <h3>100 V Class Synchronous Buck</h3>
+              <p>250 kHz switching; clean 5 V directly from 48 V.</p>
+            </li>
+            <li class="bk-step">
+              <span class="bk-part">Protection</span>
+              <h3>Electronic Fuse</h3>
+              <p>Software on/off control, overcurrent protection and reverse-current blocking.</p>
+            </li>
+            <li class="bk-step">
+              <span class="bk-part">Monitoring</span>
+              <h3>Measurement and Temperature</h3>
+              <p>Voltage, current, power and board temperature are measured continuously; same interface as the SHIFT modules.</p>
+            </li>
+            <li class="bk-step">
+              <span class="bk-part">5 V / 3 A</span>
+              <h3>Back in One Piece</h3>
+              <p>Plugs into a GUARD slot and is monitored from PILOT.</p>
+              <button class="btn btn-ghost" type="button" data-open-product="pwr-bk">See details</button>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ ÜRÜN DETAY PENCERESİ ============
+       Karta tıklanınca main.js doldurur ve açar (GSAP: ölçek + belirme).
+       data-lenis-prevent: pencere içinde kaydırma Lenis'e takılmasın. -->
+  <dialog class="product-modal" id="product-modal" aria-labelledby="pm-title" data-lenis-prevent>
+    <div class="pm-inner">
+      <button class="pm-close" type="button" data-pm-close aria-label="Close dialog">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <div class="pm-media">
+        <div class="product-image-wrapper pm-image">
+          <img id="pm-img" src="" alt="" width="1400" height="1000">
+        </div>
+        <div class="pm-thumbs" id="pm-thumbs" hidden></div>
+      </div>
+      <div class="pm-content">
+        <p class="product-code" id="pm-code"></p>
+        <h2 class="pm-title" id="pm-title"></h2>
+        <p class="product-slogan" id="pm-slogan"></p>
+        <p class="pm-long" id="pm-long"></p>
+        <h3 class="pm-subtitle">Technical Specifications</h3>
+        <dl class="pm-specs" id="pm-specs"></dl>
+        <ul class="product-tags" id="pm-tags" aria-label="Highlights"></ul>
+        <p class="pm-note" id="pm-note" hidden>In the design phase: values are design targets, and prototype validation is planned.</p>
+        <div class="pm-actions">
+          <a class="btn btn-accent" id="pm-quote" href="/en/quote">Get a Quote</a>
+          <button class="btn btn-ghost" type="button" data-pm-close>Close</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Ürün verisi (pencere içeriği). Kart metinleriyle aynı kaynaktan üretildi. -->
+  <script type="application/json" id="product-data">{"spark": {"code": "MW-SPARK", "title": "MODWARE SPARK", "slogan": "The shortest path from idea to working prototype.", "long": "Bringing your ideas to life starts with the right development board. This compact STM32-based board is designed for testing communication protocols, developing new firmware and building prototypes quickly. Whether you use it for education or industrial projects, its flexible design helps you turn any idea into reality.", "specs": [["Microcontroller", "STM32"], ["Use cases", "Prototyping, firmware development, protocol testing"], ["Intended for", "Education and industrial projects"], ["Form factor", "Compact development board"]], "tags": ["STM32", "Rapid prototyping"], "img": "spark.webp?v=2", "img2": null, "platform": null}, "sense": {"code": "MW-SENSE", "title": "MODWARE SENSE", "slogan": "Accurate measurement, safe systems.", "long": "Without accurate measurement, you cannot build a robust system. ModWare Sense precisely measures current via current sensors, giving developers reliable data. Whether you use it in motor drivers or energy monitoring projects, real-time current tracking makes your designs safer and more efficient.", "specs": [["Measurement", "Current (via current sensors)"], ["Tracking", "Real-time"], ["Applications", "Motor drivers, energy monitoring"], ["Output", "Reliable measurement data for developers"]], "tags": ["Current measurement", "Real-time", "Motor drivers", "Energy monitoring"], "img": "sense.webp", "img2": null, "platform": null}, "aero": {"code": "MW-AERO", "title": "MODWARE AERO", "slogan": "Airspeed and altitude on one board.", "long": "Combine airspeed and altitude measurement on a single board. With its onboard dual pressure sensor, ModWare Aero tracks airspeed while also providing high-precision altitude data. Optimized for unmanned aerial vehicles, drones and aviation projects, this board strengthens your flight control algorithms with reliable data.", "specs": [["Sensor", "Dual pressure sensor"], ["Measurement", "Airspeed and altitude"], ["Interface", "I²C (VCC, GND, SDA, SCL, INT)"], ["Applications", "UAVs, drones, aviation"]], "tags": ["Dual pressure sensor", "Airspeed", "Altitude", "I²C"], "img": "aero.webp", "img2": null, "platform": null}, "link": {"code": "MW-LINK", "title": "MODWARE LINK", "slogan": "Long range, low power, uninterrupted data.", "long": "A compact solution developed for long-range, low-power communication projects. Its STM32 microcontroller and integrated LoRa module provide reliable data transfer in IoT applications. It is easy to program over USB/UART, while GPIO output pins and an SWD debug port speed up development. It suits a wide range of uses, from sensor networks to smart city applications.", "specs": [["Microcontroller", "STM32"], ["Communication", "Integrated LoRa module"], ["Programming", "USB/UART"], ["Debugging", "SWD debug port"], ["I/O", "GPIO output pins"]], "tags": ["STM32", "LoRa", "USB/UART", "SWD"], "img": "link.webp?v=2", "img2": null, "platform": null}, "axis": {"code": "MW-AXIS", "title": "MODWARE AXIS", "slogan": "Buttons, joysticks, vehicles: all from one controller.", "long": "Simplify your development process. ModWare Axis is a versatile control platform with an onboard microcontroller and digital/analog connection interfaces. By connecting peripherals such as buttons, switches and joysticks, you can control a variety of systems (for example, land and air vehicles or simulation systems).", "specs": [["Processor", "Onboard microcontroller"], ["Interface", "Digital and analog I/O"], ["Peripherals", "Buttons, switches, joysticks"], ["Applications", "Land/air vehicles, simulation"]], "tags": ["Digital I/O", "Analog I/O", "Joystick", "Simulation"], "img": "axis.webp", "img2": null, "platform": null}, "energy": {"code": "MW-ENERGY", "title": "MODWARE ENERGY", "slogan": "The energy backbone of the ecosystem.", "long": "ModWare Energy forms the high-performance energy backbone of the entire ModWare ecosystem. Designed to simplify complex wiring and replace it with a single-board solution, it uses an advanced buck converter architecture to provide stable, regulated voltage to your system. High-quality SMD components and advanced noise-filtering circuitry effectively reduce signal interference and voltage fluctuations, so even the most sensitive sensors and controllers run with industrial-grade reliability.", "specs": [["Architecture", "Buck converter"], ["Output", "Stable, regulated voltage"], ["Filtering", "Noise-filtering circuitry"], ["Components", "High-quality SMD"]], "tags": ["Buck converter", "Noise filtering"], "img": "energy.webp", "img2": null, "platform": null}, "power": {"code": "MW-POWER", "title": "MODWARE POWER", "slogan": "Fixed 5 V and 15 V from inputs up to 75 V.", "long": "ModWare Power safely accepts input voltages up to 75 V and produces fixed 5 V and 15 V outputs. By powering different modules at the same time, from motor drivers to sensor boards, it simplifies complex projects. With its compact, efficient design, it is the stable power supply you need as your system grows.", "specs": [["Input", "Up to 75 V"], ["Outputs", "Fixed 5 V and 15 V"], ["Supply", "Multiple modules at once"], ["Design", "Compact, efficient"]], "tags": ["75 V input", "5 V output", "15 V output"], "img": "power.webp", "img2": null, "platform": null}, "pwr01-base": {"code": "MW-GUARD", "title": "MODWARE GUARD", "slogan": "Protects the input, distributes power, measures everything.", "long": "The backbone of the system. It takes the 12–48 V DC input at a single point, protects against reverse connection, short circuits, overvoltage and undervoltage, and connects three power modules to a common bus. When a module signals a fault, it shuts off all outputs independently of software. MOSFET-based reverse-polarity protection instead of a diode keeps losses and heat low; the fuse, cutoff switch, measurement and module bus are combined on a single board.", "specs": [["Input", "12–48 V DC"], ["Total output target", "123 W (with input above ≈18 V; ≈80 W at 12 V input)"], ["Module slots", "3, plug-in"], ["Dimensions", "220 × 85 mm"]], "tags": ["12–48 V", "3 module slots", "Reverse-polarity protection", "Power measurement"], "img": "pwr01-base.webp", "img2": null, "platform": true}, "pwr-bb": {"code": "MW-SHIFT", "title": "MODWARE SHIFT 24 / 12", "slogan": "Steady output whether the input rises or falls.", "long": "Its four-switch buck-boost architecture delivers a fixed 24 V or 12 V across the entire 12–48 V input range. With a few part changes, the same board becomes two products: SHIFT 24 (24 V / 2 A) and SHIFT 12 (12 V / 5 A). The electronic fuse is switched on and off by software; voltage, current, power and temperature are measured. The output stays constant even as the battery voltage drops.", "specs": [["Output", "SHIFT 24: 24 V / 2 A · SHIFT 12: 12 V / 5 A"], ["Architecture", "4-switch buck-boost"], ["Dimensions", "70 × 70 mm"]], "tags": ["Buck-boost", "24 V / 12 V", "eFuse", "Power measurement"], "img": "pwr-bb.webp", "img2": null, "platform": true}, "pwr-bk": {"code": "MW-PURE", "title": "MODWARE PURE 5", "slogan": "Clean 5 V directly from 48 V.", "long": "A 100 V class synchronous buck controller produces 5 V / 3 A from a 12–48 V input in a single step; no intermediate voltage stage is needed. The electronic fuse provides on/off control, overcurrent protection and reverse-current blocking; if an external voltage is applied to the output, it cuts off the reverse current. Voltage, current, power and temperature are measured; it uses the same interface and software as the SHIFT modules.", "specs": [["Output", "5 V / 3 A, regulated"], ["Controller", "100 V class synchronous buck, 250 kHz"], ["Dimensions", "56 × 45 mm"]], "tags": ["5 V / 3 A", "100 V class", "eFuse", "Temperature measurement"], "img": "pwr-bk.webp", "img2": null, "platform": true}, "pwr01-ctl": {"code": "MW-PILOT", "title": "MODWARE PILOT", "slogan": "Displays, manages, logs, communicates.", "long": "The brain of the system. It switches channels on and off, sets outputs, displays measurements and logs events. A 2.0\" color display, a push-button encoder and keys allow on-site monitoring and adjustment; galvanically isolated USB-C and RS-485 (Modbus RTU) enable remote management. Settings, last state and the event log are retained in FRAM, even through a power outage; the global fault LED is driven directly by hardware, independent of software.", "specs": [["Microcontroller", "STM32G474"], ["Display", "2.0\" color, 240 × 320"], ["Communication", "Isolated USB-C, RS-485 Modbus RTU (9600–115200 baud)"], ["Logging", "FRAM event log; real-time clock (optional backup battery holder)"], ["Dimensions", "120 × 85 mm"]], "tags": ["STM32G474", "Modbus RTU", "Isolated USB-C", "FRAM"], "img": "pwr01-ctl.webp", "img2": "pwr01-ctl-top.webp", "platform": true}}</script>
+
+  <!-- ============ ORTAK ALT BİLGİ ============ -->
+  <footer class="site-footer">
+    <!-- Footer üstündeki çizgi: sayfa sonuna yaklaşırken soldan sağa dolar -->
+    <div class="footer-line" aria-hidden="true"><span class="footer-line-fill"></span></div>
+    <div class="container footer-inner">
+      <a class="logo logo-sm" href="/en/"><img src="/assets/logo/modware-logo-light.png" alt="ModWare" width="275" height="30"></a>
+      <p class="footer-meta"><span class="footer-location">İzmit, Kocaeli</span> <span class="footer-copy">© <span data-year>2026</span> ModWare Technology</span></p>
+      <!-- İletişim ikonları: e-posta ve LinkedIn -->
+      <div class="footer-contact">
+        <a class="footer-icon" href="mailto:info@modwaretechnology.com" aria-label="Send us an e-mail: info@modwaretechnology.com" title="info@modwaretechnology.com"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M4 7l8 6 8-6"/></svg></a>
+        <a class="footer-icon" href="https://www.linkedin.com/company/modware-technology1/" target="_blank" rel="noopener" aria-label="ModWare Technology on LinkedIn (opens in a new tab)" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 5a2 2 0 1 1-4-.002 2 2 0 0 1 4 .002zM7 8.48H3V21h4V8.48zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.72-2.91l.04-1.68z"/></svg></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Yukarı çık: sayfa sonuna gelince belirir (main.js) -->
+  <button class="to-top" id="to-top" type="button" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+
+  <!-- Kütüphaneler (CDN, sabit sürüm). main.js ve animations.js'den önce yüklenmeli.
+       GSAP + ScrollTrigger: animasyon · SplitType: harf bölme · Lenis: yumuşak kaydırma -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/split-type@0.3.4/umd/index.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
+  <script src="/js/main.js?v=31" defer></script>
+  <script src="/js/animations.js?v=31" defer></script>
+</body>
+</html>

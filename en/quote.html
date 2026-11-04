@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Get a Quote: Electronics Design, PCB and Embedded Software | ModWare</title>
+  <meta name="description" content="Get a quote for electronics and hardware design, PCB design and manufacturing, embedded software or our products. We reply with scope, timeline and budget.">
+  <link rel="canonical" href="https://modwaretechnology.com/en/quote">
+  <link rel="alternate" hreflang="tr" href="https://modwaretechnology.com/teklif">
+  <link rel="alternate" hreflang="en" href="https://modwaretechnology.com/en/quote">
+  <link rel="alternate" hreflang="x-default" href="https://modwaretechnology.com/teklif">
+
+  <!-- Paylaşım önizlemesi (LinkedIn, WhatsApp, X) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ModWare Technology">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="tr_TR">
+  <meta property="og:title" content="Get a Quote: Electronics Design, PCB and Embedded Software | ModWare">
+  <meta property="og:description" content="Get a quote for electronics and hardware design, PCB design and manufacturing, embedded software or our products. We reply with scope, timeline and budget.">
+  <meta property="og:url" content="https://modwaretechnology.com/en/quote">
+  <meta property="og:image" content="https://modwaretechnology.com/assets/og/modware-og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Sekme ikonu -->
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/assets/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <meta name="theme-color" content="#0a0f1c">
+
+  <!-- Preloader yalnızca JS çalışıyorsa görünür. GSAP/animations.js
+       5 sn içinde devralmazsa güvenlik zamanlayıcısı onu kaldırır. -->
+  <script>
+    document.documentElement.classList.add('is-loading');
+    window.__preloaderSafety = setTimeout(function () {
+      document.documentElement.classList.remove('is-loading');
+    }, 5000);
+  </script>
+
+  <!-- Fontlar: Space Grotesk (başlıklar) + Inter (metin) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+
+  <link rel="stylesheet" href="/css/style.css?v=31">
+</head>
+<body data-page="teklif">
+
+  <!-- ============ PRELOADER ============ -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader-inner">
+      <p class="preloader-word" data-preloader-word>MODWARE</p>
+      <div class="preloader-bar"><span class="preloader-bar-fill"></span></div>
+      <p class="preloader-count"><span data-preloader-count>0</span>%</p>
+    </div>
+  </div>
+
+  <!-- ============ ARKA PLAN KATMANI (sabit, içeriğin arkasında) ============ -->
+  <div class="bg-layer" aria-hidden="true">
+    <div class="bg-glow"></div>
+    <div class="bg-shade"></div>
+    <div class="bg-noise"></div>
+  </div>
+
+  <!-- ============ ÖZEL İMLEÇ (yalnızca fareli cihazlarda) ============ -->
+  <div class="cursor" aria-hidden="true">
+    <div class="cursor-frame"><i></i><i></i><i></i><i></i></div>
+    <div class="cursor-dot"></div>
+  </div>
+
+  <!-- ============ KAYDIRMA İLERLEME ÇUBUĞU ============ -->
+  <div class="scroll-progress" aria-hidden="true"><span class="scroll-progress-bar"></span></div>
+
+  <!-- ============ ORTAK ÜST MENÜ ============
+       Bu blok her sayfada aynıdır. Aktif sayfa,
+       main.js tarafından <body data-page> değerine göre işaretlenir. -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="/en/" aria-label="ModWare Technology home">
+        <img src="/assets/logo/modware-logo-light.png" alt="ModWare" width="275" height="30">
+      </a>
+
+      <!-- Mobilde menüyü açıp kapatan buton -->
+      <button class="nav-toggle" id="nav-toggle" type="button"
+              aria-controls="site-nav" aria-expanded="false" aria-label="Open menu">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="Main menu">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="/en/" data-nav="home">Home</a></li>
+          <li><a class="nav-link" href="/en/services" data-nav="hizmetler">Services</a></li>
+          <li><a class="nav-link" href="/en/products" data-nav="urunler">Products</a></li>
+          <li><a class="nav-link" href="/en/about" data-nav="hakkimizda">About</a></li>
+          <li><a class="nav-link" href="/en/blog/" data-nav="blog">Blog</a></li>
+        </ul>
+        <a class="btn btn-accent nav-cta" href="/en/quote">Get a Quote</a>
+        <a class="lang-switch" href="/teklif" hreflang="tr" lang="tr" aria-label="Türkçe" title="Türkçe">TR</a>
+      </nav>
+    </div>
+  </header>
+  <!-- ============ /ORTAK ÜST MENÜ ============ -->
+
+  <main id="main" class="quote">
+
+    <!-- ============ SAYFA BAŞLIĞI ============ -->
+    <section class="page-head" aria-labelledby="quote-title">
+      <div class="container page-head-inner">
+        <p class="eyebrow" data-anim="hero">Get a Quote</p>
+        <h1 id="quote-title" data-split-intro>Tell Us About Your Project, We&#x27;ll Prepare a Quote.</h1>
+        <p class="page-lede" data-anim="hero">We review your form and get back to you with the scope, timeline and an estimated budget. You can also use this form for partnerships and other topics.</p>
+      </div>
+    </section>
+
+    <section class="section quote-section" aria-label="Quote form">
+      <div class="container quote-grid">
+
+        <!-- ============ FORM ============
+             Web3Forms ile çalışır: gönderilen talep info@modwaretechnology.com adresine
+             e-postayla gelir (access_key bu adrese bağlıdır). Gönderim, doğrulama ve
+             ilerleme çubuğu: main.js → "Teklif formu". -->
+        <form class="quote-form" id="quote-form" name="teklif" method="POST"
+              action="https://api.web3forms.com/submit" novalidate data-anim="hero">
+          <input type="hidden" name="access_key" value="f0fe1264-5a31-4280-a34c-26db3051b182">
+          <input type="hidden" name="subject" value="New quote request: modwaretechnology.com (EN)">
+          <input type="hidden" name="from_name" value="ModWare Technology website (EN)">
+          <p class="hp" aria-hidden="true"><label>Do not tick this box <input type="checkbox" name="botcheck" id="q-bot" tabindex="-1" autocomplete="off"></label></p>
+
+          <!-- Doldurma ilerlemesi (zorunlu alanlar) -->
+          <div class="quote-progress" aria-hidden="true">
+            <span class="quote-progress-bar" id="quote-progress-bar"></span>
+          </div>
+          <p class="quote-progress-text" id="quote-progress-text" aria-live="polite">Required fields: 0 / 5</p>
+
+          <!-- 1. Ne istiyorsunuz? -->
+          <fieldset class="q-group">
+            <legend class="q-legend"><span>01</span> What Do You Need?</legend>
+
+            <!-- Konu: teklif dışı mesajlar da aynı formdan gelir.
+                 "Teklif / proje" seçiliyken ürün/hizmet seçimi zorunludur. -->
+            <fieldset class="field">
+              <legend>Topic</legend>
+              <div class="seg seg--3" role="radiogroup">
+                <label class="seg-item"><input type="radio" name="konu" value="Quote / project" id="q-topic-1" checked><span>Quote / project</span></label>
+                <label class="seg-item"><input type="radio" name="konu" value="Partnership / pilot project" id="q-topic-2"><span>Partnership / pilot</span></label>
+                <label class="seg-item"><input type="radio" name="konu" value="Other" id="q-topic-3"><span>Other</span></label>
+              </div>
+            </fieldset>
+
+            <div class="field">
+              <label for="q-product">Product / service <b aria-hidden="true" id="q-product-star">*</b> <span class="opt" id="q-product-opt" hidden>(optional)</span></label>
+              <div class="select">
+                <select id="q-product" name="urun" required>
+                  <option value="">Choose an option</option>
+                  <optgroup label="Development and control">
+                    <option value="MW-SPARK">ModWare Spark</option>
+                    <option value="MW-AXIS">ModWare Axis</option>
+                  </optgroup>
+                  <optgroup label="Sensors">
+                    <option value="MW-SENSE">ModWare Sense</option>
+                    <option value="MW-AERO">ModWare Aero</option>
+                  </optgroup>
+                  <optgroup label="Communication">
+                    <option value="MW-LINK">ModWare Link</option>
+                  </optgroup>
+                  <optgroup label="Power">
+                    <option value="MW-ENERGY">ModWare Energy</option>
+                    <option value="MW-POWER">ModWare Power</option>
+                  </optgroup>
+                  <optgroup label="PRISM modular power platform">
+                    <option value="MW-GUARD">ModWare Guard · Carrier and protection board</option>
+                    <option value="MW-SHIFT">ModWare Shift 24 / 12 · Buck-boost power module</option>
+                    <option value="MW-PURE">ModWare Pure 5 · 5 V power module</option>
+                    <option value="MW-PILOT">ModWare Pilot · Control and interface board</option>
+                    <option value="MW-PRISM">ModWare Prism · Complete platform</option>
+                  </optgroup>
+                  <optgroup label="Services">
+                    <option value="Custom hardware design">Custom hardware / board design</option>
+                    <option value="PCB design">PCB design</option>
+                    <option value="PCB manufacturing">PCB manufacturing</option>
+                    <option value="Design review">Design review</option>
+                    <option value="Embedded software">Embedded software</option>
+                    <option value="Manufacturing consulting">Manufacturing consulting</option>
+                    <option value="Other">Other</option>
+                  </optgroup>
+                </select>
+              </div>
+              <p class="field-error" id="q-product-error"></p>
+            </div>
+
+            <fieldset class="field">
+              <legend>Project stage</legend>
+              <div class="seg" role="radiogroup">
+                <label class="seg-item"><input type="radio" name="asama" value="Idea" id="q-stage-1" checked><span>Idea</span></label>
+                <label class="seg-item"><input type="radio" name="asama" value="POC" id="q-stage-2"><span>POC</span></label>
+                <label class="seg-item"><input type="radio" name="asama" value="Prototype" id="q-stage-3"><span>Prototype</span></label>
+                <label class="seg-item"><input type="radio" name="asama" value="Production" id="q-stage-4"><span>Production</span></label>
+              </div>
+            </fieldset>
+          </fieldset>
+
+          <!-- 2. Proje detayları -->
+          <fieldset class="q-group">
+            <legend class="q-legend"><span>02</span> Project Details</legend>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="q-qty">Estimated quantity</label>
+                <div class="select">
+                  <select id="q-qty" name="adet">
+                    <option>Prefer not to say</option>
+                    <option>1–10</option>
+                    <option>10–100</option>
+                    <option>100–1,000</option>
+                    <option>1,000+</option>
+                  </select>
+                </div>
+              </div>
+              <div class="field">
+                <label for="q-time">Timeline</label>
+                <div class="select">
+                  <select id="q-time" name="zaman">
+                    <option>Right away</option>
+                    <option>1–3 months</option>
+                    <option>3–6 months</option>
+                    <option>6 months or later</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <!-- Bütçe aralıklarını kendi fiyatlandırmanıza göre düzenleyin -->
+                <label for="q-budget">Budget range</label>
+                <div class="select">
+                  <select id="q-budget" name="butce">
+                    <option>Prefer not to say</option>
+                    <option>Under ₺50,000</option>
+                    <option>₺50,000 – 250,000</option>
+                    <option>Over ₺250,000</option>
+                  </select>
+                </div>
+              </div>
+              <div class="field">
+                <label for="q-ref">Reference link <span class="opt">(optional)</span></label>
+                <input id="q-ref" name="referans" type="url" inputmode="url" placeholder="Link to GitHub, a document or a drawing">
+                <p class="field-error" id="q-ref-error"></p>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="q-msg">Short description <b aria-hidden="true">*</b></label>
+              <textarea id="q-msg" name="aciklama" required minlength="20" maxlength="800" rows="6"
+                        placeholder="Purpose, goals, special requirements… (e.g. input voltage, communication interface, operating conditions)"></textarea>
+              <div class="field-foot">
+                <p class="field-error" id="q-msg-error"></p>
+                <span class="count" id="q-count">0 / 800</span>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- 3. İletişim bilgileri -->
+          <fieldset class="q-group">
+            <legend class="q-legend"><span>03</span> Contact Details</legend>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="q-name">Full name <b aria-hidden="true">*</b></label>
+                <input id="q-name" name="ad" required autocomplete="name" placeholder="Your full name">
+                <p class="field-error" id="q-name-error"></p>
+              </div>
+              <div class="field">
+                <label for="q-company">Company / organization <span class="opt">(optional)</span></label>
+                <input id="q-company" name="sirket" autocomplete="organization" placeholder="Company name">
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="q-email">E-mail <b aria-hidden="true">*</b></label>
+                <input id="q-email" name="email" type="email" required autocomplete="email" inputmode="email" placeholder="name@company.com">
+                <p class="field-error" id="q-email-error"></p>
+              </div>
+              <div class="field">
+                <label for="q-phone">Phone <span class="opt">(optional)</span></label>
+                <input id="q-phone" name="telefon" type="tel" autocomplete="tel" inputmode="tel" placeholder="With country code, e.g. +90 5xx xxx xx xx">
+              </div>
+            </div>
+
+            <label class="check" for="q-consent">
+              <input type="checkbox" id="q-consent" name="onay" value="yes" required>
+              <span class="check-box" aria-hidden="true"></span>
+              <span>I agree that my details are processed to prepare a quote. <b aria-hidden="true">*</b></span>
+            </label>
+            <p class="field-error" id="q-consent-error"></p>
+          </fieldset>
+
+          <div class="quote-actions">
+            <button class="btn btn-accent quote-submit" type="submit">
+              <span class="quote-submit-label">Request a quote</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+            <p class="quote-status" id="quote-status" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+
+        <!-- Gönderim başarılı olunca formun yerine görünür -->
+        <div class="quote-success" id="quote-success" hidden tabindex="-1">
+          <svg class="quote-success-icon" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21"/><path d="M15 24.5l6 6 12-13"/></svg>
+          <h2>We Have Received Your Request.</h2>
+          <p>We will review your form and reply to <strong id="quote-success-email">your e-mail address</strong> as soon as possible.</p>
+          <a class="btn btn-ghost" href="/en/products">Browse our products</a>
+        </div>
+
+        <!-- ============ YAN BİLGİ ============ -->
+        <aside class="quote-aside" data-anim="hero">
+          <div class="aside-card">
+            <h2>How Does It Work?</h2>
+            <ol class="aside-steps">
+              <li><span>01</span><div><strong>We understand your needs.</strong> We review your form and schedule a short call if needed.</div></li>
+              <li><span>02</span><div><strong>Quote and plan.</strong> Scope, timeline, deliverables and an estimated budget.</div></li>
+              <li><span>03</span><div><strong>Kick-off.</strong> Roadmap, milestones and a communication channel.</div></li>
+            </ol>
+          </div>
+          <div class="aside-card">
+            <h2>Quick Contact</h2>
+            <p class="aside-label">E-mail</p>
+            <div class="copy-row">
+              <a class="link-u" href="mailto:info@modwaretechnology.com">info@modwaretechnology.com</a>
+              <button class="copy-btn" type="button" data-copy="info@modwaretechnology.com">Copy</button>
+            </div>
+            <p class="aside-label">LinkedIn</p>
+            <a class="link-u aside-link" href="https://www.linkedin.com/company/modware-technology1/" target="_blank" rel="noopener">ModWare Technology <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
+            <p class="aside-label">Location</p>
+            <p class="aside-text">İzmit, Kocaeli, Türkiye</p>
+          </div>
+        </aside>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ ORTAK ALT BİLGİ ============ -->
+  <footer class="site-footer">
+    <!-- Footer üstündeki çizgi: sayfa sonuna yaklaşırken soldan sağa dolar -->
+    <div class="footer-line" aria-hidden="true"><span class="footer-line-fill"></span></div>
+    <div class="container footer-inner">
+      <a class="logo logo-sm" href="/en/"><img src="/assets/logo/modware-logo-light.png" alt="ModWare" width="275" height="30"></a>
+      <p class="footer-meta"><span class="footer-location">İzmit, Kocaeli</span> <span class="footer-copy">© <span data-year>2026</span> ModWare Technology</span></p>
+      <!-- İletişim ikonları: e-posta ve LinkedIn -->
+      <div class="footer-contact">
+        <a class="footer-icon" href="mailto:info@modwaretechnology.com" aria-label="Send us an e-mail: info@modwaretechnology.com" title="info@modwaretechnology.com"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M4 7l8 6 8-6"/></svg></a>
+        <a class="footer-icon" href="https://www.linkedin.com/company/modware-technology1/" target="_blank" rel="noopener" aria-label="ModWare Technology on LinkedIn (opens in a new tab)" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 5a2 2 0 1 1-4-.002 2 2 0 0 1 4 .002zM7 8.48H3V21h4V8.48zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.72-2.91l.04-1.68z"/></svg></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Yukarı çık: sayfa sonuna gelince belirir (main.js) -->
+  <button class="to-top" id="to-top" type="button" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+
+  <!-- Kütüphaneler (CDN, sabit sürüm). main.js ve animations.js'den önce yüklenmeli.
+       GSAP + ScrollTrigger: animasyon · SplitType: harf bölme · Lenis: yumuşak kaydırma -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/split-type@0.3.4/umd/index.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
+  <script src="/js/main.js?v=31" defer></script>
+  <script src="/js/animations.js?v=31" defer></script>
+</body>
+</html>

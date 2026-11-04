@@ -759,7 +759,10 @@
     pauseBtn.addEventListener('click', () => {
       userPaused = !userPaused;
       pauseBtn.setAttribute('aria-pressed', String(userPaused));
-      pauseBtn.setAttribute('aria-label', userPaused ? 'Otomatik geçişi başlat' : 'Otomatik geçişi durdur');
+      const T = (tr, en) => (document.documentElement.lang === 'en' ? en : tr);
+      pauseBtn.setAttribute('aria-label', userPaused
+        ? T('Otomatik geçişi başlat', 'Start autoplay')
+        : T('Otomatik geçişi durdur', 'Pause autoplay'));
       syncPause();
     });
 

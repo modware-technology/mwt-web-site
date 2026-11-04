@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>About Us: Electronics R&amp;D and Hardware Team | ModWare Technology</title>
+  <meta name="description" content="An engineering team in İzmit, Kocaeli, Türkiye, born from a TEKNOFEST team: hardware and PCB design, embedded software, project management and mechanical engineering.">
+  <link rel="canonical" href="https://modwaretechnology.com/en/about">
+  <link rel="alternate" hreflang="tr" href="https://modwaretechnology.com/hakkimizda">
+  <link rel="alternate" hreflang="en" href="https://modwaretechnology.com/en/about">
+  <link rel="alternate" hreflang="x-default" href="https://modwaretechnology.com/hakkimizda">
+
+  <!-- Paylaşım önizlemesi (LinkedIn, WhatsApp, X) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ModWare Technology">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="tr_TR">
+  <meta property="og:title" content="About Us: Electronics R&amp;D and Hardware Team | ModWare Technology">
+  <meta property="og:description" content="An engineering team in İzmit, Kocaeli, Türkiye, born from a TEKNOFEST team: hardware and PCB design, embedded software, project management and mechanical engineering.">
+  <meta property="og:url" content="https://modwaretechnology.com/en/about">
+  <meta property="og:image" content="https://modwaretechnology.com/assets/og/modware-og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Sekme ikonu -->
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/assets/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <meta name="theme-color" content="#0a0f1c">
+
+  <!-- Preloader yalnızca JS çalışıyorsa görünür. GSAP/animations.js
+       5 sn içinde devralmazsa güvenlik zamanlayıcısı onu kaldırır. -->
+  <script>
+    document.documentElement.classList.add('is-loading');
+    window.__preloaderSafety = setTimeout(function () {
+      document.documentElement.classList.remove('is-loading');
+    }, 5000);
+  </script>
+
+  <!-- Fontlar: Space Grotesk (başlıklar) + Inter (metin) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+
+  <link rel="stylesheet" href="/css/style.css?v=31">
+</head>
+<body data-page="hakkimizda">
+
+  <!-- ============ PRELOADER ============ -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader-inner">
+      <p class="preloader-word" data-preloader-word>MODWARE</p>
+      <div class="preloader-bar"><span class="preloader-bar-fill"></span></div>
+      <p class="preloader-count"><span data-preloader-count>0</span>%</p>
+    </div>
+  </div>
+
+  <!-- ============ ARKA PLAN KATMANI (sabit, içeriğin arkasında) ============ -->
+  <div class="bg-layer" aria-hidden="true">
+    <div class="bg-glow"></div>
+    <div class="bg-shade"></div>
+    <div class="bg-noise"></div>
+  </div>
+
+  <!-- Sayfa boyunca arkada duran atölye/İHA fotoğrafı.
+       Kaydırdıkça yavaşça kayar (parallax) ve kararır (animations.js → initAbout). -->
+  <div class="about-photo" aria-hidden="true">
+    <img src="/assets/hakkimizda/atolye-iha.webp" alt="" width="1024" height="768">
+    <div class="about-photo-tint"></div>
+    <div class="about-photo-dim"></div>
+  </div>
+
+  <!-- ============ ÖZEL İMLEÇ (yalnızca fareli cihazlarda) ============ -->
+  <div class="cursor" aria-hidden="true">
+    <div class="cursor-frame"><i></i><i></i><i></i><i></i></div>
+    <div class="cursor-dot"></div>
+  </div>
+
+  <!-- ============ KAYDIRMA İLERLEME ÇUBUĞU ============ -->
+  <div class="scroll-progress" aria-hidden="true"><span class="scroll-progress-bar"></span></div>
+
+  <!-- ============ ORTAK ÜST MENÜ ============
+       Bu blok her sayfada aynıdır. Aktif sayfa,
+       main.js tarafından <body data-page> değerine göre işaretlenir. -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="/en/" aria-label="ModWare Technology home">
+        <img src="/assets/logo/modware-logo-light.png" alt="ModWare" width="275" height="30">
+      </a>
+
+      <!-- Mobilde menüyü açıp kapatan buton -->
+      <button class="nav-toggle" id="nav-toggle" type="button"
+              aria-controls="site-nav" aria-expanded="false" aria-label="Open menu">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="Main menu">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="/en/" data-nav="home">Home</a></li>
+          <li><a class="nav-link" href="/en/services" data-nav="hizmetler">Services</a></li>
+          <li><a class="nav-link" href="/en/products" data-nav="urunler">Products</a></li>
+          <li><a class="nav-link" href="/en/about" data-nav="hakkimizda">About</a></li>
+          <li><a class="nav-link" href="/en/blog/" data-nav="blog">Blog</a></li>
+        </ul>
+        <a class="btn btn-accent nav-cta" href="/en/quote">Get a Quote</a>
+        <a class="lang-switch" href="/hakkimizda" hreflang="tr" lang="tr" aria-label="Türkçe" title="Türkçe">TR</a>
+      </nav>
+    </div>
+  </header>
+  <!-- ============ /ORTAK ÜST MENÜ ============ -->
+
+  <main id="main" class="about">
+
+    <!-- ============ 1. HERO ============ -->
+    <section class="about-hero" aria-labelledby="about-title">
+      <!-- Scroll ile hareket eden neon gradient katmanı -->
+      <div class="about-hero-glow" aria-hidden="true"></div>
+
+      <div class="container about-hero-inner">
+        <p class="eyebrow" data-anim="hero">About us</p>
+
+        <!-- METİN: Başlık. SplitType ile kelime kelime maskeli açılır. -->
+        <h1 class="about-title" id="about-title" data-split-intro>
+          Born from a TEKNOFEST Team.
+        </h1>
+
+        <!-- METİN: Uzun vizyon metni. Takım ve proje bilgisini kendi metninizle değiştirin. -->
+        <p class="about-lede" data-anim="hero">
+          Developing unmanned aerial vehicles taught us one thing: a system works in the field
+          only when every board inside it is reliable, measurable and compatible with the others.
+          Today we bring the same discipline to PCB design, hardware development and embedded software.
+        </p>
+
+        <a class="about-scroll" href="#hikaye" data-anim="hero">
+          <span class="about-scroll-line" aria-hidden="true"></span>
+          Our story
+        </a>
+      </div>
+    </section>
+
+    <!-- ============ 2. PARÇALI CAM KARTLAR ============
+         Asimetrik yerleşim (12 sütun): üst sıra A geniş + C dar,
+         alt sıra B dar + D geniş. Hover: 3D eğim (data-tilt) + ışık (data-glow). -->
+    <section class="section about-pieces" id="hikaye" aria-label="Our story">
+      <div class="container about-grid">
+
+        <!-- Kart A: Neden ModWare? -->
+        <article class="glass-card g-a" data-tilt data-glow>
+          <svg class="glass-art" viewBox="0 0 80 80" aria-hidden="true">
+            <rect x="26" y="26" width="28" height="28" rx="3"/>
+            <path d="M33 26V16M40 26V10M47 26V16M33 54v10M40 54v16M47 54v10M26 33H16M26 47H10M54 33h10M54 47h16"/>
+            <circle cx="40" cy="10" r="2.5"/><circle cx="40" cy="70" r="2.5"/><circle cx="10" cy="47" r="2.5"/><circle cx="70" cy="47" r="2.5"/>
+          </svg>
+          <p class="glass-kicker">Why ModWare?</p>
+          <h2 class="glass-title">From Idea to Manufacturable Product</h2>
+          <!-- METİN -->
+          <p>We bring PCB design, hardware development, embedded software and manufacturing consulting together in one team. The same team takes an idea from schematic to prototype and from prototype to production.</p>
+          <p>With rapid prototyping and EMC/EMI-focused design, we aim for boards that run trouble-free in the field.</p>
+        </article>
+
+        <!-- Kart C: Misyon & Vizyon -->
+        <article class="glass-card g-c" data-tilt data-glow>
+          <svg class="glass-art" viewBox="0 0 80 80" aria-hidden="true">
+            <circle cx="40" cy="40" r="28"/><circle cx="40" cy="40" r="17"/><circle cx="40" cy="40" r="5"/>
+            <path d="M40 4v12M40 64v12M4 40h12M64 40h12"/>
+          </svg>
+          <p class="glass-kicker">Mission &amp; Vision</p>
+          <h2 class="glass-title">Reliable, Manufacturable, Scalable</h2>
+          <!-- METİN -->
+          <p><strong>Our mission</strong> is to turn ideas into reliable, manufacturable and scalable electronic products.</p>
+          <p><strong>Our vision</strong> is to be a benchmark for reliable design and manufacturing in Türkiye&#x27;s electronics ecosystem.</p>
+        </article>
+
+        <!-- Kart B: Kökenimiz (TEKNOFEST) -->
+        <article class="glass-card g-b" data-tilt data-glow>
+          <svg class="glass-art" viewBox="0 0 80 80" aria-hidden="true">
+            <circle cx="16" cy="16" r="9"/><circle cx="64" cy="16" r="9"/><circle cx="16" cy="64" r="9"/><circle cx="64" cy="64" r="9"/>
+            <path d="M22 22l12 12M58 22L46 34M22 58l12-12M58 58L46 46"/>
+            <rect x="32" y="32" width="16" height="16" rx="4"/>
+          </svg>
+          <p class="glass-kicker">Our roots</p>
+          <h2 class="glass-title">Tested in the Field</h2>
+          <!-- METİN: TEKNOFEST takımınızın adı, kategorisi ve yılıyla değiştirin. -->
+          <p>As a university team at TEKNOFEST, Türkiye&#x27;s largest technology festival, we tested our systems under real-world conditions. Design, build, test, fix: that cycle is second nature to us.</p>
+        </article>
+
+        <!-- Kart D: Ekip + yetkinlikler -->
+        <article class="glass-card g-d" data-tilt data-glow>
+          <svg class="glass-art" viewBox="0 0 80 80" aria-hidden="true">
+            <circle cx="40" cy="18" r="6"/><circle cx="16" cy="44" r="6"/><circle cx="64" cy="44" r="6"/><circle cx="28" cy="68" r="6"/><circle cx="52" cy="68" r="6"/>
+            <path d="M36 23L20 39M44 23l16 16M21 47l26 18M59 47L33 65M22 44h36M34 68h12"/>
+          </svg>
+          <div class="team">
+            <p class="glass-kicker">Team</p>
+            <p class="team-number"><span>5</span> core team members</p>
+            <ul class="team-roles">
+              <li><b>2</b> hardware engineers</li>
+              <li><b>1</b> embedded software engineer</li>
+              <li><b>1</b> project manager</li>
+              <li><b>1</b> mechanical engineer</li>
+            </ul>
+          </div>
+          <ul class="skills">
+            <li><h3>End-to-End Development</h3><p>Schematic/PCB → firmware → prototype → test → production</p></li>
+            <li><h3>Industrial Discipline</h3><p>DFM/DFT, traceable process, thorough documentation</p></li>
+            <li><h3>EMC/EMI Focus</h3><p>Layout, filtering and noise reduction</p></li>
+          </ul>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ============ 3. SCROLL İLE AÇILAN BÜYÜK CÜMLE ============
+         Bölüm uzun; içindeki cümle ekrana yapışık kalır. Kaydırdıkça kelimeler
+         tek tek aydınlanır. data-accent: vurgulu kelimeler. -->
+    <section class="statement" aria-labelledby="statement-text">
+      <div class="statement-sticky">
+        <div class="container statement-inner">
+          <!-- METİN: Öne çıkan cümle -->
+          <p class="statement-text" id="statement-text">
+            We design every board with <span data-accent>the day it goes into the field</span> in mind.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ ORTAK ALT BİLGİ ============ -->
+  <footer class="site-footer">
+    <!-- Footer üstündeki çizgi: sayfa sonuna yaklaşırken soldan sağa dolar -->
+    <div class="footer-line" aria-hidden="true"><span class="footer-line-fill"></span></div>
+    <div class="container footer-inner">
+      <a class="logo logo-sm" href="/en/"><img src="/assets/logo/modware-logo-light.png" alt="ModWare" width="275" height="30"></a>
+      <p class="footer-meta"><span class="footer-location">İzmit, Kocaeli</span> <span class="footer-copy">© <span data-year>2026</span> ModWare Technology</span></p>
+      <!-- İletişim ikonları: e-posta ve LinkedIn -->
+      <div class="footer-contact">
+        <a class="footer-icon" href="mailto:info@modwaretechnology.com" aria-label="Send us an e-mail: info@modwaretechnology.com" title="info@modwaretechnology.com"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M4 7l8 6 8-6"/></svg></a>
+        <a class="footer-icon" href="https://www.linkedin.com/company/modware-technology1/" target="_blank" rel="noopener" aria-label="ModWare Technology on LinkedIn (opens in a new tab)" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 5a2 2 0 1 1-4-.002 2 2 0 0 1 4 .002zM7 8.48H3V21h4V8.48zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.72-2.91l.04-1.68z"/></svg></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Yukarı çık: sayfa sonuna gelince belirir (main.js) -->
+  <button class="to-top" id="to-top" type="button" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+
+  <!-- Kütüphaneler (CDN, sabit sürüm). main.js ve animations.js'den önce yüklenmeli.
+       GSAP + ScrollTrigger: animasyon · SplitType: harf bölme · Lenis: yumuşak kaydırma -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/split-type@0.3.4/umd/index.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
+  <script src="/js/main.js?v=31" defer></script>
+  <script src="/js/animations.js?v=31" defer></script>
+</body>
+</html>

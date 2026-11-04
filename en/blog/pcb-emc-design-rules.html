@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>EMC in PCB Design: 10 Rules to Prevent Noise | ModWare</title>
+  <meta name="description" content="Passing EMC testing starts on day one of the design: 10 rules for ground planes, current loops, decoupling, switching power stages and connector filtering.">
+  <link rel="canonical" href="https://modwaretechnology.com/en/blog/pcb-emc-design-rules">
+  <link rel="alternate" hreflang="tr" href="https://modwaretechnology.com/blog/pcb-tasariminda-emc-kurallari">
+  <link rel="alternate" hreflang="en" href="https://modwaretechnology.com/en/blog/pcb-emc-design-rules">
+  <link rel="alternate" hreflang="x-default" href="https://modwaretechnology.com/blog/pcb-tasariminda-emc-kurallari">
+
+  <!-- Paylaşım önizlemesi (LinkedIn, WhatsApp, X) -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="ModWare Technology">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="tr_TR">
+  <meta property="og:title" content="EMC in PCB Design: 10 Rules to Prevent Noise | ModWare">
+  <meta property="og:description" content="Passing EMC testing starts on day one of the design: 10 rules for ground planes, current loops, decoupling, switching power stages and connector filtering.">
+  <meta property="og:url" content="https://modwaretechnology.com/en/blog/pcb-emc-design-rules">
+  <meta property="og:image" content="https://modwaretechnology.com/assets/og/modware-og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="article:published_time" content="2026-11-04">
+  <meta property="article:section" content="PCB design">
+
+  <!-- Arama motorları için yapılandırılmış veri (schema.org) -->
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "BlogPosting", "@id": "https://modwaretechnology.com/en/blog/pcb-emc-design-rules#yazi", "headline": "EMC in PCB Design: 10 Rules for Preventing Noise from the Start", "description": "Passing EMC testing starts on day one of the design: 10 rules for ground planes, current loops, decoupling, switching power stages and connector filtering.", "datePublished": "2026-11-04", "dateModified": "2026-11-04", "inLanguage": "en-US", "url": "https://modwaretechnology.com/en/blog/pcb-emc-design-rules", "mainEntityOfPage": "https://modwaretechnology.com/en/blog/pcb-emc-design-rules", "image": "https://modwaretechnology.com/assets/og/modware-og.png", "articleSection": "PCB design", "wordCount": 1090, "author": {"@type": "Organization", "@id": "https://modwaretechnology.com/#org", "name": "ModWare Technology", "url": "https://modwaretechnology.com/"}, "publisher": {"@type": "Organization", "@id": "https://modwaretechnology.com/#org", "name": "ModWare Technology", "url": "https://modwaretechnology.com/", "logo": {"@type": "ImageObject", "url": "https://modwaretechnology.com/assets/logo/modware-icon-512.png"}}, "isPartOf": {"@type": "Blog", "@id": "https://modwaretechnology.com/en/blog/#blog", "url": "https://modwaretechnology.com/en/blog/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://modwaretechnology.com/en/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://modwaretechnology.com/en/blog/"}, {"@type": "ListItem", "position": 3, "name": "EMC in PCB Design: 10 Rules for Preventing Noise from the Start"}]}]}</script>
+
+  <!-- Sekme ikonu -->
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/assets/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <meta name="theme-color" content="#0a0f1c">
+
+  <!-- Preloader yalnızca JS çalışıyorsa görünür. GSAP/animations.js
+       5 sn içinde devralmazsa güvenlik zamanlayıcısı onu kaldırır. -->
+  <script>
+    document.documentElement.classList.add('is-loading');
+    window.__preloaderSafety = setTimeout(function () {
+      document.documentElement.classList.remove('is-loading');
+    }, 5000);
+  </script>
+
+  <!-- Fontlar: Space Grotesk (başlıklar) + Inter (metin) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+
+  <link rel="stylesheet" href="/css/style.css?v=31">
+</head>
+<body data-page="blog">
+
+  <!-- ============ PRELOADER ============ -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader-inner">
+      <p class="preloader-word" data-preloader-word>MODWARE</p>
+      <div class="preloader-bar"><span class="preloader-bar-fill"></span></div>
+      <p class="preloader-count"><span data-preloader-count>0</span>%</p>
+    </div>
+  </div>
+
+  <!-- ============ ARKA PLAN KATMANI (sabit, içeriğin arkasında) ============ -->
+  <div class="bg-layer" aria-hidden="true">
+    <div class="bg-glow"></div>
+    <div class="bg-shade"></div>
+    <div class="bg-noise"></div>
+  </div>
+
+  <!-- ============ ÖZEL İMLEÇ (yalnızca fareli cihazlarda) ============ -->
+  <div class="cursor" aria-hidden="true">
+    <div class="cursor-frame"><i></i><i></i><i></i><i></i></div>
+    <div class="cursor-dot"></div>
+  </div>
+
+  <!-- ============ KAYDIRMA İLERLEME ÇUBUĞU ============ -->
+  <div class="scroll-progress" aria-hidden="true"><span class="scroll-progress-bar"></span></div>
+
+  <!-- ============ ORTAK ÜST MENÜ ============
+       Bu blok her sayfada aynıdır. Aktif sayfa,
+       main.js tarafından <body data-page> değerine göre işaretlenir. -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="/en/" aria-label="ModWare Technology home">
+        <img src="/assets/logo/modware-logo-light.png" alt="ModWare" width="275" height="30">
+      </a>
+
+      <!-- Mobilde menüyü açıp kapatan buton -->
+      <button class="nav-toggle" id="nav-toggle" type="button"
+              aria-controls="site-nav" aria-expanded="false" aria-label="Open menu">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="Main menu">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="/en/" data-nav="home">Home</a></li>
+          <li><a class="nav-link" href="/en/services" data-nav="hizmetler">Services</a></li>
+          <li><a class="nav-link" href="/en/products" data-nav="urunler">Products</a></li>
+          <li><a class="nav-link" href="/en/about" data-nav="hakkimizda">About</a></li>
+          <li><a class="nav-link" href="/en/blog/" data-nav="blog">Blog</a></li>
+        </ul>
+        <a class="btn btn-accent nav-cta" href="/en/quote">Get a Quote</a>
+        <a class="lang-switch" href="/blog/pcb-tasariminda-emc-kurallari" hreflang="tr" lang="tr" aria-label="Türkçe" title="Türkçe">TR</a>
+      </nav>
+    </div>
+  </header>
+  <!-- ============ /ORTAK ÜST MENÜ ============ -->
+
+  <!-- Blog yazısı: pcb-emc-design-rules. Metin site-araclar/blog_en_1.py / blog_en_2.py dosyasından üretilir. -->
+  <main id="main">
+
+    <!-- ============ SAYFA BAŞLIĞI ============ -->
+    <section class="page-head page-head--yazi" aria-labelledby="page-title">
+      <div class="container page-head-inner">
+        <p class="eyebrow" data-anim="hero"><a href="/en/blog/">Blog</a> · PCB design</p>
+        <h1 id="page-title" data-split-intro>EMC in PCB Design: 10 Rules for Preventing Noise from the Start</h1>
+        <p class="page-lede" data-anim="hero">EMC problems are usually discovered in the test lab, but their causes almost always lie in the initial PCB layout. A board set up correctly from the start costs far less than ferrites and shields added later.</p>
+        <p class="post-meta" data-anim="hero"><time datetime="2026-11-04">November 4, 2026</time> <span aria-hidden="true">·</span> <span>6 min read</span> <span aria-hidden="true">·</span> <span>ModWare Technology engineering team</span></p>
+      </div>
+    </section>
+
+    <section class="section article-section">
+      <div class="container">
+        <article class="prose">
+<nav class="toc" aria-label="Contents">
+<p class="toc-title">Contents</p>
+<ol>
+  <li><a href="#1-every-signal-has-a-return-path">1. Every Signal Has a Return Path</a></li>
+  <li><a href="#2-keep-current-loops-small">2. Keep Current Loops Small</a></li>
+  <li><a href="#3-minimize-the-hot-loop-in-the-switching-power-stage">3. Minimize the &quot;Hot Loop&quot; in the Switching Power Stage</a></li>
+  <li><a href="#4-place-decoupling-capacitors-correctly">4. Place Decoupling Capacitors Correctly</a></li>
+  <li><a href="#5-choose-the-layer-stackup-with-emc-in-mind">5. Choose the Layer Stackup with EMC in Mind</a></li>
+  <li><a href="#6-cables-are-antennas-filter-at-the-connectors">6. Cables Are Antennas: Filter at the Connectors</a></li>
+  <li><a href="#7-slow-down-clocks-and-fast-signals">7. Slow Down Clocks and Fast Signals</a></li>
+  <li><a href="#8-separate-analog-and-digital-sections-by-placement">8. Separate Analog and Digital Sections by Placement</a></li>
+  <li><a href="#9-remove-floating-copper-and-stitch-grounds-together">9. Remove Floating Copper and Stitch Grounds Together</a></li>
+  <li><a href="#10-measure-early-pre-compliance-testing">10. Measure Early: Pre-compliance Testing</a></li>
+  <li><a href="#emc-checklist">EMC Checklist</a></li>
+  <li><a href="#conclusion">Conclusion</a></li>
+</ol>
+</nav>
+<p>Electromagnetic compatibility (EMC) means that a device does not emit electromagnetic noise into its surroundings above acceptable limits (emissions) and that it can operate without being affected by the noise around it (immunity). For electronic products sold on the European market, it is part of CE marking and is tested under the EMC Directive.</p>
+<p>Fixing EMC after the fact is expensive: it takes extra filters, ferrites, shields and often a new PCB revision. Yet most of the noise can be prevented from the start by following a few basic rules during layout.</p>
+<aside class="callout"><p><strong>In short:</strong> Think about the current&#x27;s return path, keep current loops small, don&#x27;t split the ground plane, filter noise at its source; and think of the board edges and cables as antennas.</p></aside>
+<h2 id="1-every-signal-has-a-return-path">1. Every Signal Has a Return Path</h2>
+<p>Current always flows in a loop: wherever it goes, it somehow finds its way back to its source. At high frequencies, the return current flows in the reference plane directly beneath the signal trace, following the path of lowest impedance. That is why there must be a continuous ground plane under fast signals. A slot or void in the plane forces the return current to take a detour; the loop grows and emissions increase.</p>
+<h2 id="2-keep-current-loops-small">2. Keep Current Loops Small</h2>
+<p>The noise a loop radiates increases with the loop area and with how fast the current changes. Placing the source and the load close together and keeping the signal path and the return path close to each other reduces the loop area. This rule reduces both emissions and noise pickup from outside.</p>
+<h2 id="3-minimize-the-hot-loop-in-the-switching-power-stage">3. Minimize the &quot;Hot Loop&quot; in the Switching Power Stage</h2>
+<p>In switching regulators such as a buck converter, the most critical area is the loop between the input capacitor and the switching devices. The current in this loop changes very quickly, making it one of the strongest noise sources on the board.</p>
+<ul>
+  <li>Place the input capacitors right next to the switching devices, with the shortest possible connections.</li>
+  <li>Make the copper area of the switch node (SW) large enough to carry the current, but no larger than necessary.</li>
+  <li>Route the feedback trace away from the inductor and the switch node.</li>
+  <li>Start from the example layout recommended by the regulator manufacturer; these recommendations are usually layouts that have been measured and proven.</li>
+</ul>
+<h2 id="4-place-decoupling-capacitors-correctly">4. Place Decoupling Capacitors Correctly</h2>
+<p>Decoupling capacitors supply the instantaneous current demand of ICs locally. To be effective, they must be placed as close as possible to the supply pin, and their ground connection must go directly to the ground plane through a short via. A long, thin connection narrows the frequency range over which the capacitor is effective. Typically, a 100 nF capacitor is used on each supply pin, plus one or more larger-value capacitors on each supply rail.</p>
+<h2 id="5-choose-the-layer-stackup-with-emc-in-mind">5. Choose the Layer Stackup with EMC in Mind</h2>
+<p>As the layer count goes up, it becomes easier to place a reference plane right next to each signal layer. On a four-layer board, a stackup of signal, ground, power and signal layers is a common and solid starting point. On two-layer boards, one side should be devoted to a ground pour that is as continuous as possible, and traces should be planned so that they don&#x27;t break up this plane. The right layer count is determined by weighing circuit density, speed and cost together.</p>
+<h2 id="6-cables-are-antennas-filter-at-the-connectors">6. Cables Are Antennas: Filter at the Connectors</h2>
+<p>Every cable leaving the board is an antenna that can both radiate and pick up noise. Noise has to be stopped before it reaches the cable connector:</p>
+<ul>
+  <li>Add a ferrite, an RC filter or a common-mode choke to communication and power lines at the connector entry.</li>
+  <li>For ESD and voltage transients, place TVS diodes right next to the connector, with a short ground connection.</li>
+  <li>Keep fast signals and clock lines away from connectors and the board edge.</li>
+</ul>
+<h2 id="7-slow-down-clocks-and-fast-signals">7. Slow Down Clocks and Fast Signals</h2>
+<p>The frequency content of the noise is determined more by the edge rate than by the signal frequency. Edges that are faster than necessary generate high-frequency harmonics.</p>
+<ul>
+  <li>Place the crystal right next to the microcontroller, keep its traces short and don&#x27;t route other signals underneath it.</li>
+  <li>Soften the edges by adding 22–33 Ω series resistors to fast outputs.</li>
+  <li>Keep the pin speed on the microcontroller (the GPIO speed setting on STM32) at the lowest setting that does the job.</li>
+</ul>
+<h2 id="8-separate-analog-and-digital-sections-by-placement">8. Separate Analog and Digital Sections by Placement</h2>
+<p>Splitting the ground plane into analog and digital sections often creates new return-path problems instead of solving the problem. The safer approach is to use a single, continuous ground plane and separate the sections by placement: group sensitive analog circuits in one area and noisy digital and power circuits in another, and don&#x27;t route fast signals between them.</p>
+<h2 id="9-remove-floating-copper-and-stitch-grounds-together">9. Remove Floating Copper and Stitch Grounds Together</h2>
+<p>Floating copper islands that are not connected to ground can act as antennas; they should either be removed or connected to ground. Ground areas on different layers should be tied together with closely spaced vias, especially along the board edges and near the points where fast signals change layers.</p>
+<h2 id="10-measure-early-pre-compliance-testing">10. Measure Early: Pre-compliance Testing</h2>
+<p>Simple measurements made before lab testing greatly reduce surprises. Noise sources on the board can be located with near-field probes and a spectrum analyzer, while noise radiated from cables can be measured with a common-mode current probe. A problem found at the prototype stage is much cheaper to fix than one found at the product stage.</p>
+<h2 id="emc-checklist">EMC Checklist</h2>
+<ul>
+  <li>Is there a continuous reference plane under fast signals?</li>
+  <li>Is the input loop of the switching power stage as small as possible?</li>
+  <li>Are the decoupling capacitors close to the pins and connected directly to the plane?</li>
+  <li>Do the connectors have filtering and ESD protection?</li>
+  <li>Are the crystal and clock lines short and well protected?</li>
+  <li>Are there any floating copper areas or split planes?</li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>EMC is not a feature added at the end of the design; it is the result of decisions made from the first day of layout. These rules won&#x27;t solve every problem on their own, but they prevent most problems before you ever get to the lab.</p>
+<p>In our <a href="/en/electronics-pcb-design">electronics and PCB design</a> projects, we treat EMC as part of the layout from the very beginning. If you already have a finished design, we can go over the risks together in a <a href="/en/design-review">design review</a> before it goes to production.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section-alt" aria-labelledby="ilgili-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Related services</p>
+          <h2 id="ilgili-title" data-split-reveal>Need Help with This?</h2>
+        </header>
+        <div class="values-grid">
+            <article class="value-card tilt-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M9.5 3v4M14.5 3v4M9.5 17v4M14.5 17v4M3 9.5h4M3 14.5h4M17 9.5h4M17 14.5h4"/></svg></span>
+              <h3>Electronics and Hardware Design</h3>
+              <p>From requirements to schematic, from PCB design to prototype: control, power, sensor and communication boards.</p>
+              <a class="link-u" href="/en/electronics-pcb-design">Learn more <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span>
+              <h3>Design Review</h3>
+              <p>We review your schematic and PCB before they go into production and report errors and risks.</p>
+              <a class="link-u" href="/en/design-review">Learn more <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 3h5M10.5 3v6.2L5.2 18.4A1.8 1.8 0 0 0 6.8 21h10.4a1.8 1.8 0 0 0 1.6-2.6L13.5 9.2V3"/><path d="M7.5 15h9"/></svg></span>
+              <h3>Prototyping and R&amp;D</h3>
+              <p>From idea to working prototype and from prototype to production, with a test plan and documentation.</p>
+              <a class="link-u" href="/en/prototyping-rd">Learn more <span aria-hidden="true">→</span></a>
+            </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="diger-yazilar-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Blog</p>
+          <h2 id="diger-yazilar-title" data-split-reveal>More Articles</h2>
+        </header>
+        <div class="values-grid">
+            <article class="value-card tilt-card blog-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span>
+              <p class="blog-meta">Design review · 5 min read</p>
+              <h3>Pre-production Design Review: The 15 Most Common Mistakes</h3>
+              <p>From schematic to footprints, from layout to manufacturing files: 15 common mistakes to catch before you send a board to production.</p>
+              <a class="link-u" href="/en/blog/pcb-design-review-common-mistakes">Read the article <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card blog-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M9.5 3v4M14.5 3v4M9.5 17v4M14.5 17v4M3 9.5h4M3 14.5h4M17 9.5h4M17 14.5h4"/></svg></span>
+              <p class="blog-meta">Electronics design · 7 min read</p>
+              <h3>The Electronics Design Process: From Idea to Mass Production, Step by Step</h3>
+              <p>From requirements to schematic, from PCB to prototype and mass production: the steps an electronic board goes through and what to watch for at each one.</p>
+              <a class="link-u" href="/en/blog/electronics-design-process">Read the article <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card blog-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/></svg></span>
+              <p class="blog-meta">Embedded software · 7 min read</p>
+              <h3>Modbus RTU (RS-485) with STM32: What to Watch for in Hardware and Firmware</h3>
+              <p>RS-485 transceiver selection, termination, direction control, frame timing and CRC: a checklist for Modbus RTU on STM32 that works reliably in the field.</p>
+              <a class="link-u" href="/en/blog/stm32-modbus-rtu-rs485">Read the article <span aria-hidden="true">→</span></a>
+            </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section cta-band" aria-labelledby="cta-title">
+      <div class="container cta-inner">
+        <h2 id="cta-title" data-cta-split>Let&#x27;s Review Your Board Before It Goes to Production.</h2>
+        <p class="cta-text">Tell us briefly about your project; we&#x27;ll get back to you with the scope, timeline and an estimated budget.</p>
+        <div class="cta-actions">
+          <a class="btn btn-accent" href="/en/quote?urun=Design%20review" data-burst>Get a Quote</a>
+          <a class="btn btn-ghost" href="/en/services" data-burst>All services</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ ORTAK ALT BİLGİ ============ -->
+  <footer class="site-footer">
+    <!-- Footer üstündeki çizgi: sayfa sonuna yaklaşırken soldan sağa dolar -->
+    <div class="footer-line" aria-hidden="true"><span class="footer-line-fill"></span></div>
+    <div class="container footer-inner">
+      <a class="logo logo-sm" href="/en/"><img src="/assets/logo/modware-logo-light.png" alt="ModWare" width="275" height="30"></a>
+      <p class="footer-meta"><span class="footer-location">İzmit, Kocaeli</span> <span class="footer-copy">© <span data-year>2026</span> ModWare Technology</span></p>
+      <!-- İletişim ikonları: e-posta ve LinkedIn -->
+      <div class="footer-contact">
+        <a class="footer-icon" href="mailto:info@modwaretechnology.com" aria-label="Send us an e-mail: info@modwaretechnology.com" title="info@modwaretechnology.com"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M4 7l8 6 8-6"/></svg></a>
+        <a class="footer-icon" href="https://www.linkedin.com/company/modware-technology1/" target="_blank" rel="noopener" aria-label="ModWare Technology on LinkedIn (opens in a new tab)" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 5a2 2 0 1 1-4-.002 2 2 0 0 1 4 .002zM7 8.48H3V21h4V8.48zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.72-2.91l.04-1.68z"/></svg></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Yukarı çık: sayfa sonuna gelince belirir (main.js) -->
+  <button class="to-top" id="to-top" type="button" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+
+  <!-- Kütüphaneler (CDN, sabit sürüm). main.js ve animations.js'den önce yüklenmeli.
+       GSAP + ScrollTrigger: animasyon · SplitType: harf bölme · Lenis: yumuşak kaydırma -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/split-type@0.3.4/umd/index.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
+  <script src="/js/main.js?v=31" defer></script>
+  <script src="/js/animations.js?v=31" defer></script>
+</body>
+</html>

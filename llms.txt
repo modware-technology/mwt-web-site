@@ -2,7 +2,7 @@
 
 > İzmit, Kocaeli merkezli elektronik Ar-Ge ekibi. Elektronik kart ve donanım tasarımı, PCB tasarımı ve üretimi, gömülü yazılım, tasarım incelemesi, prototip ve Ar-Ge hizmetleri verir; STM32 kartları, sensör kartları, LoRa haberleşme modülü ve 12–48 V PRISM güç platformu gibi kendi modüler ürünlerini geliştirir.
 
-- Dil: Türkçe
+- Dil: Türkçe; İngilizce sürüm https://modwaretechnology.com/en/ altında
 - Konum: İzmit, Kocaeli, Türkiye; Türkiye geneline hizmet
 - E-posta: info@modwaretechnology.com
 - LinkedIn: https://www.linkedin.com/company/modware-technology1/
@@ -31,3 +31,25 @@
 - [Üretim Öncesi Tasarım İncelemesi: En Sık Yapılan 15 Hata](https://modwaretechnology.com/blog/pcb-tasarim-incelemesi-sik-yapilan-hatalar): Şematikten footprint'e, yerleşimden üretim dosyalarına: kartı üretime göndermeden önce yakalanması gereken 15 yaygın hata.
 - [Prototip PCB Maliyetini Düşürmenin 9 Yolu](https://modwaretechnology.com/blog/prototip-pcb-maliyetini-dusurme): Standart üretim değerleri, kart boyutu, yüzey kaplama, parça listesi ve revizyon sayısı: prototip bütçesini küçültmenin pratik yolları.
 - [Tüm Yazılar](https://modwaretechnology.com/blog/): Elektronik kart tasarımı, PCB üretimi, EMC ve gömülü yazılım üzerine pratik teknik yazılar: süreçler, üretim dosyaları, sık yapılan hatalar ve maliyet ipuçları.
+
+## English
+
+> English version of the site: an electronics R&D team in İzmit, Kocaeli, Türkiye offering electronic board and hardware design, PCB design and manufacturing, embedded software, design review, prototyping and R&D, plus its own modular products (STM32 boards, sensor boards, a LoRa module and the 12–48 V PRISM power platform).
+
+- [Home](https://modwaretechnology.com/en/): We develop industrial-grade hardware, embedded software and Edge AI solutions for complex electronic systems.
+- [Electronics and Hardware Design](https://modwaretechnology.com/en/electronics-pcb-design): From requirements to schematic, from PCB design to prototype: control, power, sensor and communication boards.
+- [PCB Manufacturing](https://modwaretechnology.com/en/pcb-manufacturing): From file check to delivery: prototype and small-batch printed circuit board manufacturing.
+- [Embedded Software Development](https://modwaretechnology.com/en/embedded-software): Embedded software tailored to your hardware and reliable in the field: written from scratch, or your existing software improved.
+- [Design Review](https://modwaretechnology.com/en/design-review): We review your schematic and PCB before they go into production and report errors and risks.
+- [Prototyping and R&D](https://modwaretechnology.com/en/prototyping-rd): From idea to working prototype and from prototype to production, with a test plan and documentation.
+- [All Services](https://modwaretechnology.com/en/services): Electronics and PCB design, PCB manufacturing, embedded software, design review, prototyping and R&D. From İzmit, Kocaeli, for clients in Türkiye and abroad.
+- [Products](https://modwaretechnology.com/en/products): STM32 development and control boards, current and pressure sensor boards, a LoRa module and the 12–48 V PRISM modular power platform. ModWare Technology, Türkiye.
+- [About Us](https://modwaretechnology.com/en/about): An engineering team in İzmit, Kocaeli, Türkiye, born from a TEKNOFEST team: hardware and PCB design, embedded software, project management and mechanical engineering.
+- [Get a Quote](https://modwaretechnology.com/en/quote): Get a quote for electronics and hardware design, PCB design and manufacturing, embedded software or our products. We reply with scope, timeline and budget.
+- [The Electronics Design Process: From Idea to Mass Production, Step by Step](https://modwaretechnology.com/en/blog/electronics-design-process): From requirements to schematic, from PCB to prototype and mass production: the steps an electronic board goes through and what to watch for at each one.
+- [Which Files Do You Need for PCB Manufacturing? Gerber, Drill, BOM and Pick-and-Place Files](https://modwaretechnology.com/en/blog/pcb-manufacturing-files): Gerber layers, drill file, BOM and pick-and-place file: what needs to be prepared before sending a PCB to manufacturing, and common mistakes.
+- [EMC in PCB Design: 10 Rules for Preventing Noise from the Start](https://modwaretechnology.com/en/blog/pcb-emc-design-rules): Ground plane, current loops, decoupling, the switching power stage and connector filtering: 10 rules that prevent EMC problems from the start.
+- [Modbus RTU (RS-485) with STM32: What to Watch for in Hardware and Firmware](https://modwaretechnology.com/en/blog/stm32-modbus-rtu-rs485): RS-485 transceiver selection, termination, direction control, frame timing and CRC: a checklist for Modbus RTU on STM32 that works reliably in the field.
+- [Pre-production Design Review: The 15 Most Common Mistakes](https://modwaretechnology.com/en/blog/pcb-design-review-common-mistakes): From schematic to footprints, from layout to manufacturing files: 15 common mistakes to catch before you send a board to production.
+- [9 Ways to Reduce Prototype PCB Costs](https://modwaretechnology.com/en/blog/reduce-prototype-pcb-cost): Standard manufacturing specs, board size, surface finish, the bill of materials and the number of revisions: practical ways to shrink your prototype budget.
+- [All Articles](https://modwaretechnology.com/en/blog/): Practical technical articles on electronic board design, PCB manufacturing, EMC and embedded software: processes, manufacturing files, common mistakes and cost tips.

@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>PCB Design Review: The 15 Most Common Mistakes | ModWare</title>
+  <meta name="description" content="What should you check before a PCB goes to production? The 15 most common mistakes in schematics, footprints, layout, manufacturability and files, with fixes.">
+  <link rel="canonical" href="https://modwaretechnology.com/en/blog/pcb-design-review-common-mistakes">
+  <link rel="alternate" hreflang="tr" href="https://modwaretechnology.com/blog/pcb-tasarim-incelemesi-sik-yapilan-hatalar">
+  <link rel="alternate" hreflang="en" href="https://modwaretechnology.com/en/blog/pcb-design-review-common-mistakes">
+  <link rel="alternate" hreflang="x-default" href="https://modwaretechnology.com/blog/pcb-tasarim-incelemesi-sik-yapilan-hatalar">
+
+  <!-- Paylaşım önizlemesi (LinkedIn, WhatsApp, X) -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="ModWare Technology">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="tr_TR">
+  <meta property="og:title" content="PCB Design Review: The 15 Most Common Mistakes | ModWare">
+  <meta property="og:description" content="What should you check before a PCB goes to production? The 15 most common mistakes in schematics, footprints, layout, manufacturability and files, with fixes.">
+  <meta property="og:url" content="https://modwaretechnology.com/en/blog/pcb-design-review-common-mistakes">
+  <meta property="og:image" content="https://modwaretechnology.com/assets/og/modware-og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="article:published_time" content="2026-11-04">
+  <meta property="article:section" content="Design review">
+
+  <!-- Arama motorları için yapılandırılmış veri (schema.org) -->
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "BlogPosting", "@id": "https://modwaretechnology.com/en/blog/pcb-design-review-common-mistakes#yazi", "headline": "Pre-production Design Review: The 15 Most Common Mistakes", "description": "What should you check before a PCB goes to production? The 15 most common mistakes in schematics, footprints, layout, manufacturability and files, with fixes.", "datePublished": "2026-11-04", "dateModified": "2026-11-04", "inLanguage": "en-US", "url": "https://modwaretechnology.com/en/blog/pcb-design-review-common-mistakes", "mainEntityOfPage": "https://modwaretechnology.com/en/blog/pcb-design-review-common-mistakes", "image": "https://modwaretechnology.com/assets/og/modware-og.png", "articleSection": "Design review", "wordCount": 963, "author": {"@type": "Organization", "@id": "https://modwaretechnology.com/#org", "name": "ModWare Technology", "url": "https://modwaretechnology.com/"}, "publisher": {"@type": "Organization", "@id": "https://modwaretechnology.com/#org", "name": "ModWare Technology", "url": "https://modwaretechnology.com/", "logo": {"@type": "ImageObject", "url": "https://modwaretechnology.com/assets/logo/modware-icon-512.png"}}, "isPartOf": {"@type": "Blog", "@id": "https://modwaretechnology.com/en/blog/#blog", "url": "https://modwaretechnology.com/en/blog/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://modwaretechnology.com/en/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://modwaretechnology.com/en/blog/"}, {"@type": "ListItem", "position": 3, "name": "Pre-production Design Review: The 15 Most Common Mistakes"}]}]}</script>
+
+  <!-- Sekme ikonu -->
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/assets/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <meta name="theme-color" content="#0a0f1c">
+
+  <!-- Preloader yalnızca JS çalışıyorsa görünür. GSAP/animations.js
+       5 sn içinde devralmazsa güvenlik zamanlayıcısı onu kaldırır. -->
+  <script>
+    document.documentElement.classList.add('is-loading');
+    window.__preloaderSafety = setTimeout(function () {
+      document.documentElement.classList.remove('is-loading');
+    }, 5000);
+  </script>
+
+  <!-- Fontlar: Space Grotesk (başlıklar) + Inter (metin) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+
+  <link rel="stylesheet" href="/css/style.css?v=31">
+</head>
+<body data-page="blog">
+
+  <!-- ============ PRELOADER ============ -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader-inner">
+      <p class="preloader-word" data-preloader-word>MODWARE</p>
+      <div class="preloader-bar"><span class="preloader-bar-fill"></span></div>
+      <p class="preloader-count"><span data-preloader-count>0</span>%</p>
+    </div>
+  </div>
+
+  <!-- ============ ARKA PLAN KATMANI (sabit, içeriğin arkasında) ============ -->
+  <div class="bg-layer" aria-hidden="true">
+    <div class="bg-glow"></div>
+    <div class="bg-shade"></div>
+    <div class="bg-noise"></div>
+  </div>
+
+  <!-- ============ ÖZEL İMLEÇ (yalnızca fareli cihazlarda) ============ -->
+  <div class="cursor" aria-hidden="true">
+    <div class="cursor-frame"><i></i><i></i><i></i><i></i></div>
+    <div class="cursor-dot"></div>
+  </div>
+
+  <!-- ============ KAYDIRMA İLERLEME ÇUBUĞU ============ -->
+  <div class="scroll-progress" aria-hidden="true"><span class="scroll-progress-bar"></span></div>
+
+  <!-- ============ ORTAK ÜST MENÜ ============
+       Bu blok her sayfada aynıdır. Aktif sayfa,
+       main.js tarafından <body data-page> değerine göre işaretlenir. -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="/en/" aria-label="ModWare Technology home">
+        <img src="/assets/logo/modware-logo-light.png" alt="ModWare" width="275" height="30">
+      </a>
+
+      <!-- Mobilde menüyü açıp kapatan buton -->
+      <button class="nav-toggle" id="nav-toggle" type="button"
+              aria-controls="site-nav" aria-expanded="false" aria-label="Open menu">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="Main menu">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="/en/" data-nav="home">Home</a></li>
+          <li><a class="nav-link" href="/en/services" data-nav="hizmetler">Services</a></li>
+          <li><a class="nav-link" href="/en/products" data-nav="urunler">Products</a></li>
+          <li><a class="nav-link" href="/en/about" data-nav="hakkimizda">About</a></li>
+          <li><a class="nav-link" href="/en/blog/" data-nav="blog">Blog</a></li>
+        </ul>
+        <a class="btn btn-accent nav-cta" href="/en/quote">Get a Quote</a>
+        <a class="lang-switch" href="/blog/pcb-tasarim-incelemesi-sik-yapilan-hatalar" hreflang="tr" lang="tr" aria-label="Türkçe" title="Türkçe">TR</a>
+      </nav>
+    </div>
+  </header>
+  <!-- ============ /ORTAK ÜST MENÜ ============ -->
+
+  <!-- Blog yazısı: pcb-design-review-common-mistakes. Metin site-araclar/blog_en_1.py / blog_en_2.py dosyasından üretilir. -->
+  <main id="main">
+
+    <!-- ============ SAYFA BAŞLIĞI ============ -->
+    <section class="page-head page-head--yazi" aria-labelledby="page-title">
+      <div class="container page-head-inner">
+        <p class="eyebrow" data-anim="hero"><a href="/en/blog/">Blog</a> · Design review</p>
+        <h1 id="page-title" data-split-intro>Pre-production Design Review: The 15 Most Common Mistakes</h1>
+        <p class="page-lede" data-anim="hero">Sending a PCB to production is easy; remaking a faulty board costs both money and time. A systematic review before production catches most mistakes while they are still cheap to fix.</p>
+        <p class="post-meta" data-anim="hero"><time datetime="2026-11-04">November 4, 2026</time> <span aria-hidden="true">·</span> <span>5 min read</span> <span aria-hidden="true">·</span> <span>ModWare Technology engineering team</span></p>
+      </div>
+    </section>
+
+    <section class="section article-section">
+      <div class="container">
+        <article class="prose">
+<nav class="toc" aria-label="Contents">
+<p class="toc-title">Contents</p>
+<ol>
+  <li><a href="#schematic">Schematic</a></li>
+  <li><a href="#footprints-and-layout">Footprints and Layout</a></li>
+  <li><a href="#manufacturability-dfm">Manufacturability (DFM)</a></li>
+  <li><a href="#manufacturing-files">Manufacturing Files</a></li>
+  <li><a href="#how-should-the-review-be-done">How Should the Review Be Done?</a></li>
+  <li><a href="#conclusion">Conclusion</a></li>
+</ol>
+</nav>
+<p>The electrical rules check (ERC) and design rule check (DRC) in design tools are important, but they only check the rules they have been given. A poorly chosen part, a connector with a mirrored pinout or an undersized cooling area can pass these checks without a single error. That is why, before production, a board should be reviewed against a checklist and, if possible, by a second reviewer who did not do the design.</p>
+<p>Below, we have grouped the 15 mistakes we come across most often in pre-production reviews under four headings.</p>
+<aside class="callout"><p><strong>In short:</strong> Check the schematic first, then the footprints and the layout, then manufacturability and, last of all, the manufacturing files. Record every finding with its severity.</p></aside>
+<h2 id="schematic">Schematic</h2>
+<h3>1. Missing or Incorrect Pull-Up/Pull-Down Resistors</h3>
+<p>Pull-up resistors on I²C lines, the reset pin and the pins that set the microcontroller&#x27;s boot mode (such as BOOT0 on the STM32) are the most frequently forgotten connections. A pin left floating makes the board work sometimes and fail at other times.</p>
+<h3>2. Regulator Calculation Errors</h3>
+<p>A wrong resistor value in the feedback divider throws off the output voltage, and a wrong choice of inductor or output capacitor compromises the regulator&#x27;s stability. Every value should be verified, one by one, against the manufacturer&#x27;s formulas and recommendations.</p>
+<h3>3. Skipping the Thermal Calculation</h3>
+<p>In a linear regulator, the input–output voltage difference multiplied by the current turns into heat. Going from 24 V to 3.3 V at 100 mA means about 2 W; a small package cannot get rid of that much heat. Losses and temperature rise should be calculated for every power component.</p>
+<h3>4. Missing Protection Circuits</h3>
+<p>Reverse-connected supplies, voltage transients coming in over the cables and electrostatic discharge (ESD) are the main causes of failures in the field. Reverse-polarity protection, TVS diodes and a fuse or an eFuse are hard to add later, so they should be considered from the start.</p>
+<h3>5. Pin Assignment Conflicts</h3>
+<p>A microcontroller pin can have more than one function. Assigning a UART and a timer channel to the same pin, or picking a package in which the peripheral you need is not available, is only noticed once the firmware is being written. The pin assignment should be verified with the manufacturer&#x27;s configuration tool.</p>
+<h2 id="footprints-and-layout">Footprints and Layout</h2>
+<h3>6. Footprint Does Not Match the Package</h3>
+<p>Packages with the same name can come in different variants: narrow and wide SOIC, QFNs in different sizes, or SOT-23 versions with different pin orders. Every footprint should be checked against the dimensions in the datasheet of the part you will actually buy.</p>
+<h3>7. Missing Pin 1 and Polarity Markings</h3>
+<p>On diodes, LEDs, electrolytic capacitors and ICs, the orientation mark should be clearly visible on the silkscreen. These marks prevent reversed mounting both in assembly and during manual inspection.</p>
+<h3>8. Mirrored Connector Pinouts</h3>
+<p>Connector datasheets may give the pin numbers as seen from the top or from the bottom. A mirrored pin order between two mating boards or in a cable is a common and costly mistake.</p>
+<h3>9. Decoupling Capacitors Placed Too Far Away</h3>
+<p>Decoupling capacitors placed far from the pins or connected through long traces cannot do their job. Each capacitor should be as close as possible to the pin it supplies.</p>
+<h3>10. Mechanical Fit Not Checked</h3>
+<p>Mounting holes, height limits inside the enclosure and the alignment of connectors with the enclosure openings should be checked with a 3D model. A mechanical mismatch makes an electrically flawless board unusable.</p>
+<h2 id="manufacturability-dfm">Manufacturability (DFM)</h2>
+<h3>11. Values Outside Manufacturing Capabilities</h3>
+<p>Very thin traces, very tight clearances or very small holes cannot be made by every manufacturer, or they add extra cost. Design rules should be set to match the capabilities of the manufacturer that will build the board.</p>
+<h3>12. Silkscreen on Pads and Illegible Text</h3>
+<p>Silkscreen that runs onto pads interferes with soldering, and text that is too small cannot be printed. Reference designators should be a legible size and kept clear of pads.</p>
+<h3>13. Overlooked Assembly Requirements</h3>
+<p>Automated assembly needs fiducial marks, enough clearance from the board edge and, if required, panel rails. Parts too close to the edge can be damaged during depaneling.</p>
+<h3>14. No Access for Testing and Programming</h3>
+<p>Without a programming connector (e.g., SWD) and test points on important signals, debugging and production testing become very difficult once the board has been built.</p>
+<h2 id="manufacturing-files">Manufacturing Files</h2>
+<h3>15. Inconsistencies Between Files</h3>
+<p>Reference designators in the bill of materials (BOM) that do not match the PCB, unmarked do-not-place (DNP) parts, wrong rotations in the pick-and-place file (CPL) and files from different revisions getting mixed up will lead to a faulty build even for a correctly designed board. We explain which files are needed in our article on the <a href="/en/blog/pcb-manufacturing-files">files required for PCB manufacturing</a>.</p>
+<h2 id="how-should-the-review-be-done">How Should the Review Be Done?</h2>
+<ol>
+  <li>Run the review against a checklist and in a fixed order: schematic, footprints, layout, manufacturability, files.</li>
+  <li>Record every finding and give it a severity: blocks production, must be fixed, suggested improvement.</li>
+  <li>After the fixes, recheck not only what changed but also the areas those changes may affect.</li>
+  <li>If possible, have someone who did not do the design carry out the review; designers find it hard to see their own assumptions.</li>
+</ol>
+<h2 id="conclusion">Conclusion</h2>
+<p>A pre-production review costs a small fraction of a prototype round and often makes that round unnecessary altogether.</p>
+<p>With our <a href="/en/design-review">design review</a> service, we review your schematic and PCB files before they go to production and report our findings in order of severity. If you would like your board designed from scratch, take a look at our <a href="/en/electronics-pcb-design">electronics and PCB design</a> page.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section-alt" aria-labelledby="ilgili-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Related services</p>
+          <h2 id="ilgili-title" data-split-reveal>Need Help with This?</h2>
+        </header>
+        <div class="values-grid">
+            <article class="value-card tilt-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span>
+              <h3>Design Review</h3>
+              <p>We review your schematic and PCB before they go into production and report errors and risks.</p>
+              <a class="link-u" href="/en/design-review">Learn more <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M9.5 3v4M14.5 3v4M9.5 17v4M14.5 17v4M3 9.5h4M3 14.5h4M17 9.5h4M17 14.5h4"/></svg></span>
+              <h3>Electronics and Hardware Design</h3>
+              <p>From requirements to schematic, from PCB design to prototype: control, power, sensor and communication boards.</p>
+              <a class="link-u" href="/en/electronics-pcb-design">Learn more <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/></svg></span>
+              <h3>PCB Manufacturing</h3>
+              <p>From file check to delivery: prototype and small-batch printed circuit board manufacturing.</p>
+              <a class="link-u" href="/en/pcb-manufacturing">Learn more <span aria-hidden="true">→</span></a>
+            </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="diger-yazilar-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Blog</p>
+          <h2 id="diger-yazilar-title" data-split-reveal>More Articles</h2>
+        </header>
+        <div class="values-grid">
+            <article class="value-card tilt-card blog-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/></svg></span>
+              <p class="blog-meta">PCB manufacturing · 5 min read</p>
+              <h3>Which Files Do You Need for PCB Manufacturing? Gerber, Drill, BOM and Pick-and-Place Files</h3>
+              <p>Gerber layers, drill file, BOM and pick-and-place file: what needs to be prepared before sending a PCB to manufacturing, and common mistakes.</p>
+              <a class="link-u" href="/en/blog/pcb-manufacturing-files">Read the article <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card blog-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12h4l3-7 5 14 3-7h5"/></svg></span>
+              <p class="blog-meta">PCB design · 6 min read</p>
+              <h3>EMC in PCB Design: 10 Rules for Preventing Noise from the Start</h3>
+              <p>Ground plane, current loops, decoupling, the switching power stage and connector filtering: 10 rules that prevent EMC problems from the start.</p>
+              <a class="link-u" href="/en/blog/pcb-emc-design-rules">Read the article <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card blog-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg></span>
+              <p class="blog-meta">PCB manufacturing · 5 min read</p>
+              <h3>9 Ways to Reduce Prototype PCB Costs</h3>
+              <p>Standard manufacturing specs, board size, surface finish, the bill of materials and the number of revisions: practical ways to shrink your prototype budget.</p>
+              <a class="link-u" href="/en/blog/reduce-prototype-pcb-cost">Read the article <span aria-hidden="true">→</span></a>
+            </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section cta-band" aria-labelledby="cta-title">
+      <div class="container cta-inner">
+        <h2 id="cta-title" data-cta-split>Let&#x27;s Review Your Board Before It Goes to Production.</h2>
+        <p class="cta-text">Tell us briefly about your project; we&#x27;ll get back to you with the scope, timeline and an estimated budget.</p>
+        <div class="cta-actions">
+          <a class="btn btn-accent" href="/en/quote?urun=Design%20review" data-burst>Get a Quote</a>
+          <a class="btn btn-ghost" href="/en/services" data-burst>All services</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ ORTAK ALT BİLGİ ============ -->
+  <footer class="site-footer">
+    <!-- Footer üstündeki çizgi: sayfa sonuna yaklaşırken soldan sağa dolar -->
+    <div class="footer-line" aria-hidden="true"><span class="footer-line-fill"></span></div>
+    <div class="container footer-inner">
+      <a class="logo logo-sm" href="/en/"><img src="/assets/logo/modware-logo-light.png" alt="ModWare" width="275" height="30"></a>
+      <p class="footer-meta"><span class="footer-location">İzmit, Kocaeli</span> <span class="footer-copy">© <span data-year>2026</span> ModWare Technology</span></p>
+      <!-- İletişim ikonları: e-posta ve LinkedIn -->
+      <div class="footer-contact">
+        <a class="footer-icon" href="mailto:info@modwaretechnology.com" aria-label="Send us an e-mail: info@modwaretechnology.com" title="info@modwaretechnology.com"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M4 7l8 6 8-6"/></svg></a>
+        <a class="footer-icon" href="https://www.linkedin.com/company/modware-technology1/" target="_blank" rel="noopener" aria-label="ModWare Technology on LinkedIn (opens in a new tab)" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 5a2 2 0 1 1-4-.002 2 2 0 0 1 4 .002zM7 8.48H3V21h4V8.48zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.72-2.91l.04-1.68z"/></svg></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Yukarı çık: sayfa sonuna gelince belirir (main.js) -->
+  <button class="to-top" id="to-top" type="button" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+
+  <!-- Kütüphaneler (CDN, sabit sürüm). main.js ve animations.js'den önce yüklenmeli.
+       GSAP + ScrollTrigger: animasyon · SplitType: harf bölme · Lenis: yumuşak kaydırma -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/split-type@0.3.4/umd/index.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
+  <script src="/js/main.js?v=31" defer></script>
+  <script src="/js/animations.js?v=31" defer></script>
+</body>
+</html>

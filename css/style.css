@@ -266,6 +266,27 @@ body::before {
 .nav-link:hover::after,
 .nav-link[aria-current="page"]::after { transform: scaleX(1); }
 
+/* Dil seçici (TR / EN): sayfanın öbür dildeki karşılığını açar (seo_uret.py her sayfaya ekler) */
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 42px;
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  color: var(--color-text-muted);
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.lang-switch:hover,
+.lang-switch:focus-visible { color: var(--color-text); border-color: var(--color-primary); }
+
 /* Hamburger buton: sadece mobilde görünür */
 .nav-toggle {
   display: none;
@@ -341,6 +362,7 @@ body::before {
   .nav-link[aria-current="page"] { color: var(--color-primary); }
 
   .nav-cta { width: 100%; padding-block: 16px; }
+  .lang-switch { align-self: center; min-width: 72px; height: 44px; font-size: 0.95rem; }
 }
 
 /* ---------- 5. Hero slaytı ---------- */

@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>9 Ways to Reduce Prototype PCB Costs | ModWare</title>
+  <meta name="description" content="What drives prototype PCB cost? How to shrink the budget through standard specs, layer count, board size, surface finish, the BOM and fewer revisions.">
+  <link rel="canonical" href="https://modwaretechnology.com/en/blog/reduce-prototype-pcb-cost">
+  <link rel="alternate" hreflang="tr" href="https://modwaretechnology.com/blog/prototip-pcb-maliyetini-dusurme">
+  <link rel="alternate" hreflang="en" href="https://modwaretechnology.com/en/blog/reduce-prototype-pcb-cost">
+  <link rel="alternate" hreflang="x-default" href="https://modwaretechnology.com/blog/prototip-pcb-maliyetini-dusurme">
+
+  <!-- Paylaşım önizlemesi (LinkedIn, WhatsApp, X) -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="ModWare Technology">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="tr_TR">
+  <meta property="og:title" content="9 Ways to Reduce Prototype PCB Costs | ModWare">
+  <meta property="og:description" content="What drives prototype PCB cost? How to shrink the budget through standard specs, layer count, board size, surface finish, the BOM and fewer revisions.">
+  <meta property="og:url" content="https://modwaretechnology.com/en/blog/reduce-prototype-pcb-cost">
+  <meta property="og:image" content="https://modwaretechnology.com/assets/og/modware-og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="article:published_time" content="2026-11-04">
+  <meta property="article:section" content="PCB manufacturing">
+
+  <!-- Arama motorları için yapılandırılmış veri (schema.org) -->
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "BlogPosting", "@id": "https://modwaretechnology.com/en/blog/reduce-prototype-pcb-cost#yazi", "headline": "9 Ways to Reduce Prototype PCB Costs", "description": "What drives prototype PCB cost? How to shrink the budget through standard specs, layer count, board size, surface finish, the BOM and fewer revisions.", "datePublished": "2026-11-04", "dateModified": "2026-11-04", "inLanguage": "en-US", "url": "https://modwaretechnology.com/en/blog/reduce-prototype-pcb-cost", "mainEntityOfPage": "https://modwaretechnology.com/en/blog/reduce-prototype-pcb-cost", "image": "https://modwaretechnology.com/assets/og/modware-og.png", "articleSection": "PCB manufacturing", "wordCount": 820, "author": {"@type": "Organization", "@id": "https://modwaretechnology.com/#org", "name": "ModWare Technology", "url": "https://modwaretechnology.com/"}, "publisher": {"@type": "Organization", "@id": "https://modwaretechnology.com/#org", "name": "ModWare Technology", "url": "https://modwaretechnology.com/", "logo": {"@type": "ImageObject", "url": "https://modwaretechnology.com/assets/logo/modware-icon-512.png"}}, "isPartOf": {"@type": "Blog", "@id": "https://modwaretechnology.com/en/blog/#blog", "url": "https://modwaretechnology.com/en/blog/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://modwaretechnology.com/en/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://modwaretechnology.com/en/blog/"}, {"@type": "ListItem", "position": 3, "name": "9 Ways to Reduce Prototype PCB Costs"}]}]}</script>
+
+  <!-- Sekme ikonu -->
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/assets/favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <meta name="theme-color" content="#0a0f1c">
+
+  <!-- Preloader yalnızca JS çalışıyorsa görünür. GSAP/animations.js
+       5 sn içinde devralmazsa güvenlik zamanlayıcısı onu kaldırır. -->
+  <script>
+    document.documentElement.classList.add('is-loading');
+    window.__preloaderSafety = setTimeout(function () {
+      document.documentElement.classList.remove('is-loading');
+    }, 5000);
+  </script>
+
+  <!-- Fontlar: Space Grotesk (başlıklar) + Inter (metin) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+
+  <link rel="stylesheet" href="/css/style.css?v=31">
+</head>
+<body data-page="blog">
+
+  <!-- ============ PRELOADER ============ -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader-inner">
+      <p class="preloader-word" data-preloader-word>MODWARE</p>
+      <div class="preloader-bar"><span class="preloader-bar-fill"></span></div>
+      <p class="preloader-count"><span data-preloader-count>0</span>%</p>
+    </div>
+  </div>
+
+  <!-- ============ ARKA PLAN KATMANI (sabit, içeriğin arkasında) ============ -->
+  <div class="bg-layer" aria-hidden="true">
+    <div class="bg-glow"></div>
+    <div class="bg-shade"></div>
+    <div class="bg-noise"></div>
+  </div>
+
+  <!-- ============ ÖZEL İMLEÇ (yalnızca fareli cihazlarda) ============ -->
+  <div class="cursor" aria-hidden="true">
+    <div class="cursor-frame"><i></i><i></i><i></i><i></i></div>
+    <div class="cursor-dot"></div>
+  </div>
+
+  <!-- ============ KAYDIRMA İLERLEME ÇUBUĞU ============ -->
+  <div class="scroll-progress" aria-hidden="true"><span class="scroll-progress-bar"></span></div>
+
+  <!-- ============ ORTAK ÜST MENÜ ============
+       Bu blok her sayfada aynıdır. Aktif sayfa,
+       main.js tarafından <body data-page> değerine göre işaretlenir. -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="/en/" aria-label="ModWare Technology home">
+        <img src="/assets/logo/modware-logo-light.png" alt="ModWare" width="275" height="30">
+      </a>
+
+      <!-- Mobilde menüyü açıp kapatan buton -->
+      <button class="nav-toggle" id="nav-toggle" type="button"
+              aria-controls="site-nav" aria-expanded="false" aria-label="Open menu">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="Main menu">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="/en/" data-nav="home">Home</a></li>
+          <li><a class="nav-link" href="/en/services" data-nav="hizmetler">Services</a></li>
+          <li><a class="nav-link" href="/en/products" data-nav="urunler">Products</a></li>
+          <li><a class="nav-link" href="/en/about" data-nav="hakkimizda">About</a></li>
+          <li><a class="nav-link" href="/en/blog/" data-nav="blog">Blog</a></li>
+        </ul>
+        <a class="btn btn-accent nav-cta" href="/en/quote">Get a Quote</a>
+        <a class="lang-switch" href="/blog/prototip-pcb-maliyetini-dusurme" hreflang="tr" lang="tr" aria-label="Türkçe" title="Türkçe">TR</a>
+      </nav>
+    </div>
+  </header>
+  <!-- ============ /ORTAK ÜST MENÜ ============ -->
+
+  <!-- Blog yazısı: reduce-prototype-pcb-cost. Metin site-araclar/blog_en_1.py / blog_en_2.py dosyasından üretilir. -->
+  <main id="main">
+
+    <!-- ============ SAYFA BAŞLIĞI ============ -->
+    <section class="page-head page-head--yazi" aria-labelledby="page-title">
+      <div class="container page-head-inner">
+        <p class="eyebrow" data-anim="hero"><a href="/en/blog/">Blog</a> · PCB manufacturing</p>
+        <h1 id="page-title" data-split-intro>9 Ways to Reduce Prototype PCB Costs</h1>
+        <p class="page-lede" data-anim="hero">At the prototype stage, what strains the budget is usually not a single line item but the sum of many small decisions. With a few right decisions at the start of the design, you can manufacture the same board at a noticeably lower cost and in less time.</p>
+        <p class="post-meta" data-anim="hero"><time datetime="2026-11-04">November 4, 2026</time> <span aria-hidden="true">·</span> <span>5 min read</span> <span aria-hidden="true">·</span> <span>ModWare Technology engineering team</span></p>
+      </div>
+    </section>
+
+    <section class="section article-section">
+      <div class="container">
+        <article class="prose">
+<nav class="toc" aria-label="Contents">
+<p class="toc-title">Contents</p>
+<ol>
+  <li><a href="#1-stick-to-standard-manufacturing-specs">1. Stick to Standard Manufacturing Specs</a></li>
+  <li><a href="#2-choose-the-layer-count-to-fit-the-need">2. Choose the Layer Count to Fit the Need</a></li>
+  <li><a href="#3-shrink-the-board-and-use-the-panel-efficiently">3. Shrink the Board and Use the Panel Efficiently</a></li>
+  <li><a href="#4-choose-the-surface-finish-for-the-job">4. Choose the Surface Finish for the Job</a></li>
+  <li><a href="#5-avoid-special-processes-unless-needed">5. Avoid Special Processes Unless Needed</a></li>
+  <li><a href="#6-simplify-the-bill-of-materials">6. Simplify the Bill of Materials</a></li>
+  <li><a href="#7-place-parts-on-one-side-if-possible">7. Place Parts on One Side If Possible</a></li>
+  <li><a href="#8-plan-quantity-and-lead-time">8. Plan Quantity and Lead Time</a></li>
+  <li><a href="#9-reduce-the-number-of-revisions">9. Reduce the Number of Revisions</a></li>
+  <li><a href="#how-does-each-decision-affect-cost">How Does Each Decision Affect Cost?</a></li>
+  <li><a href="#conclusion">Conclusion</a></li>
+</ol>
+</nav>
+<p>The price of a PCB is a combination of board area, layer count, material, manufacturing tolerances, surface finish, special processes, quantity and lead time. If the board is also going to assembly, the part count, part availability and the complexity of the assembly come into play as well. The points below summarize the most effective ways to reduce cost without compromising quality or reliability.</p>
+<aside class="callout"><p><strong>In short:</strong> Stick to standard manufacturing specs, use special processes only when they are truly needed, simplify the bill of materials (BOM) and, above all, reduce the number of revisions.</p></aside>
+<h2 id="1-stick-to-standard-manufacturing-specs">1. Stick to Standard Manufacturing Specs</h2>
+<p>Manufacturers treat certain values as standard and offer their best prices for them: 1.6 mm FR-4, 35 µm (1 oz) copper, green solder mask, white silkscreen, and trace widths, clearances and hole diameters within the manufacturer&#x27;s standard capabilities. Going beyond these values increases both price and lead time. Unless you really need them, choose standard values over very thin traces and small vias.</p>
+<h2 id="2-choose-the-layer-count-to-fit-the-need">2. Choose the Layer Count to Fit the Need</h2>
+<p>The unit price rises with the layer count, but fewer layers are not always cheaper. Trying to fit a dense circuit onto fewer layers can make the board larger, cause EMC problems and require an extra prototype round. The right choice is made by looking at the total cost together with the circuit density and the current and noise requirements.</p>
+<h2 id="3-shrink-the-board-and-use-the-panel-efficiently">3. Shrink the Board and Use the Panel Efficiently</h2>
+<p>Price depends largely on board area. Removing unnecessary empty space and using rectangular outlines reduces the area. Several small boards can be manufactured on the same panel, and handling the boards as a panel also speeds up assembly.</p>
+<h2 id="4-choose-the-surface-finish-for-the-job">4. Choose the Surface Finish for the Job</h2>
+<p>HASL is usually the most economical option. For fine-pitch ICs and packages that need a flat surface, such as QFN and BGA, ENIG costs more but reduces soldering defects. Choosing the finish based on what the board really needs protects you from both unnecessary cost and assembly defects.</p>
+<h2 id="5-avoid-special-processes-unless-needed">5. Avoid Special Processes Unless Needed</h2>
+<p>Processes such as blind and buried vias, via-in-pad filling, controlled impedance, castellated (half-hole) edges and heavy copper increase cost significantly. Some designs genuinely need them; where they are not needed, they only drive up the price.</p>
+<h2 id="6-simplify-the-bill-of-materials">6. Simplify the Bill of Materials</h2>
+<p>In prototype assembly, cost is often driven less by the number of parts than by the number of <strong>unique part types</strong>. For example, using a single value instead of 10 kΩ, 9.1 kΩ and 11 kΩ wherever the circuit allows reduces the number of lines in the BOM.</p>
+<ul>
+  <li>Prefer common parts that are in stock at more than one distributor.</li>
+  <li>Avoid parts that are discontinued or have long lead times.</li>
+  <li>Try to stick to a single package size for passive parts (e.g., 0603).</li>
+</ul>
+<h2 id="7-place-parts-on-one-side-if-possible">7. Place Parts on One Side If Possible</h2>
+<p>Spreading parts over both sides means a second pass in assembly, an extra stencil and extra work. If space allows, keeping the SMD parts on one side of the board lowers the assembly cost.</p>
+<h2 id="8-plan-quantity-and-lead-time">8. Plan Quantity and Lead Time</h2>
+<p>The unit price drops as the quantity goes up; for a first prototype, 5–10 pieces is often the most balanced choice. Express manufacturing, on the other hand, adds a significant extra cost. Planning the schedule from the start prevents rushed and expensive orders.</p>
+<h2 id="9-reduce-the-number-of-revisions">9. Reduce the Number of Revisions</h2>
+<p>The most expensive prototype is the one that has to be built again. Every new round means boards, parts, assembly, shipping and, most importantly, time. Running a <a href="/en/design-review">design review</a> before production, adding test points and a programming connector, and providing footprints that can be left unpopulated wherever tuning may be needed often make the next round unnecessary.</p>
+<h2 id="how-does-each-decision-affect-cost">How Does Each Decision Affect Cost?</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Decision</th><th>Effect on cost</th><th>When should you choose it?</th></tr></thead>
+<tbody>
+<tr><td>Standard thickness and copper</td><td>Low cost, short lead time</td><td>Always, unless there is a special requirement</td></tr>
+<tr><td>More layers</td><td>Higher unit price</td><td>Dense circuits, high-speed signals, EMC requirements</td></tr>
+<tr><td>ENIG finish</td><td>Moderate increase</td><td>Fine-pitch packages and packages that need a flat surface</td></tr>
+<tr><td>Via-in-pad, blind vias</td><td>Significant increase</td><td>Very dense, fine-pitch designs</td></tr>
+<tr><td>Single-sided assembly</td><td>Savings in assembly</td><td>When space allows</td></tr>
+<tr><td>Express manufacturing</td><td>Significant increase</td><td>Genuinely urgent cases</td></tr>
+</tbody>
+</table></div>
+<h2 id="conclusion">Conclusion</h2>
+<p>The most effective way to reduce prototype cost is not to blindly pick the cheapest options, but to avoid unnecessary special processes and reduce the number of revisions. The right decisions make both today&#x27;s prototype and tomorrow&#x27;s volume production cheaper.</p>
+<p>With our <a href="/en/pcb-manufacturing">PCB manufacturing</a> service, we check your files before production and work with you to choose the manufacturing options that suit the job and the budget. If you would like to plan your product from the idea stage onward, take a look at our <a href="/en/prototyping-rd">prototyping and R&amp;D</a> page.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section-alt" aria-labelledby="ilgili-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Related services</p>
+          <h2 id="ilgili-title" data-split-reveal>Need Help with This?</h2>
+        </header>
+        <div class="values-grid">
+            <article class="value-card tilt-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/></svg></span>
+              <h3>PCB Manufacturing</h3>
+              <p>From file check to delivery: prototype and small-batch printed circuit board manufacturing.</p>
+              <a class="link-u" href="/en/pcb-manufacturing">Learn more <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span>
+              <h3>Design Review</h3>
+              <p>We review your schematic and PCB before they go into production and report errors and risks.</p>
+              <a class="link-u" href="/en/design-review">Learn more <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 3h5M10.5 3v6.2L5.2 18.4A1.8 1.8 0 0 0 6.8 21h10.4a1.8 1.8 0 0 0 1.6-2.6L13.5 9.2V3"/><path d="M7.5 15h9"/></svg></span>
+              <h3>Prototyping and R&amp;D</h3>
+              <p>From idea to working prototype and from prototype to production, with a test plan and documentation.</p>
+              <a class="link-u" href="/en/prototyping-rd">Learn more <span aria-hidden="true">→</span></a>
+            </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="diger-yazilar-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Blog</p>
+          <h2 id="diger-yazilar-title" data-split-reveal>More Articles</h2>
+        </header>
+        <div class="values-grid">
+            <article class="value-card tilt-card blog-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/></svg></span>
+              <p class="blog-meta">PCB manufacturing · 5 min read</p>
+              <h3>Which Files Do You Need for PCB Manufacturing? Gerber, Drill, BOM and Pick-and-Place Files</h3>
+              <p>Gerber layers, drill file, BOM and pick-and-place file: what needs to be prepared before sending a PCB to manufacturing, and common mistakes.</p>
+              <a class="link-u" href="/en/blog/pcb-manufacturing-files">Read the article <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card blog-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span>
+              <p class="blog-meta">Design review · 5 min read</p>
+              <h3>Pre-production Design Review: The 15 Most Common Mistakes</h3>
+              <p>From schematic to footprints, from layout to manufacturing files: 15 common mistakes to catch before you send a board to production.</p>
+              <a class="link-u" href="/en/blog/pcb-design-review-common-mistakes">Read the article <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="value-card tilt-card blog-card" data-glow data-tilt>
+              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M9.5 3v4M14.5 3v4M9.5 17v4M14.5 17v4M3 9.5h4M3 14.5h4M17 9.5h4M17 14.5h4"/></svg></span>
+              <p class="blog-meta">Electronics design · 7 min read</p>
+              <h3>The Electronics Design Process: From Idea to Mass Production, Step by Step</h3>
+              <p>From requirements to schematic, from PCB to prototype and mass production: the steps an electronic board goes through and what to watch for at each one.</p>
+              <a class="link-u" href="/en/blog/electronics-design-process">Read the article <span aria-hidden="true">→</span></a>
+            </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section cta-band" aria-labelledby="cta-title">
+      <div class="container cta-inner">
+        <h2 id="cta-title" data-cta-split>Let&#x27;s Manufacture Your PCBs Together.</h2>
+        <p class="cta-text">Tell us briefly about your project; we&#x27;ll get back to you with the scope, timeline and an estimated budget.</p>
+        <div class="cta-actions">
+          <a class="btn btn-accent" href="/en/quote?urun=PCB%20manufacturing" data-burst>Get a Quote</a>
+          <a class="btn btn-ghost" href="/en/services" data-burst>All services</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ ORTAK ALT BİLGİ ============ -->
+  <footer class="site-footer">
+    <!-- Footer üstündeki çizgi: sayfa sonuna yaklaşırken soldan sağa dolar -->
+    <div class="footer-line" aria-hidden="true"><span class="footer-line-fill"></span></div>
+    <div class="container footer-inner">
+      <a class="logo logo-sm" href="/en/"><img src="/assets/logo/modware-logo-light.png" alt="ModWare" width="275" height="30"></a>
+      <p class="footer-meta"><span class="footer-location">İzmit, Kocaeli</span> <span class="footer-copy">© <span data-year>2026</span> ModWare Technology</span></p>
+      <!-- İletişim ikonları: e-posta ve LinkedIn -->
+      <div class="footer-contact">
+        <a class="footer-icon" href="mailto:info@modwaretechnology.com" aria-label="Send us an e-mail: info@modwaretechnology.com" title="info@modwaretechnology.com"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M4 7l8 6 8-6"/></svg></a>
+        <a class="footer-icon" href="https://www.linkedin.com/company/modware-technology1/" target="_blank" rel="noopener" aria-label="ModWare Technology on LinkedIn (opens in a new tab)" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 5a2 2 0 1 1-4-.002 2 2 0 0 1 4 .002zM7 8.48H3V21h4V8.48zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.72-2.91l.04-1.68z"/></svg></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Yukarı çık: sayfa sonuna gelince belirir (main.js) -->
+  <button class="to-top" id="to-top" type="button" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+
+  <!-- Kütüphaneler (CDN, sabit sürüm). main.js ve animations.js'den önce yüklenmeli.
+       GSAP + ScrollTrigger: animasyon · SplitType: harf bölme · Lenis: yumuşak kaydırma -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/split-type@0.3.4/umd/index.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
+  <script src="/js/main.js?v=31" defer></script>
+  <script src="/js/animations.js?v=31" defer></script>
+</body>
+</html>
