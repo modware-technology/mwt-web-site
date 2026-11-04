@@ -2,6 +2,7 @@
 
 Mevcut sayfaların görünüşüne dokunmadan: sekme başlıkları, açıklamalar, canonical, paylaşım önizlemesi,
 yapılandırılmış veri, robots.txt, sitemap.xml, llms.txt. Her hizmet için sitenin aynı bileşenleriyle ayrı bir sayfa.
+İki dil: Türkçe sayfalar kökte, İngilizce karşılıkları /en/ altında (hreflang ve menüde TR/EN düğmesi).
 Kullanım: python seo_uret.py <site-klasörü>
 """
 import html
@@ -14,6 +15,9 @@ from urllib.parse import quote
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from blog_yazilar import YAZILAR  # noqa: E402
+from hizmet_en import HIZMETLER_EN, SAYFALAR_EN, HUB_EN, METIN_EN  # noqa: E402
+from blog_en_1 import YAZILAR_EN as _BLOG_EN_1  # noqa: E402
+from blog_en_2 import YAZILAR_EN as _BLOG_EN_2  # noqa: E402
 
 SITE = sys.argv[1]
 ALAN = "https://modwaretechnology.com"
@@ -59,7 +63,32 @@ def _buyut(kelime, ilk):
     return on + {"i": "İ", "ı": "I"}.get(harf, harf.upper()) + kalan
 
 
-def _baslik_ic(ic):
+# İngilizce başlıklarda (Title Case) bağlaç, edat ve tanımlıklar küçük kalır (ilk kelime hariç)
+EN_KUCUK = {"a", "an", "and", "as", "at", "but", "by", "for", "from", "in", "into", "nor", "of", "on", "or", "per",
+            "the", "to", "via", "vs", "with"}
+# Tek başına kelime olmayan ön ekler: sonraki parça küçük kalır (Pre-production, Non-volatile)
+EN_ONEK = {"anti", "co", "e", "multi", "non", "pre", "re", "semi", "sub"}
+
+
+def _buyut_en(kelime, ilk):
+    if "-" in kelime.strip("-"):
+        # Tireli birleşik kelimede her parça büyür: Pick-and-Place, Small-Batch
+        ilk_parca, *kalanlar = kelime.split("-")
+        onek = re.sub(r"^\W+", "", ilk_parca).lower() in EN_ONEK
+        return "-".join([_buyut_en(ilk_parca, True)] + [p if onek else _buyut_en(p, False) for p in kalanlar])
+    m = re.match(r"(\W*)([^\W\d_])(.*)", kelime, re.S)
+    if not m:
+        return kelime
+    on, harf, kalan = m.groups()
+    if not harf.islower() or any(c.isupper() for c in kalan):
+        return kelime
+    if not ilk and re.sub(r"\W+$", "", harf + kalan) in EN_KUCUK:
+        return kelime
+    return on + harf.upper() + kalan
+
+
+def _baslik_ic(ic, kod="tr"):
+    buyut = _buyut if kod == "tr" else _buyut_en
     cikti, bas, ilk = [], True, True
     for p in re.split(r"(<[^>]+>|&[#\w]+;|\s+|/)", ic):
         if not p:
@@ -73,18 +102,19 @@ def _baslik_ic(ic):
             bas = p in ("&quot;", "&#34;")
         else:
             if bas:
-                p = _buyut(p, ilk)
-                ilk = False
+                p = buyut(p, ilk)
+            # İngilizcede iki nokta / soru işaretinden sonraki kelime büyük başlar: "Design Review: The 15 …"
+            ilk = kod == "en" and p.endswith((":", "?"))
             bas = False
         cikti.append(p)
     return "".join(cikti)
 
 
-def basliklar(s):
+def basliklar(s, kod="tr"):
     s = re.sub(r"(<(h[1-3])\b[^>]*>)(.*?)(</\2>)",
-               lambda m: m.group(1) + _baslik_ic(m.group(3)) + m.group(4), s, flags=re.S)
+               lambda m: m.group(1) + _baslik_ic(m.group(3), kod) + m.group(4), s, flags=re.S)
     return re.sub(r'(<legend class="q-legend"[^>]*>)(.*?)(</legend>)',
-                  lambda m: m.group(1) + _baslik_ic(m.group(2)) + m.group(3), s, flags=re.S)
+                  lambda m: m.group(1) + _baslik_ic(m.group(2), kod) + m.group(3), s, flags=re.S)
 
 
 # ---------------------------------------------------------------- temiz adresler
@@ -97,10 +127,6 @@ def temiz_url(s):
         yeni = "/" + (yol[:-len("index.html")] if yol.endswith("index.html") else yol[:-len(".html")])
         return f'{m.group(1)}="{yeni}{ek}"'
     return re.sub(r'\b(href)="(?!https?:|mailto:|tel:|#|//)(/?[a-z0-9/_-]+\.html)([?#][^"]*)?"', cevir, s)
-
-
-def son_isle(s):
-    return temiz_url(basliklar(s))
 
 
 # ---------------------------------------------------------------- ikonlar (24×24, çizgi)
@@ -357,22 +383,153 @@ def menu_blok(s):
     return s[:m.end()] + f'{girinti}<li><a class="nav-link" href="{on}blog/index.html" data-nav="blog">Blog</a></li>\n' + s[m.end():]
 
 
-# ---------------------------------------------------------------- şablon parçaları (teklif.html'den)
-teklif, _ = oku("teklif.html")
-teklif = menu_blok(ikon_blok(teklif))
-HEAD_ORTAK = teklif[teklif.index("  <!-- Sekme ikonu -->"):teklif.index("</head>")]
-GOVDE_UST = teklif[teklif.index("  <!-- ============ PRELOADER ============ -->"):teklif.index("  <main")]
-GOVDE_ALT = teklif[teklif.index("  <!-- ============ ORTAK ALT BİLGİ ============ -->"):]
+# ---------------------------------------------------------------- blog sabitleri (metinler blog_yazilar.py ve blog_en_*.py'de)
+AYLAR = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"]
+AYLAR_EN = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
+            "November", "December"]
+TR_ASCII = str.maketrans("çğıöşüÇĞİÖŞÜâîû", "cgiosuCGIOSUaiu")
+YAYINCI = {"@type": "Organization", "@id": ORG_ID, "name": "ModWare Technology", "url": f"{ALAN}/",
+           "logo": {"@type": "ImageObject", "url": f"{ALAN}/assets/logo/modware-icon-512.png"}}
+BLOG = dict(
+    title="Blog: Elektronik Kart, PCB ve Gömülü Yazılım Yazıları | ModWare",
+    desc="Elektronik kart tasarımı, PCB üretimi, EMC ve gömülü yazılım üzerine pratik teknik yazılar: süreçler, üretim dosyaları, sık yapılan hatalar ve maliyet ipuçları.",
+    eyebrow="Blog",
+    h1="Teknik yazılar",
+    lede="Elektronik kart tasarımından PCB üretimine, EMC'den gömülü yazılıma; projelerde işe yarayan pratik bilgileri paylaşıyoruz.",
+)
+BLOG_EN = dict(
+    title="Blog: Electronics Design, PCB and Embedded Software Articles | ModWare",
+    desc="Practical technical articles on electronic board design, PCB manufacturing, EMC and embedded software: "
+         "processes, manufacturing files, common mistakes and cost tips.",
+    eyebrow="Blog",
+    h1="Technical articles",
+    lede="From electronic board design to PCB manufacturing, from EMC to embedded software: practical knowledge "
+         "that helps in real projects.",
+)
+
+# ---------------------------------------------------------------- diller: Türkçe kökte, İngilizce /en/ altında
+# Sayfalar iki dilde de aynı anahtarla anılır (Türkçe adres adı): "urunler", ("hizmet", "pcb-uretimi"),
+# ("yazi", "stm32-modbus-rtu-rs485") … hreflang bağlantıları ve menüdeki dil düğmesi bu eşlemeden üretilir.
+# İngilizce metinler: hizmet_en.py (hizmet sayfaları), blog_en_1.py ve blog_en_2.py (blog yazıları). Elle tutulan
+# İngilizce sayfalar: en/index.html, en/products.html, en/about.html, en/quote.html, en/404.html.
+TARIH_EN = "2026-11-04"
+SURUM = 31          # css/js önbellek sürümü (?v=): stil ya da betik değişince bir artırın
+METIN_EN_EK = {     # hizmet_en.METIN_EN'de olmayan sabit metinler
+    "Ana Sayfa": "Home", "Hizmetler": "Services", "dk okuma": "min read", "Yazıyı okuyun": "Read the article",
+    "İçindekiler": "Contents", "ModWare Technology mühendislik ekibi": "ModWare Technology engineering team",
+    "İlgili hizmetler": "Related services", "Bu konuda desteğe mi ihtiyacınız var?": "Need help with this?",
+    "Diğer yazılar": "More articles", "Yazılar": "Articles", "Tüm yazılar": "All articles",
+}
+HUB_ADIMLAR = [("Keşif ve kapsam", "İhtiyaçları ve başarı kriterlerini netleştirir, teknik gereksinimleri çıkarırız."),
+               ("Tasarım ve doğrulama", "Şematik, PCB ve yazılım mimarisi; hesap ve ara teslimlerle doğrulama."),
+               ("Prototip ve test", "Prototipi üretir, ölçer ve iyileştiririz."),
+               ("Üretime geçiş", "PCB üretimi, tedarik ve dokümantasyon.")]
 
 
-def og_blok(title, desc, url, jsonld=None, tur="website", ek=()):
-    satir = [
-        f'  <link rel="canonical" href="{url}">',
+class Dil:
+    def __init__(s, kod, on, tablo, hizmetler, sayfalar, hub, blog, yazilar, metin, og_locale, in_lang, tarih):
+        s.kod, s.on, s.tablo = kod, on, tablo
+        s.hizmet = {h.get("tr", h["slug"]): h for h in hizmetler}
+        s.sayfa, s.hub, s.blog = sayfalar, hub, blog
+        s.yazi = {y.get("tr", y["slug"]): y for y in yazilar}
+        s.metin, s.og_locale, s.in_lang, s.tarih_yayin = metin, og_locale, in_lang, tarih
+
+    def m(s, tr):
+        """Sabit arayüz metni: Türkçede kendisi, İngilizcede karşılığı (karşılık yoksa üretici durur)."""
+        return tr if s.metin is None else s.metin[tr]
+
+    def dosya(s, a):
+        if isinstance(a, tuple):
+            tur, k = a
+            return f"{s.on}{s.hizmet[k]['slug']}.html" if tur == "hizmet" else f"{s.on}blog/{s.yazi[k]['slug']}.html"
+        return s.tablo[a]
+
+    def yol(s, a, urun=None):
+        """Site içi bağlantı: kökten ve .html ile (temiz_url uzantısız adrese çevirir)."""
+        return "/" + s.dosya(a) + (f"?urun={quote(urun)}" if urun else "")
+
+    def url(s, a):
+        d = s.dosya(a)
+        return f"{ALAN}/" + (d[:-len("index.html")] if d.endswith("index.html") else d[:-len(".html")])
+
+    def tarih(s, t):
+        yil, ay, gun = (int(x) for x in t.split("-"))
+        return f"{gun} {AYLAR[ay - 1]} {yil}" if s.kod == "tr" else f"{AYLAR_EN[ay - 1]} {gun}, {yil}"
+
+
+_YEN = {y["tr"]: y for y in _BLOG_EN_1 + _BLOG_EN_2}
+assert set(_YEN) == {y["slug"] for y in YAZILAR}, "İngilizce blog yazıları Türkçe listeyle eşleşmiyor"
+assert [h["tr"] for h in HIZMETLER_EN] == [h["slug"] for h in HIZMETLER], "İngilizce hizmet listesi eşleşmiyor"
+assert set(SAYFALAR_EN) == set(SAYFALAR), "İngilizce hizmet sayfaları eşleşmiyor"
+TR = Dil("tr", "", {"index": "index.html", "urunler": "urunler.html", "hakkimizda": "hakkimizda.html",
+                    "teklif": "teklif.html", "hizmetler": "hizmetler.html", "blog": "blog/index.html", "404": "404.html"},
+         HIZMETLER, SAYFALAR, HUB, BLOG, YAZILAR, None, "tr_TR", "tr-TR", TARIH)
+EN = Dil("en", "en/", {"index": "en/index.html", "urunler": "en/products.html", "hakkimizda": "en/about.html",
+                       "teklif": "en/quote.html", "hizmetler": "en/services.html", "blog": "en/blog/index.html",
+                       "404": "en/404.html"},
+         HIZMETLER_EN, {k: SAYFALAR_EN[k] for k in SAYFALAR}, HUB_EN, BLOG_EN, [_YEN[y["slug"]] for y in YAZILAR],
+         {**METIN_EN, **METIN_EN_EK}, "en_US", "en-US", TARIH_EN)
+
+
+def karsi(D):
+    return EN if D is TR else TR
+
+
+def alternatlar(a):
+    return [("tr", TR.url(a)), ("en", EN.url(a)), ("x-default", TR.url(a))]
+
+
+def surum(s):
+    return re.sub(r"\b(css/style\.css|js/main\.js|js/animations\.js)\?v=\d+", rf"\1?v={SURUM}", s)
+
+
+def mutlak(s):
+    """Alt klasördeki sayfalarda (/blog/, /en/) göreli bağlantıları kökten başlayan yollara çevirir
+    (tarayıcı göreli bağlantıyı sayfanın klasörüne göre çözer)."""
+    return re.sub(r'\b(href|src)="(?!https?:|mailto:|tel:|data:|#|/)([^"]+)"', r'\1="/\2"', s)
+
+
+def dil_dugmesi(s, D, a):
+    """Menüye, sayfanın öbür dildeki karşılığına giden düğmeyi koyar (varsa yeniler)."""
+    K = karsi(D)
+    s = re.sub(r'\n *<a class="lang-switch"[^\n]*', "", s)
+    m = re.search(r'\n( *)<a class="btn btn-accent nav-cta"[^\n]*', s)
+    assert m, "menüde Teklif Al düğmesi bulunamadı"
+    ad = "English" if K is EN else "Türkçe"
+    dugme = (f'\n{m.group(1)}<a class="lang-switch" href="{K.yol("index" if a == "404" else a)}" hreflang="{K.kod}" '
+             f'lang="{K.kod}" aria-label="{ad}" title="{ad}">{K.kod.upper()}</a>')
+    return s[:m.end()] + dugme + s[m.end():]
+
+
+def son_isle(s, D, a):
+    s = dil_dugmesi(s, D, a)
+    if D is EN:
+        s = mutlak(s)
+    return temiz_url(basliklar(s, D.kod))
+
+
+def sablon_yukle(D):
+    s, _ = oku(D.dosya("teklif"))
+    s = surum(menu_blok(ikon_blok(s)))
+    D.HEAD_ORTAK = s[s.index("  <!-- Sekme ikonu -->"):s.index("</head>")]
+    D.GOVDE_UST = s[s.index("  <!-- ============ PRELOADER ============ -->"):s.index("  <main")]
+    D.GOVDE_ALT = s[s.index("  <!-- ============ ORTAK ALT BİLGİ ============ -->"):]
+
+
+sablon_yukle(TR)
+sablon_yukle(EN)
+
+
+def og_blok(D, title, desc, url, jsonld=None, tur="website", ek=(), alt=None):
+    satir = [f'  <link rel="canonical" href="{url}">']
+    satir += [f'  <link rel="alternate" hreflang="{h}" href="{u}">' for h, u in (alt or [])]
+    satir += [
         "",
         "  <!-- Paylaşım önizlemesi (LinkedIn, WhatsApp, X) -->",
         f'  <meta property="og:type" content="{tur}">',
         '  <meta property="og:site_name" content="ModWare Technology">',
-        '  <meta property="og:locale" content="tr_TR">',
+        f'  <meta property="og:locale" content="{D.og_locale}">',
+        f'  <meta property="og:locale:alternate" content="{karsi(D).og_locale}">',
         f'  <meta property="og:title" content="{e(title)}">',
         f'  <meta property="og:description" content="{e(desc)}">',
         f'  <meta property="og:url" content="{url}">',
@@ -413,7 +570,7 @@ def izgara(kartlar):
     return '        <div class="values-grid">\n' + "\n".join(kartlar) + "\n        </div>"
 
 
-def surec(baslik, adimlar, alt):
+def surec(D, baslik, adimlar, alt):
     li = []
     for i, (h3, p) in enumerate(adimlar, 1):
         ok = '\n            <svg class="p-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>' if i < len(adimlar) else ""
@@ -427,7 +584,7 @@ def surec(baslik, adimlar, alt):
             f'    <section class="{cls}" id="nasil-calisiyoruz" aria-labelledby="process-title">\n'
             f'      <div class="container">\n'
             f'        <header class="section-head">\n'
-            f'          <p class="eyebrow">Süreç</p>\n'
+            f'          <p class="eyebrow">{e(D.m("Süreç"))}</p>\n'
             f'          <h2 id="process-title" data-split-reveal>{e(baslik)}</h2>\n'
             f'        </header>\n\n'
             f'        <ol class="p-list">\n' + "\n".join(li) + "\n        </ol>\n"
@@ -435,30 +592,26 @@ def surec(baslik, adimlar, alt):
             f'    </section>')
 
 
-def teklif_href(urun):
-    return "teklif.html" + (f"?urun={quote(urun)}" if urun else "")
-
-
-def kapanis(baslik, urun):
+def kapanis(D, baslik, urun):
     return (f'    <section class="section cta-band" aria-labelledby="cta-title">\n'
             f'      <div class="container cta-inner">\n'
             f'        <h2 id="cta-title" data-cta-split>{e(baslik)}</h2>\n'
-            f'        <p class="cta-text">Projenizi kısaca anlatın; kapsam, süre ve tahmini bütçeyle dönelim.</p>\n'
+            f'        <p class="cta-text">{e(D.m("Projenizi kısaca anlatın; kapsam, süre ve tahmini bütçeyle dönelim."))}</p>\n'
             f'        <div class="cta-actions">\n'
-            f'          <a class="btn btn-accent" href="{teklif_href(urun)}" data-burst>Teklif Al</a>\n'
-            f'          <a class="btn btn-ghost" href="hizmetler.html" data-burst>Tüm hizmetler</a>\n'
+            f'          <a class="btn btn-accent" href="{D.yol("teklif", urun)}" data-burst>{e(D.m("Teklif Al"))}</a>\n'
+            f'          <a class="btn btn-ghost" href="{D.yol("hizmetler")}" data-burst>{e(D.m("Tüm hizmetler"))}</a>\n'
             f'        </div>\n'
             f'      </div>\n'
             f'    </section>')
 
 
-def sayfa_head(title, desc, url, jsonld, tur="website", ek=()):
-    return ('<!doctype html>\n<html lang="tr">\n<head>\n'
+def sayfa_head(D, title, desc, url, jsonld, tur="website", ek=(), alt=None):
+    return (f'<!doctype html>\n<html lang="{D.kod}">\n<head>\n'
             '  <meta charset="utf-8">\n'
             '  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
             f'  <title>{e(title)}</title>\n'
             f'  <meta name="description" content="{e(desc)}">\n'
-            + og_blok(title, desc, url, jsonld, tur, ek) + "\n\n" + HEAD_ORTAK + "</head>\n")
+            + og_blok(D, title, desc, url, jsonld, tur, ek, alt) + "\n\n" + D.HEAD_ORTAK + "</head>\n")
 
 
 def sayfa_bas(eyebrow, h1, lede):
@@ -473,90 +626,70 @@ def sayfa_bas(eyebrow, h1, lede):
             '    </section>\n\n')
 
 
-def servis_jsonld(slug, s):
-    return {
-        "@context": "https://schema.org",
-        "@type": "Service",
-        "name": H[slug]["ad"],
-        "serviceType": H[slug]["ad"],
-        "description": s["desc"],
-        "url": f"{ALAN}/{slug}",
-        "areaServed": {"@type": "Country", "name": "Türkiye"},
-        "provider": {"@type": "Organization", "@id": ORG_ID, "name": "ModWare Technology", "url": f"{ALAN}/"},
-    }
+def servis_jsonld(D, k, s):
+    h = D.hizmet[k]
+    jl = {"@context": "https://schema.org", "@type": "Service", "name": h["ad"], "serviceType": h["ad"],
+          "description": s["desc"], "url": D.url(("hizmet", k))}
+    if D is TR:
+        jl["areaServed"] = {"@type": "Country", "name": "Türkiye"}
+    jl["provider"] = {"@type": "Organization", "@id": ORG_ID, "name": "ModWare Technology", "url": f"{ALAN}/"}
+    return jl
 
 
-def servis_sayfasi(slug):
-    s = SAYFALAR[slug]
-    url = f"{ALAN}/{slug}"
-    bol = [lambda alt: bolum("kapsam", "Kapsam", s["kapsam_baslik"], izgara([kart(*k) for k in s["kapsam"]]), alt=alt)]
+def hizmet_karti(D, k):
+    x = D.hizmet[k]
+    return kart(x["ikon"], x["ad"], x["ozet"], (D.yol(("hizmet", k)), D.m("Hizmeti inceleyin")))
+
+
+def servis_sayfasi(D, k):
+    s, a = D.sayfa[k], ("hizmet", k)
+    bol = [lambda alt: bolum("kapsam", D.m("Kapsam"), s["kapsam_baslik"], izgara([kart(*x) for x in s["kapsam"]]), alt=alt)]
     if "kapsam2" in s:
         k2 = s["kapsam2"]
-        bol.append(lambda alt: bolum("kapsam2", k2["eyebrow"], k2["baslik"], izgara([kart(*k) for k in k2["kartlar"]]), alt=alt))
-    bol.append(lambda alt: surec(s["surec_baslik"], s["surec"], alt=alt))
-    bol.append(lambda alt: bolum("teslim", "Teslimatlar", "Projenin sonunda elinizde olanlar", izgara([kart(*k) for k in s["teslim"]]), alt=alt))
+        bol.append(lambda alt: bolum("kapsam2", k2["eyebrow"], k2["baslik"], izgara([kart(*x) for x in k2["kartlar"]]), alt=alt))
+    bol.append(lambda alt: surec(D, s["surec_baslik"], s["surec"], alt=alt))
+    bol.append(lambda alt: bolum("teslim", D.m("Teslimatlar"), D.m("Projenin sonunda elinizde olanlar"),
+                                 izgara([kart(*x) for x in s["teslim"]]), alt=alt))
     if "ornek" in s:
-        b, m = s["ornek"]
-        ek = (f'\n          <p class="page-lede">{e(m)}</p>\n'
-              f'          <p><a class="btn btn-ghost" href="urunler.html">Ürünleri inceleyin</a></p>')
-        bol.append(lambda alt: bolum("ornek", "Örnek", b, "", alt=alt, ek=ek))
-    bol.append(lambda alt: bolum("sss", "Sık sorulanlar", "Merak edilenler", izgara([kart(None, q, a) for q, a in s["sss"]]), alt=alt))
-    diger = [kart(h["ikon"], h["ad"], h["ozet"], (f'{h["slug"]}.html', "Hizmeti inceleyin")) for h in HIZMETLER if h["slug"] != slug]
-    bol.append(lambda alt: bolum("diger", "Diğer hizmetler", "Tek ekipte, uçtan uca", izgara(diger), alt=alt))
+        b, mt = s["ornek"]
+        ek = (f'\n          <p class="page-lede">{e(mt)}</p>\n'
+              f'          <p><a class="btn btn-ghost" href="{D.yol("urunler")}">{e(D.m("Ürünleri inceleyin"))}</a></p>')
+        bol.append(lambda alt: bolum("ornek", D.m("Örnek"), b, "", alt=alt, ek=ek))
+    bol.append(lambda alt: bolum("sss", D.m("Sık sorulanlar"), D.m("Merak edilenler"),
+                                 izgara([kart(None, q, c) for q, c in s["sss"]]), alt=alt))
+    diger = [hizmet_karti(D, k2) for k2 in D.hizmet if k2 != k]
+    bol.append(lambda alt: bolum("diger", D.m("Diğer hizmetler"), D.m("Tek ekipte, uçtan uca"), izgara(diger), alt=alt))
     govde = "\n\n".join(f(i % 2 == 1) for i, f in enumerate(bol))
-    return "".join([sayfa_head(s["title"], s["desc"], url, servis_jsonld(slug, s)),
-                    '<body data-page="hizmetler">\n\n', GOVDE_UST,
-                    f'  <!-- Hizmet sayfası: {slug}. Yeni hizmet eklenirse sitemap.xml de güncellenir. -->\n',
+    return "".join([sayfa_head(D, s["title"], s["desc"], D.url(a), servis_jsonld(D, k, s), alt=alternatlar(a)),
+                    '<body data-page="hizmetler">\n\n', D.GOVDE_UST,
+                    f'  <!-- Hizmet sayfası: {D.hizmet[k]["slug"]}. Yeni hizmet eklenirse sitemap.xml de güncellenir. -->\n',
                     sayfa_bas(s["eyebrow"], s["h1"], s["lede"]), govde, "\n\n",
-                    kapanis(s["cta"], H[slug]["urun"]), "\n\n  </main>\n\n", GOVDE_ALT])
+                    kapanis(D, s["cta"], D.hizmet[k]["urun"]), "\n\n  </main>\n\n", D.GOVDE_ALT])
 
 
-def hub_sayfasi():
-    url = f"{ALAN}/hizmetler"
-    jl = {"@context": "https://schema.org", "@type": "CollectionPage", "name": "Hizmetler", "url": url,
-          "description": HUB["desc"], "about": {"@id": ORG_ID},
-          "hasPart": [{"@type": "Service", "name": h["ad"], "url": f"{ALAN}/{h['slug']}"} for h in HIZMETLER]}
-    kartlar = [kart(h["ikon"], h["ad"], h["ozet"], (f'{h["slug"]}.html', "Hizmeti inceleyin")) for h in HIZMETLER]
-    adimlar = [("Keşif ve kapsam", "İhtiyaçları ve başarı kriterlerini netleştirir, teknik gereksinimleri çıkarırız."),
-               ("Tasarım ve doğrulama", "Şematik, PCB ve yazılım mimarisi; hesap ve ara teslimlerle doğrulama."),
-               ("Prototip ve test", "Prototipi üretir, ölçer ve iyileştiririz."),
-               ("Üretime geçiş", "PCB üretimi, tedarik ve dokümantasyon.")]
-    return "".join([sayfa_head(HUB["title"], HUB["desc"], url, jl), '<body data-page="hizmetler">\n\n', GOVDE_UST,
+def hub_sayfasi(D):
+    url = D.url("hizmetler")
+    jl = {"@context": "https://schema.org", "@type": "CollectionPage", "name": D.m("Hizmetler"), "url": url,
+          "description": D.hub["desc"], "about": {"@id": ORG_ID},
+          "hasPart": [{"@type": "Service", "name": x["ad"], "url": D.url(("hizmet", k))} for k, x in D.hizmet.items()]}
+    adimlar = [(D.m(b), D.m(m)) for b, m in HUB_ADIMLAR]
+    return "".join([sayfa_head(D, D.hub["title"], D.hub["desc"], url, jl, alt=alternatlar("hizmetler")),
+                    '<body data-page="hizmetler">\n\n', D.GOVDE_UST,
                     "  <!-- Hizmetler sayfası. Yeni hizmet eklenirse kartı buraya, adresi sitemap.xml'e eklenir. -->\n",
-                    sayfa_bas(HUB["eyebrow"], HUB["h1"], HUB["lede"]),
-                    bolum("hizmet", "Ne yapıyoruz?", "Hizmetlerimiz", izgara(kartlar)), "\n\n",
-                    surec("Fikirden üretime tek ekip", adimlar, alt=True), "\n\n",
-                    kapanis("Projenizi birlikte geliştirelim.", None), "\n\n  </main>\n\n", GOVDE_ALT])
+                    sayfa_bas(D.hub["eyebrow"], D.hub["h1"], D.hub["lede"]),
+                    bolum("hizmet", D.m("Ne yapıyoruz?"), D.m("Hizmetlerimiz"), izgara([hizmet_karti(D, k) for k in D.hizmet])), "\n\n",
+                    surec(D, D.m("Fikirden üretime tek ekip"), adimlar, alt=True), "\n\n",
+                    kapanis(D, D.m("Projenizi birlikte geliştirelim."), None), "\n\n  </main>\n\n", D.GOVDE_ALT])
 
 
-# ---------------------------------------------------------------- blog (/blog/; metinler blog_yazilar.py'de)
-AYLAR = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"]
-TR_ASCII = str.maketrans("çğıöşüÇĞİÖŞÜâîû", "cgiosuCGIOSUaiu")
-Y = {y["slug"]: y for y in YAZILAR}
-BLOG_URL = f"{ALAN}/blog/"
-YAYINCI = {"@type": "Organization", "@id": ORG_ID, "name": "ModWare Technology", "url": f"{ALAN}/",
-           "logo": {"@type": "ImageObject", "url": f"{ALAN}/assets/logo/modware-icon-512.png"}}
-BLOG = dict(
-    title="Blog: Elektronik Kart, PCB ve Gömülü Yazılım Yazıları | ModWare",
-    desc="Elektronik kart tasarımı, PCB üretimi, EMC ve gömülü yazılım üzerine pratik teknik yazılar: süreçler, üretim dosyaları, sık yapılan hatalar ve maliyet ipuçları.",
-    eyebrow="Blog",
-    h1="Teknik yazılar",
-    lede="Elektronik kart tasarımından PCB üretimine, EMC'den gömülü yazılıma; projelerde işe yarayan pratik bilgileri paylaşıyoruz.",
-)
-
-
-def tarih_tr(t):
-    yil, ay, gun = t.split("-")
-    return f"{int(gun)} {AYLAR[int(ay) - 1]} {yil}"
-
-
+# ---------------------------------------------------------------- blog (/blog/ ve /en/blog/)
 def slugla(metin):
     return re.sub(r"[^a-z0-9]+", "-", metin.translate(TR_ASCII).lower()).strip("-")
 
 
-def baslik_bicimi(metin):
+def baslik_bicimi(metin, kod="tr"):
     """Düz metni başlık yazımına çevirir (sekme başlığı, içindekiler ve yapılandırılmış veri için)."""
-    return html.unescape(_baslik_ic(e(metin)))
+    return html.unescape(_baslik_ic(e(metin), kod))
 
 
 def satir_ici(t):
@@ -572,7 +705,7 @@ def satir_ici(t):
 
 
 def md(metin):
-    """blog_yazilar.py gövde biçimini HTML'e çevirir; (html, [(kimlik, h2 metni)]) döndürür."""
+    """Blog gövde biçimini HTML'e çevirir; (html, [(kimlik, h2 metni)]) döndürür."""
     sat = metin.strip("\n").split("\n")
     out, h2ler, i = [], [], 0
     ozel = re.compile(r"(#{2,3} |> |- |\d+\. |\||```)")
@@ -627,57 +760,54 @@ def md(metin):
     return "\n".join(out), h2ler
 
 
-def mutlak(s):
-    """/blog/ altındaki sayfalarda göreli bağlantıları kökten başlayan yollara çevirir
-    (tarayıcı göreli bağlantıyı sayfanın klasörüne göre çözer)."""
-    return re.sub(r'\b(href|src)="(?!https?:|mailto:|tel:|data:|#|/)([^"]+)"', r'\1="/\2"', s)
-
-
 def okuma(y):
     kelime = len(re.findall(r"\w+", re.sub(r"```.*?```", " ", y["govde"], flags=re.S)))
     return max(1, math.ceil(kelime / 200)), kelime
 
 
-def blog_kart(y):
+def blog_kart(D, k):
+    y = D.yazi[k]
     return (f'            <article class="value-card tilt-card blog-card" data-glow data-tilt>\n'
             f'              <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true">{IKON[y["ikon"]]}</svg></span>\n'
-            f'              <p class="blog-meta">{e(y["kategori"])} · {okuma(y)[0]} dk okuma</p>\n'
+            f'              <p class="blog-meta">{e(y["kategori"])} · {okuma(y)[0]} {e(D.m("dk okuma"))}</p>\n'
             f'              <h3>{e(y["baslik"])}</h3>\n'
             f'              <p>{e(y["ozet"])}</p>\n'
-            f'              <a class="link-u" href="/blog/{y["slug"]}.html">Yazıyı okuyun <span aria-hidden="true">→</span></a>\n'
+            f'              <a class="link-u" href="{D.yol(("yazi", k))}">{e(D.m("Yazıyı okuyun"))} <span aria-hidden="true">→</span></a>\n'
             f'            </article>')
 
 
-def blog_yazi_sayfasi(y):
-    url = f"{ALAN}/blog/{y['slug']}"
+def blog_yazi_sayfasi(D, k):
+    y, a = D.yazi[k], ("yazi", k)
+    url, blog_url = D.url(a), D.url("blog")
     govde, h2ler = md(y["govde"])
     dk, kelime = okuma(y)
-    b = baslik_bicimi(y["baslik"])
+    b = baslik_bicimi(y["baslik"], D.kod)
     jl = {"@context": "https://schema.org", "@graph": [
         {"@type": "BlogPosting", "@id": f"{url}#yazi", "headline": b, "description": y["desc"],
-         "datePublished": TARIH, "dateModified": TARIH, "inLanguage": "tr-TR", "url": url, "mainEntityOfPage": url,
-         "image": OG_IMG, "articleSection": y["kategori"], "wordCount": kelime,
+         "datePublished": D.tarih_yayin, "dateModified": D.tarih_yayin, "inLanguage": D.in_lang, "url": url,
+         "mainEntityOfPage": url, "image": OG_IMG, "articleSection": y["kategori"], "wordCount": kelime,
          "author": {"@type": "Organization", "@id": ORG_ID, "name": "ModWare Technology", "url": f"{ALAN}/"},
-         "publisher": YAYINCI, "isPartOf": {"@type": "Blog", "@id": f"{BLOG_URL}#blog", "url": BLOG_URL}},
+         "publisher": YAYINCI, "isPartOf": {"@type": "Blog", "@id": f"{blog_url}#blog", "url": blog_url}},
         {"@type": "BreadcrumbList", "itemListElement": [
-            {"@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": f"{ALAN}/"},
-            {"@type": "ListItem", "position": 2, "name": "Blog", "item": BLOG_URL},
+            {"@type": "ListItem", "position": 1, "name": D.m("Ana Sayfa"), "item": D.url("index")},
+            {"@type": "ListItem", "position": 2, "name": "Blog", "item": blog_url},
             {"@type": "ListItem", "position": 3, "name": b}]},
     ]}
-    ek = [f'  <meta property="article:published_time" content="{TARIH}">',
+    ek = [f'  <meta property="article:published_time" content="{D.tarih_yayin}">',
           f'  <meta property="article:section" content="{e(y["kategori"])}">']
-    icindekiler = ('<nav class="toc" aria-label="İçindekiler">\n<p class="toc-title">İçindekiler</p>\n<ol>\n'
-                   + "\n".join(f'  <li><a href="#{k}">{e(baslik_bicimi(t))}</a></li>' for k, t in h2ler) + "\n</ol>\n</nav>")
+    ic = D.m("İçindekiler")
+    icindekiler = (f'<nav class="toc" aria-label="{e(ic)}">\n<p class="toc-title">{e(ic)}</p>\n<ol>\n'
+                   + "\n".join(f'  <li><a href="#{kk}">{e(baslik_bicimi(t, D.kod))}</a></li>' for kk, t in h2ler) + "\n</ol>\n</nav>")
     bas = ('  <main id="main">\n\n'
            '    <!-- ============ SAYFA BAŞLIĞI ============ -->\n'
            '    <section class="page-head page-head--yazi" aria-labelledby="page-title">\n'
            '      <div class="container page-head-inner">\n'
-           f'        <p class="eyebrow" data-anim="hero"><a href="/blog/index.html">Blog</a> · {e(y["kategori"])}</p>\n'
+           f'        <p class="eyebrow" data-anim="hero"><a href="{D.yol("blog")}">Blog</a> · {e(y["kategori"])}</p>\n'
            f'        <h1 id="page-title" data-split-intro>{e(y["baslik"])}</h1>\n'
            f'        <p class="page-lede" data-anim="hero">{e(y["lede"])}</p>\n'
-           f'        <p class="post-meta" data-anim="hero"><time datetime="{TARIH}">{tarih_tr(TARIH)}</time> '
-           f'<span aria-hidden="true">·</span> <span>{dk} dk okuma</span> '
-           '<span aria-hidden="true">·</span> <span>ModWare Technology mühendislik ekibi</span></p>\n'
+           f'        <p class="post-meta" data-anim="hero"><time datetime="{D.tarih_yayin}">{D.tarih(D.tarih_yayin)}</time> '
+           f'<span aria-hidden="true">·</span> <span>{dk} {e(D.m("dk okuma"))}</span> '
+           f'<span aria-hidden="true">·</span> <span>{e(D.m("ModWare Technology mühendislik ekibi"))}</span></p>\n'
            '      </div>\n'
            '    </section>\n\n')
     makale = ('    <section class="section article-section">\n'
@@ -687,39 +817,45 @@ def blog_yazi_sayfasi(y):
               '        </article>\n'
               '      </div>\n'
               '    </section>')
-    ilgili = [kart(H[s]["ikon"], H[s]["ad"], H[s]["ozet"], (f"{s}.html", "Hizmeti inceleyin")) for s in y["ilgili"]]
+    kaynak = "blog_yazilar.py" if D is TR else "blog_en_1.py / blog_en_2.py"
     return mutlak("".join([
-        sayfa_head(y["title"], y["desc"], url, jl, "article", ek), '<body data-page="blog">\n\n', GOVDE_UST,
-        f'  <!-- Blog yazısı: {y["slug"]}. Metin site-araclar/blog_yazilar.py dosyasından üretilir. -->\n',
+        sayfa_head(D, y["title"], y["desc"], url, jl, "article", ek, alt=alternatlar(a)), '<body data-page="blog">\n\n',
+        D.GOVDE_UST, f'  <!-- Blog yazısı: {y["slug"]}. Metin site-araclar/{kaynak} dosyasından üretilir. -->\n',
         bas, makale, "\n\n",
-        bolum("ilgili", "İlgili hizmetler", "Bu konuda desteğe mi ihtiyacınız var?", izgara(ilgili), alt=True), "\n\n",
-        bolum("diger-yazilar", "Blog", "Diğer yazılar", izgara([blog_kart(Y[s]) for s in y["diger"]])), "\n\n",
-        kapanis(y["cta"], y["urun"]), "\n\n  </main>\n\n", GOVDE_ALT]))
+        bolum("ilgili", D.m("İlgili hizmetler"), D.m("Bu konuda desteğe mi ihtiyacınız var?"),
+              izgara([hizmet_karti(D, s) for s in y["ilgili"]]), alt=True), "\n\n",
+        bolum("diger-yazilar", "Blog", D.m("Diğer yazılar"), izgara([blog_kart(D, s) for s in y["diger"]])), "\n\n",
+        kapanis(D, y["cta"], y["urun"]), "\n\n  </main>\n\n", D.GOVDE_ALT]))
 
 
-def blog_liste_sayfasi():
-    jl = {"@context": "https://schema.org", "@type": "Blog", "@id": f"{BLOG_URL}#blog", "name": "ModWare Technology Blog",
-          "url": BLOG_URL, "description": BLOG["desc"], "inLanguage": "tr-TR", "publisher": YAYINCI,
-          "blogPost": [{"@type": "BlogPosting", "headline": baslik_bicimi(y["baslik"]), "url": f"{ALAN}/blog/{y['slug']}",
-                        "datePublished": TARIH} for y in YAZILAR]}
+def blog_liste_sayfasi(D):
+    blog_url = D.url("blog")
+    jl = {"@context": "https://schema.org", "@type": "Blog", "@id": f"{blog_url}#blog", "name": "ModWare Technology Blog",
+          "url": blog_url, "description": D.blog["desc"], "inLanguage": D.in_lang, "publisher": YAYINCI,
+          "blogPost": [{"@type": "BlogPosting", "headline": baslik_bicimi(y["baslik"], D.kod), "url": D.url(("yazi", k)),
+                        "datePublished": D.tarih_yayin} for k, y in D.yazi.items()]}
+    kaynak = "blog_yazilar.py" if D is TR else "blog_en_1.py / blog_en_2.py"
     return mutlak("".join([
-        sayfa_head(BLOG["title"], BLOG["desc"], BLOG_URL, jl), '<body data-page="blog">\n\n', GOVDE_UST,
-        "  <!-- Blog listesi. Yazılar site-araclar/blog_yazilar.py dosyasından üretilir. -->\n",
-        sayfa_bas(BLOG["eyebrow"], BLOG["h1"], BLOG["lede"]),
-        bolum("yazilar", "Yazılar", "Tüm yazılar", izgara([blog_kart(y) for y in YAZILAR])), "\n\n",
-        kapanis("Projenizi birlikte geliştirelim.", None), "\n\n  </main>\n\n", GOVDE_ALT]))
+        sayfa_head(D, D.blog["title"], D.blog["desc"], blog_url, jl, alt=alternatlar("blog")), '<body data-page="blog">\n\n',
+        D.GOVDE_UST, f"  <!-- Blog listesi. Yazılar site-araclar/{kaynak} dosyasından üretilir. -->\n",
+        sayfa_bas(D.blog["eyebrow"], D.blog["h1"], D.blog["lede"]),
+        bolum("yazilar", D.m("Yazılar"), D.m("Tüm yazılar"), izgara([blog_kart(D, k) for k in D.yazi])), "\n\n",
+        kapanis(D, D.m("Projenizi birlikte geliştirelim."), None), "\n\n  </main>\n\n", D.GOVDE_ALT]))
 
 
-for slug in SAYFALAR:
-    yaz(f"{slug}.html", son_isle(servis_sayfasi(slug)))
-yaz("hizmetler.html", son_isle(hub_sayfasi()))
-print("hizmet sayfaları:", ", ".join(list(SAYFALAR) + ["hizmetler"]))
-for y in YAZILAR:
-    yaz(f"blog/{y['slug']}.html", son_isle(blog_yazi_sayfasi(y)))
-yaz("blog/index.html", son_isle(blog_liste_sayfasi()))
-print("blog:", len(YAZILAR), "yazı + liste (" + ", ".join(f"{y['slug']} {okuma(y)[1]} kelime" for y in YAZILAR) + ")")
+for D in (TR, EN):
+    for k in D.sayfa:
+        yaz(D.dosya(("hizmet", k)), son_isle(servis_sayfasi(D, k), D, ("hizmet", k)))
+    yaz(D.dosya("hizmetler"), son_isle(hub_sayfasi(D), D, "hizmetler"))
+    for k in D.yazi:
+        yaz(D.dosya(("yazi", k)), son_isle(blog_yazi_sayfasi(D, k), D, ("yazi", k)))
+    yaz(D.dosya("blog"), son_isle(blog_liste_sayfasi(D), D, "blog"))
+    print(f"[{D.kod}] hizmet sayfaları: {', '.join(x['slug'] for x in D.hizmet.values())}, hizmetler")
+    print(f"[{D.kod}] blog: {len(D.yazi)} yazı + liste ("
+          + ", ".join(f"{y['slug']} {okuma(y)[1]} kelime" for y in D.yazi.values()) + ")")
 
-# ---------------------------------------------------------------- mevcut sayfalar (görünüş değişmez)
+
+# ---------------------------------------------------------------- elle tutulan sayfalar (görünüş değişmez; başlık blokları üretilir)
 ORG_JSONLD = {
     "@context": "https://schema.org",
     "@graph": [
@@ -737,61 +873,107 @@ ORG_JSONLD = {
          "inLanguage": "tr-TR", "publisher": {"@id": ORG_ID}},
     ],
 }
-MEVCUT = {
-    "index.html": ("ModWare Technology | Elektronik Kart Tasarımı, PCB ve Gömülü Yazılım",
-                   "Karmaşık elektronik sistemler için endüstriyel standartlarda donanım, gömülü yazılım ve Edge AI çözümleri geliştiriyoruz.",
-                   f"{ALAN}/", ORG_JSONLD),
-    "urunler.html": ("Ürünler: STM32 Kartları, Sensör, LoRa ve PRISM Güç Modülleri | ModWare",
-                     "STM32 geliştirme ve kontrol kartları, akım ve basınç sensörü kartları, LoRa haberleşme modülü ve 12–48 V PRISM modüler güç platformu. ModWare Technology, Kocaeli.",
-                     f"{ALAN}/urunler", None),
-    "hakkimizda.html": ("Hakkımızda: Elektronik Ar-Ge ve Donanım Ekibi | ModWare Technology",
-                        "Bir TEKNOFEST takımından doğan, İzmit, Kocaeli merkezli mühendislik ekibi: donanım ve PCB tasarımı, gömülü yazılım, proje yönetimi ve makine mühendisliği.",
-                        f"{ALAN}/hakkimizda", None),
-    "teklif.html": ("Teklif Al: Elektronik Tasarım, PCB Üretimi ve Gömülü Yazılım | ModWare",
-                    "Elektronik kart ve donanım tasarımı, PCB tasarımı ve üretimi, gömülü yazılım ya da ürünlerimiz için teklif alın. Kapsam, süre ve tahmini bütçeyle dönüyoruz.",
-                    f"{ALAN}/teklif", None),
+ORG_JSONLD_EN = {
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "Organization", "@id": ORG_ID, "name": "ModWare Technology", "alternateName": "ModWare", "url": f"{ALAN}/",
+            "logo": f"{ALAN}/assets/logo/modware-icon-512.png", "email": "info@modwaretechnology.com",
+            "address": {"@type": "PostalAddress", "addressLocality": "İzmit", "addressRegion": "Kocaeli", "addressCountry": "TR"},
+            "sameAs": ["https://www.linkedin.com/company/modware-technology1/"],
+            "knowsAbout": ["Electronic board design", "Hardware design", "PCB design", "PCB manufacturing", "Embedded software",
+                           "STM32", "Power electronics", "DC-DC converters", "Prototyping", "R&D"],
+            "makesOffer": [{"@type": "Offer", "itemOffered": {"@type": "Service", "name": x["ad"], "url": EN.url(("hizmet", k))}}
+                           for k, x in EN.hizmet.items()],
+        },
+        {"@type": "WebSite", "@id": f"{ALAN}/en/#website", "name": "ModWare Technology", "alternateName": "ModWare",
+         "url": f"{ALAN}/en/", "inLanguage": "en-US", "publisher": {"@id": ORG_ID}},
+    ],
 }
-for fn, (title, desc, url, jl) in MEVCUT.items():
+MEVCUT = {
+    TR: {
+        "index": ("ModWare Technology | Elektronik Kart Tasarımı, PCB ve Gömülü Yazılım",
+                  "Karmaşık elektronik sistemler için endüstriyel standartlarda donanım, gömülü yazılım ve Edge AI çözümleri geliştiriyoruz.",
+                  ORG_JSONLD),
+        "urunler": ("Ürünler: STM32 Kartları, Sensör, LoRa ve PRISM Güç Modülleri | ModWare",
+                    "STM32 geliştirme ve kontrol kartları, akım ve basınç sensörü kartları, LoRa haberleşme modülü ve 12–48 V PRISM modüler güç platformu. ModWare Technology, Kocaeli.",
+                    None),
+        "hakkimizda": ("Hakkımızda: Elektronik Ar-Ge ve Donanım Ekibi | ModWare Technology",
+                       "Bir TEKNOFEST takımından doğan, İzmit, Kocaeli merkezli mühendislik ekibi: donanım ve PCB tasarımı, gömülü yazılım, proje yönetimi ve makine mühendisliği.",
+                       None),
+        "teklif": ("Teklif Al: Elektronik Tasarım, PCB Üretimi ve Gömülü Yazılım | ModWare",
+                   "Elektronik kart ve donanım tasarımı, PCB tasarımı ve üretimi, gömülü yazılım ya da ürünlerimiz için teklif alın. Kapsam, süre ve tahmini bütçeyle dönüyoruz.",
+                   None),
+    },
+    EN: {
+        "index": ("ModWare Technology | Electronic Board Design, PCB and Embedded Software",
+                  "We develop industrial-grade hardware, embedded software and Edge AI solutions for complex electronic systems.",
+                  ORG_JSONLD_EN),
+        "urunler": ("Products: STM32 Boards, Sensors, LoRa and PRISM Power Modules | ModWare",
+                    "STM32 development and control boards, current and pressure sensor boards, a LoRa module and the 12–48 V PRISM modular power platform. ModWare Technology, Türkiye.",
+                    None),
+        "hakkimizda": ("About Us: Electronics R&D and Hardware Team | ModWare Technology",
+                       "An engineering team in İzmit, Kocaeli, Türkiye, born from a TEKNOFEST team: hardware and PCB design, embedded software, project management and mechanical engineering.",
+                       None),
+        "teklif": ("Get a Quote: Electronics Design, PCB and Embedded Software | ModWare",
+                   "Get a quote for electronics and hardware design, PCB design and manufacturing, embedded software or our products. We reply with scope, timeline and budget.",
+                   None),
+    },
+}
+GIZLI_H1 = {TR: "ModWare Technology: Elektronik Kart Tasarımı, PCB Tasarımı ve Gömülü Yazılım",
+            EN: "ModWare Technology: Electronic Board Design, PCB Design and Embedded Software"}
+for D, sayfalar in MEVCUT.items():
+    for a, (title, desc, jl) in sayfalar.items():
+        fn = D.dosya(a)
+        s, nl = oku(fn)
+        s = surum(menu_blok(ikon_blok(s)))
+        # Önceki çalıştırmanın eklediği blok (canonical … yapılandırılmış veri) kaldırılır, yeniden yazılır
+        s = re.sub(r'  <link rel="canonical".*?\n(?=\n  <!-- Sekme ikonu -->)', "", s, count=1, flags=re.S)
+        assert "og:title" not in s, f"{fn}: eski blok kaldırılamadı"
+        s, n1 = re.subn(r"  <title>.*?</title>\n", f"  <title>{e(title)}</title>\n", s, count=1)
+        s, n2 = re.subn(r'  <meta name="description" content="[^"]*">\n',
+                        lambda m: f'  <meta name="description" content="{e(desc)}">\n'
+                        + og_blok(D, title, desc, D.url(a), jl, alt=alternatlar(a)) + "\n", s, count=1)
+        assert n1 == n2 == 1, fn
+        if a == "index":
+            s, n = re.subn(r'<h1 class="visually-hidden">.*?</h1>', f'<h1 class="visually-hidden">{GIZLI_H1[D]}</h1>', s, count=1)
+            assert n == 1, fn
+        if D is TR and a == "teklif":
+            s = s.replace('                    <option value="PCB üretimi ve dizgi">PCB üretimi ve dizgi</option>\n', "")
+            eski = '                    <option value="PCB tasarımı">PCB tasarımı</option>\n'
+            yeni = '                    <option value="PCB üretimi">PCB üretimi</option>\n'
+            if yeni not in s:
+                assert s.count(eski) == 1
+                s = s.replace(eski, eski + yeni)
+            inc = '                    <option value="Tasarım incelemesi">Tasarım incelemesi</option>\n'
+            if inc not in s:
+                s = s.replace(yeni, yeni + inc)
+        yaz(fn, son_isle(s, D, a), nl)
+for D in (TR, EN):
+    fn = D.dosya("404")
     s, nl = oku(fn)
-    s = menu_blok(ikon_blok(s))
-    # Önceki çalıştırmanın eklediği blok (canonical … yapılandırılmış veri) kaldırılır, yeniden yazılır
-    s = re.sub(r'  <link rel="canonical".*?\n(?=\n  <!-- Sekme ikonu -->)', "", s, count=1, flags=re.S)
-    assert "og:title" not in s, f"{fn}: eski blok kaldırılamadı"
-    s, n1 = re.subn(r"  <title>.*?</title>\n", f"  <title>{e(title)}</title>\n", s, count=1)
-    s, n2 = re.subn(r'  <meta name="description" content="[^"]*">\n',
-                    lambda m: f'  <meta name="description" content="{e(desc)}">\n' + og_blok(title, desc, url, jl) + "\n", s, count=1)
-    assert n1 == n2 == 1, fn
-    if fn == "index.html":
-        yeni = '<h1 class="visually-hidden">ModWare Technology: Elektronik Kart Tasarımı, PCB Tasarımı ve Gömülü Yazılım</h1>'
-        s, n = re.subn(r'<h1 class="visually-hidden">.*?</h1>', yeni, s, count=1)
-        assert n == 1
-    if fn == "teklif.html":
-        s = s.replace('                    <option value="PCB üretimi ve dizgi">PCB üretimi ve dizgi</option>\n', "")
-        eski = '                    <option value="PCB tasarımı">PCB tasarımı</option>\n'
-        yeni = '                    <option value="PCB üretimi">PCB üretimi</option>\n'
-        if yeni not in s:
-            assert s.count(eski) == 1
-            s = s.replace(eski, eski + yeni)
-        inc = '                    <option value="Tasarım incelemesi">Tasarım incelemesi</option>\n'
-        if inc not in s:
-            s = s.replace(yeni, yeni + inc)
-    yaz(fn, son_isle(s), nl)
-s, nl = oku("404.html")
-s = menu_blok(ikon_blok(s))
-if 'name="robots"' not in s:
-    s = s.replace('  <title>Sayfa bulunamadı | ModWare Technology</title>\n',
-                  '  <title>Sayfa bulunamadı | ModWare Technology</title>\n  <meta name="robots" content="noindex">\n', 1)
-s = s.replace("<title>Sayfa bulunamadı | ModWare Technology</title>", "<title>Sayfa Bulunamadı | ModWare Technology</title>")
-yaz("404.html", son_isle(s), nl)
-print("mevcut sayfalar: başlık, açıklama, canonical, önizleme; index yapılandırılmış veri; 404 noindex; başlık yazımı")
+    s = surum(menu_blok(ikon_blok(s)))
+    if D is TR:
+        if 'name="robots"' not in s:
+            s = s.replace('  <title>Sayfa bulunamadı | ModWare Technology</title>\n',
+                          '  <title>Sayfa bulunamadı | ModWare Technology</title>\n  <meta name="robots" content="noindex">\n', 1)
+        s = s.replace("<title>Sayfa bulunamadı | ModWare Technology</title>", "<title>Sayfa Bulunamadı | ModWare Technology</title>")
+    assert 'name="robots" content="noindex"' in s, fn
+    yaz(fn, son_isle(s, D, "404"), nl)
+print("elle tutulan sayfalar (TR + EN): başlık, açıklama, canonical, hreflang, önizleme; ana sayfa yapılandırılmış veri; "
+      "404 noindex; dil düğmesi; başlık yazımı")
 
 # ---------------------------------------------------------------- robots, sitemap, README engeli
-yollar = (["", "urunler", "hakkimizda", "teklif", "hizmetler"] + [h["slug"] for h in HIZMETLER]
-          + ["blog/"] + [f"blog/{y['slug']}" for y in YAZILAR])
+def yollar(D):
+    return (["index", "urunler", "hakkimizda", "teklif", "hizmetler"] + [("hizmet", k) for k in D.hizmet]
+            + ["blog"] + [("yazi", k) for k in D.yazi])
+
+
 yaz("robots.txt", "User-agent: *\nAllow: /\n\nSitemap: https://modwaretechnology.com/sitemap.xml\n")
 sm = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-for y in yollar:
-    sm.append(f"  <url><loc>{ALAN}/{y}</loc><lastmod>{TARIH}</lastmod></url>")
+for D in (TR, EN):
+    for a in yollar(D):
+        sm.append(f"  <url><loc>{D.url(a)}</loc><lastmod>{D.tarih_yayin}</lastmod></url>")
 sm.append("</urlset>")
 yaz("sitemap.xml", "\n".join(sm) + "\n")
 yaz("_redirects", "# Kalıcı (301) yönlendirmeler. README.md arama motorlarına _headers dosyasıyla kapatılır\n"
@@ -803,12 +985,13 @@ yaz("_redirects", "# Kalıcı (301) yönlendirmeler. README.md arama motorların
                  "\n# Google Search Console doğrulama dosyaları: Cloudflare .html adreslerini 308 ile uzantısız adrese\n"
                  "# yönlendirir, Search Console ise bu dosyada yönlendirme izlemez. 200 kuralı dosyayı aynı adreste gösterir.\n"
                  + "".join(f"/{f}  /{f[:-5]}  200\n" for f in sorted(os.listdir(SITE)) if re.fullmatch(r"google[0-9a-f]+\.html", f)))
-print("robots.txt, sitemap.xml (", len(yollar), "adres), _redirects")
+print("robots.txt, sitemap.xml (", sum(len(yollar(D)) for D in (TR, EN)), "adres), _redirects")
+
 
 # ---------------------------------------------------------------- llms.txt (yapay zekâ araçları için site özeti; llmstxt.org)
 # Sayfalar site haritasıyla aynı listelerden gelir: yeni hizmet ya da blog yazısı eklenince kendiliğinden güncellenir.
-def llms_satir(yol, ad, aciklama):
-    return f"- [{ad}]({ALAN}/{yol}): {aciklama}"
+def llms_satir(D, a, ad, aciklama):
+    return f"- [{ad}]({D.url(a)}): {aciklama}"
 
 
 llms = [
@@ -818,26 +1001,41 @@ llms = [
     "gömülü yazılım, tasarım incelemesi, prototip ve Ar-Ge hizmetleri verir; STM32 kartları, sensör kartları, "
     "LoRa haberleşme modülü ve 12–48 V PRISM güç platformu gibi kendi modüler ürünlerini geliştirir.",
     "",
-    "- Dil: Türkçe",
+    f"- Dil: Türkçe; İngilizce sürüm {EN.url('index')} altında",
     "- Konum: İzmit, Kocaeli, Türkiye; Türkiye geneline hizmet",
     f"- E-posta: {ORG_JSONLD['@graph'][0]['email']}",
     f"- LinkedIn: {ORG_JSONLD['@graph'][0]['sameAs'][0]}",
     "",
     "## Hizmetler",
     "",
-    *[llms_satir(h["slug"], baslik_bicimi(h["ad"]), h["ozet"]) for h in HIZMETLER],
-    llms_satir("hizmetler", "Tüm Hizmetler", HUB["desc"]),
+    *[llms_satir(TR, ("hizmet", k), baslik_bicimi(h["ad"]), h["ozet"]) for k, h in TR.hizmet.items()],
+    llms_satir(TR, "hizmetler", "Tüm Hizmetler", TR.hub["desc"]),
     "",
     "## Ürünler ve Firma",
     "",
-    llms_satir("urunler", "Ürünler", MEVCUT["urunler.html"][1]),
-    llms_satir("hakkimizda", "Hakkımızda", MEVCUT["hakkimizda.html"][1]),
-    llms_satir("teklif", "Teklif Al", MEVCUT["teklif.html"][1]),
+    llms_satir(TR, "urunler", "Ürünler", MEVCUT[TR]["urunler"][1]),
+    llms_satir(TR, "hakkimizda", "Hakkımızda", MEVCUT[TR]["hakkimizda"][1]),
+    llms_satir(TR, "teklif", "Teklif Al", MEVCUT[TR]["teklif"][1]),
     "",
     "## Blog",
     "",
-    *[llms_satir(f"blog/{y['slug']}", baslik_bicimi(y["baslik"]), y["ozet"]) for y in YAZILAR],
-    llms_satir("blog/", "Tüm Yazılar", BLOG["desc"]),
+    *[llms_satir(TR, ("yazi", k), baslik_bicimi(y["baslik"]), y["ozet"]) for k, y in TR.yazi.items()],
+    llms_satir(TR, "blog", "Tüm Yazılar", TR.blog["desc"]),
+    "",
+    "## English",
+    "",
+    "> English version of the site: an electronics R&D team in İzmit, Kocaeli, Türkiye offering electronic board and "
+    "hardware design, PCB design and manufacturing, embedded software, design review, prototyping and R&D, plus its own "
+    "modular products (STM32 boards, sensor boards, a LoRa module and the 12–48 V PRISM power platform).",
+    "",
+    llms_satir(EN, "index", "Home", MEVCUT[EN]["index"][1]),
+    *[llms_satir(EN, ("hizmet", k), baslik_bicimi(h["ad"], "en"), h["ozet"]) for k, h in EN.hizmet.items()],
+    llms_satir(EN, "hizmetler", "All Services", EN.hub["desc"]),
+    llms_satir(EN, "urunler", "Products", MEVCUT[EN]["urunler"][1]),
+    llms_satir(EN, "hakkimizda", "About Us", MEVCUT[EN]["hakkimizda"][1]),
+    llms_satir(EN, "teklif", "Get a Quote", MEVCUT[EN]["teklif"][1]),
+    *[llms_satir(EN, ("yazi", k), baslik_bicimi(y["baslik"], "en"), y["ozet"]) for k, y in EN.yazi.items()],
+    llms_satir(EN, "blog", "All Articles", EN.blog["desc"]),
 ]
 yaz("llms.txt", "\n".join(llms) + "\n")
 print("llms.txt (", sum(s.startswith("- [") for s in llms), "sayfa)")
