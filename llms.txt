@@ -1,6 +1,6 @@
 # ModWare Technology
 
-> İzmit, Kocaeli merkezli elektronik Ar-Ge ekibi. Elektronik kart ve donanım tasarımı, PCB tasarımı ve üretimi, gömülü yazılım, tasarım incelemesi, prototip ve Ar-Ge hizmetleri verir; STM32 kartları, sensör kartları, LoRa haberleşme modülü ve 12–48 V PRISM güç platformu gibi kendi modüler ürünlerini geliştirir.
+> İzmit, Kocaeli merkezli elektronik Ar-Ge ekibi. Elektronik kart ve donanım tasarımı, PCB tasarımı ve üretimi, gömülü yazılım, tasarım incelemesi, prototip ve Ar-Ge hizmetleri verir; STM32 kartları, sensör kartları, LoRa haberleşme modülü, FIELD sulama izleme sistemi ve 12–48 V PRISM güç platformu gibi kendi modüler ürünlerini geliştirir.
 
 - Dil: Türkçe; İngilizce sürüm https://modwaretechnology.com/en/ altında
 - Konum: İzmit, Kocaeli, Türkiye; Türkiye geneline hizmet
@@ -18,7 +18,7 @@
 
 ## Ürünler ve Firma
 
-- [Ürünler](https://modwaretechnology.com/urunler): STM32 geliştirme ve kontrol kartları, akım ve basınç sensörü kartları, LoRa haberleşme modülü ve 12–48 V PRISM modüler güç platformu. ModWare Technology, Kocaeli.
+- [Ürünler](https://modwaretechnology.com/urunler): STM32 kartları, akım ve basınç sensörü kartları, LoRa modülü, FIELD sulama izleme sistemi ve 12–48 V PRISM güç platformu. ModWare Technology, Kocaeli.
 - [Hakkımızda](https://modwaretechnology.com/hakkimizda): Bir TEKNOFEST takımından doğan, İzmit, Kocaeli merkezli mühendislik ekibi: donanım ve PCB tasarımı, gömülü yazılım, proje yönetimi ve makine mühendisliği.
 - [Teklif Al](https://modwaretechnology.com/teklif): Elektronik kart ve donanım tasarımı, PCB tasarımı ve üretimi, gömülü yazılım ya da ürünlerimiz için teklif alın. Kapsam, süre ve tahmini bütçeyle dönüyoruz.
 
@@ -34,7 +34,7 @@
 
 ## English
 
-> English version of the site: an electronics R&D team in İzmit, Kocaeli, Türkiye offering electronic board and hardware design, PCB design and manufacturing, embedded software, design review, prototyping and R&D, plus its own modular products (STM32 boards, sensor boards, a LoRa module and the 12–48 V PRISM power platform).
+> English version of the site: an electronics R&D team in İzmit, Kocaeli, Türkiye offering electronic board and hardware design, PCB design and manufacturing, embedded software, design review, prototyping and R&D, plus its own modular products (STM32 boards, sensor boards, a LoRa module, the FIELD irrigation monitoring system and the 12–48 V PRISM power platform).
 
 - [Home](https://modwaretechnology.com/en/): We develop industrial-grade hardware, embedded software and Edge AI solutions for complex electronic systems.
 - [Electronics and Hardware Design](https://modwaretechnology.com/en/electronics-pcb-design): From requirements to schematic, from PCB design to prototype: control, power, sensor and communication boards.
@@ -43,7 +43,7 @@
 - [Design Review](https://modwaretechnology.com/en/design-review): We review your schematic and PCB before they go into production and report errors and risks.
 - [Prototyping and R&D](https://modwaretechnology.com/en/prototyping-rd): From idea to working prototype and from prototype to production, with a test plan and documentation.
 - [All Services](https://modwaretechnology.com/en/services): Electronics and PCB design, PCB manufacturing, embedded software, design review, prototyping and R&D. From İzmit, Kocaeli, for clients in Türkiye and abroad.
-- [Products](https://modwaretechnology.com/en/products): STM32 development and control boards, current and pressure sensor boards, a LoRa module and the 12–48 V PRISM modular power platform. ModWare Technology, Türkiye.
+- [Products](https://modwaretechnology.com/en/products): STM32 boards, current and pressure sensor boards, a LoRa module, the FIELD irrigation monitoring system and the 12–48 V PRISM power platform. ModWare Technology, Türkiye.
 - [About Us](https://modwaretechnology.com/en/about): An engineering team in İzmit, Kocaeli, Türkiye, born from a TEKNOFEST team: hardware and PCB design, embedded software, project management and mechanical engineering.
 - [Get a Quote](https://modwaretechnology.com/en/quote): Get a quote for electronics and hardware design, PCB design and manufacturing, embedded software or our products. We reply with scope, timeline and budget.
 - [The Electronics Design Process: From Idea to Mass Production, Step by Step](https://modwaretechnology.com/en/blog/electronics-design-process): From requirements to schematic, from PCB to prototype and mass production: the steps an electronic board goes through and what to watch for at each one.

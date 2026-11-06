@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Products: STM32 Boards, Sensors, LoRa and PRISM Power Modules | ModWare</title>
-  <meta name="description" content="STM32 development and control boards, current and pressure sensor boards, a LoRa module and the 12–48 V PRISM modular power platform. ModWare Technology, Türkiye.">
+  <meta name="description" content="STM32 boards, current and pressure sensor boards, a LoRa module, the FIELD irrigation monitoring system and the 12–48 V PRISM power platform. ModWare Technology, Türkiye.">
   <link rel="canonical" href="https://modwaretechnology.com/en/products">
   <link rel="alternate" hreflang="tr" href="https://modwaretechnology.com/urunler">
   <link rel="alternate" hreflang="en" href="https://modwaretechnology.com/en/products">
@@ -16,7 +16,7 @@
   <meta property="og:locale" content="en_US">
   <meta property="og:locale:alternate" content="tr_TR">
   <meta property="og:title" content="Products: STM32 Boards, Sensors, LoRa and PRISM Power Modules | ModWare">
-  <meta property="og:description" content="STM32 development and control boards, current and pressure sensor boards, a LoRa module and the 12–48 V PRISM modular power platform. ModWare Technology, Türkiye.">
+  <meta property="og:description" content="STM32 boards, current and pressure sensor boards, a LoRa module, the FIELD irrigation monitoring system and the 12–48 V PRISM power platform. ModWare Technology, Türkiye.">
   <meta property="og:url" content="https://modwaretechnology.com/en/products">
   <meta property="og:image" content="https://modwaretechnology.com/assets/og/modware-og.png">
   <meta property="og:image:width" content="1200">
@@ -44,7 +44,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
 
-  <link rel="stylesheet" href="/css/style.css?v=31">
+  <link rel="stylesheet" href="/css/style.css?v=32">
 </head>
 <body data-page="urunler">
 
@@ -235,6 +235,24 @@
                 </div>
               </article>
 
+              <article class="product-card" data-category="sensor" data-product="field-sensor">
+                <div class="product-image-wrapper">
+                  <span class="product-badge">FIELD</span>
+                  <img src="/assets/urunler/field-sensor.webp" alt="ModWare Field Sensor board" width="1400" height="954" loading="lazy" decoding="async">
+                </div>
+                <div class="product-body">
+                  <p class="product-code">MW-FIELD-SENSOR · Field sensor node</p>
+                  <h3 class="product-title">MODWARE FIELD SENSOR</h3>
+                  <p class="product-slogan">Measures soil, water and the pump; reports over LoRa.</p>
+                  <p class="product-desc">Battery-powered LoRa field node. Measures soil moisture, line pressure, flow, soil temperature and pump state, and sleeps deeply between readings.</p>
+                  <ul class="product-tags" aria-label="Highlights"><li>LoRa 868 MHz</li><li>5 measurements</li><li>18650 Li-ion cell</li><li>USB-C charging</li></ul>
+                  <button class="product-more" type="button" aria-haspopup="dialog">
+                    Take a look
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                  </button>
+                </div>
+              </article>
+
             </div>
           </section>
 
@@ -255,6 +273,24 @@
                   <p class="product-slogan">Long range, low power, uninterrupted data.</p>
                   <p class="product-desc">Reliable data transfer for IoT applications with an STM32 microcontroller and an integrated LoRa module. Programmed over USB/UART, debugged over SWD.</p>
                   <ul class="product-tags" aria-label="Highlights"><li>STM32</li><li>LoRa</li><li>USB/UART</li><li>SWD</li></ul>
+                  <button class="product-more" type="button" aria-haspopup="dialog">
+                    Take a look
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                  </button>
+                </div>
+              </article>
+
+              <article class="product-card" data-category="haberlesme" data-product="field-gateway">
+                <div class="product-image-wrapper">
+                  <span class="product-badge">FIELD</span>
+                  <img src="/assets/urunler/field-gateway.webp" alt="ModWare Field Gateway board" width="1400" height="908" loading="lazy" decoding="async">
+                </div>
+                <div class="product-body">
+                  <p class="product-code">MW-FIELD-GATEWAY · USB LoRa receiver</p>
+                  <h3 class="product-title">MODWARE FIELD GATEWAY</h3>
+                  <p class="product-slogan">Brings field data to your computer.</p>
+                  <p class="product-desc">USB-powered LoRa receiver. Receives the readings from the sensor nodes and forwards them over a USB serial port to the local dashboard on the computer; no internet needed.</p>
+                  <ul class="product-tags" aria-label="Highlights"><li>LoRa 868 MHz</li><li>ESP32</li><li>USB-C</li><li>USB serial port</li></ul>
                   <button class="product-more" type="button" aria-haspopup="dialog">
                     Take a look
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -474,6 +510,90 @@
       </div>
     </section>
 
+    <!-- ============ FIELD SULAMA İZLEME SİSTEMİ ============
+         Sahadan bilgisayara veri yolu: sensörler → FIELD SENSOR → LoRa → FIELD GATEWAY → USB → bilgisayar.
+         Şemadaki kartlara tıklanınca ürün penceresi açılır (main.js, data-open-product). -->
+    <section class="section platform" id="field" aria-labelledby="field-title">
+      <div class="container">
+        <header class="section-head platform-head">
+          <p class="eyebrow">System</p>
+          <h2 id="field-title" data-split-reveal>How Does FIELD Work?</h2>
+          <p>FIELD SENSOR measures the soil, the water and the pump in the field and reports over LoRa; FIELD GATEWAY receives the readings and forwards them to the computer over USB. The local dashboard on the computer shows the values, raises alerts and keeps a log, with no internet needed.</p>
+        </header>
+
+        <div class="pf">
+          <div class="pf-lane">
+            <p class="pf-lane-title">In the field</p>
+            <div class="pf-row">
+              <div class="pf-node pf-node-text">
+                <span class="pf-big">5 measurements</span>
+                <span class="pf-role">Soil moisture · line pressure · flow · soil temperature · pump state</span>
+              </div>
+              <svg class="pf-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              <button class="pf-node" type="button" data-open-product="field-sensor">
+                <img src="/assets/urunler/field-sensor.webp" alt="" width="1400" height="954" loading="lazy" decoding="async">
+                <span class="pf-code">FIELD SENSOR</span>
+                <span class="pf-role">Measures and reports; sleeps deeply between readings</span>
+              </button>
+              <svg class="pf-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              <div class="pf-node pf-node-text">
+                <span class="pf-big">LoRa 868 MHz</span>
+                <span class="pf-role">Short, acknowledged data packets</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pf-lane">
+            <p class="pf-lane-title">At the computer</p>
+            <div class="pf-row">
+              <div class="pf-node pf-node-text">
+                <span class="pf-big">LoRa 868 MHz</span>
+                <span class="pf-role">Readings from the field</span>
+              </div>
+              <svg class="pf-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              <button class="pf-node" type="button" data-open-product="field-gateway">
+                <img src="/assets/urunler/field-gateway.webp" alt="" width="1400" height="908" loading="lazy" decoding="async">
+                <span class="pf-code">FIELD GATEWAY</span>
+                <span class="pf-role">Receives, acknowledges, forwards over USB</span>
+              </button>
+              <svg class="pf-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              <div class="pf-node pf-node-text">
+                <span class="pf-big">Computer</span>
+                <span class="pf-role">Local dashboard · alerts · time-stamped log</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="values-grid pf-facts">
+          <article class="value-card tilt-card" data-glow data-tilt>
+            <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="16" height="10" rx="2"/><path d="M21 10.5v3"/><path d="M6.5 10v4M9.6 10v4M12.7 10v4"/></svg></span>
+            <h3>Months on Battery</h3>
+            <p>On a protected 18650 cell, the calculated life at a 5-minute interval is ~6.5–12 months; it charges over USB-C. To be verified by measurement on the prototype.</p>
+          </article>
+          <article class="value-card tilt-card" data-glow data-tilt>
+            <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 18h10a4 4 0 0 0 .4-8A6 6 0 0 0 6 8.6 4.5 4.5 0 0 0 7 18z"/><path d="M4 4l16 16"/></svg></span>
+            <h3>No Internet Needed</h3>
+            <p>Your data stays on your computer: local dashboard, alerts and a time-stamped log. No cloud subscription required.</p>
+          </article>
+          <article class="value-card tilt-card" data-glow data-tilt>
+            <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg></span>
+            <h3>Deep Sleep Between Readings</h3>
+            <p>The sensors are powered only while measuring; between readings the board sleeps deeply.</p>
+          </article>
+          <article class="value-card tilt-card" data-glow data-tilt>
+            <span class="value-icon-wrap"><svg class="value-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3v4M15 3v4"/><path d="M7 7h10v3.5a5 5 0 0 1-10 0V7z"/><path d="M12 15.5V21"/></svg></span>
+            <h3>Expandable</h3>
+            <p>Sensors plug into standard JST-PH connectors; firmware updates and tests run over the USB service port.</p>
+          </article>
+        </div>
+
+        <div class="pf-actions">
+          <a class="btn btn-accent" href="/en/quote?urun=MW-FIELD">Talk to us about a pilot</a>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <!-- ============ ÜRÜN DETAY PENCERESİ ============
@@ -508,7 +628,7 @@
   </dialog>
 
   <!-- Ürün verisi (pencere içeriği). Kart metinleriyle aynı kaynaktan üretildi. -->
-  <script type="application/json" id="product-data">{"spark": {"code": "MW-SPARK", "title": "MODWARE SPARK", "slogan": "The shortest path from idea to working prototype.", "long": "Bringing your ideas to life starts with the right development board. This compact STM32-based board is designed for testing communication protocols, developing new firmware and building prototypes quickly. Whether you use it for education or industrial projects, its flexible design helps you turn any idea into reality.", "specs": [["Microcontroller", "STM32"], ["Use cases", "Prototyping, firmware development, protocol testing"], ["Intended for", "Education and industrial projects"], ["Form factor", "Compact development board"]], "tags": ["STM32", "Rapid prototyping"], "img": "spark.webp?v=2", "img2": null, "platform": null}, "sense": {"code": "MW-SENSE", "title": "MODWARE SENSE", "slogan": "Accurate measurement, safe systems.", "long": "Without accurate measurement, you cannot build a robust system. ModWare Sense precisely measures current via current sensors, giving developers reliable data. Whether you use it in motor drivers or energy monitoring projects, real-time current tracking makes your designs safer and more efficient.", "specs": [["Measurement", "Current (via current sensors)"], ["Tracking", "Real-time"], ["Applications", "Motor drivers, energy monitoring"], ["Output", "Reliable measurement data for developers"]], "tags": ["Current measurement", "Real-time", "Motor drivers", "Energy monitoring"], "img": "sense.webp", "img2": null, "platform": null}, "aero": {"code": "MW-AERO", "title": "MODWARE AERO", "slogan": "Airspeed and altitude on one board.", "long": "Combine airspeed and altitude measurement on a single board. With its onboard dual pressure sensor, ModWare Aero tracks airspeed while also providing high-precision altitude data. Optimized for unmanned aerial vehicles, drones and aviation projects, this board strengthens your flight control algorithms with reliable data.", "specs": [["Sensor", "Dual pressure sensor"], ["Measurement", "Airspeed and altitude"], ["Interface", "I²C (VCC, GND, SDA, SCL, INT)"], ["Applications", "UAVs, drones, aviation"]], "tags": ["Dual pressure sensor", "Airspeed", "Altitude", "I²C"], "img": "aero.webp", "img2": null, "platform": null}, "link": {"code": "MW-LINK", "title": "MODWARE LINK", "slogan": "Long range, low power, uninterrupted data.", "long": "A compact solution developed for long-range, low-power communication projects. Its STM32 microcontroller and integrated LoRa module provide reliable data transfer in IoT applications. It is easy to program over USB/UART, while GPIO output pins and an SWD debug port speed up development. It suits a wide range of uses, from sensor networks to smart city applications.", "specs": [["Microcontroller", "STM32"], ["Communication", "Integrated LoRa module"], ["Programming", "USB/UART"], ["Debugging", "SWD debug port"], ["I/O", "GPIO output pins"]], "tags": ["STM32", "LoRa", "USB/UART", "SWD"], "img": "link.webp?v=2", "img2": null, "platform": null}, "axis": {"code": "MW-AXIS", "title": "MODWARE AXIS", "slogan": "Buttons, joysticks, vehicles: all from one controller.", "long": "Simplify your development process. ModWare Axis is a versatile control platform with an onboard microcontroller and digital/analog connection interfaces. By connecting peripherals such as buttons, switches and joysticks, you can control a variety of systems (for example, land and air vehicles or simulation systems).", "specs": [["Processor", "Onboard microcontroller"], ["Interface", "Digital and analog I/O"], ["Peripherals", "Buttons, switches, joysticks"], ["Applications", "Land/air vehicles, simulation"]], "tags": ["Digital I/O", "Analog I/O", "Joystick", "Simulation"], "img": "axis.webp", "img2": null, "platform": null}, "energy": {"code": "MW-ENERGY", "title": "MODWARE ENERGY", "slogan": "The energy backbone of the ecosystem.", "long": "ModWare Energy forms the high-performance energy backbone of the entire ModWare ecosystem. Designed to simplify complex wiring and replace it with a single-board solution, it uses an advanced buck converter architecture to provide stable, regulated voltage to your system. High-quality SMD components and advanced noise-filtering circuitry effectively reduce signal interference and voltage fluctuations, so even the most sensitive sensors and controllers run with industrial-grade reliability.", "specs": [["Architecture", "Buck converter"], ["Output", "Stable, regulated voltage"], ["Filtering", "Noise-filtering circuitry"], ["Components", "High-quality SMD"]], "tags": ["Buck converter", "Noise filtering"], "img": "energy.webp", "img2": null, "platform": null}, "power": {"code": "MW-POWER", "title": "MODWARE POWER", "slogan": "Fixed 5 V and 15 V from inputs up to 75 V.", "long": "ModWare Power safely accepts input voltages up to 75 V and produces fixed 5 V and 15 V outputs. By powering different modules at the same time, from motor drivers to sensor boards, it simplifies complex projects. With its compact, efficient design, it is the stable power supply you need as your system grows.", "specs": [["Input", "Up to 75 V"], ["Outputs", "Fixed 5 V and 15 V"], ["Supply", "Multiple modules at once"], ["Design", "Compact, efficient"]], "tags": ["75 V input", "5 V output", "15 V output"], "img": "power.webp", "img2": null, "platform": null}, "pwr01-base": {"code": "MW-GUARD", "title": "MODWARE GUARD", "slogan": "Protects the input, distributes power, measures everything.", "long": "The backbone of the system. It takes the 12–48 V DC input at a single point, protects against reverse connection, short circuits, overvoltage and undervoltage, and connects three power modules to a common bus. When a module signals a fault, it shuts off all outputs independently of software. MOSFET-based reverse-polarity protection instead of a diode keeps losses and heat low; the fuse, cutoff switch, measurement and module bus are combined on a single board.", "specs": [["Input", "12–48 V DC"], ["Total output target", "123 W (with input above ≈18 V; ≈80 W at 12 V input)"], ["Module slots", "3, plug-in"], ["Dimensions", "220 × 85 mm"]], "tags": ["12–48 V", "3 module slots", "Reverse-polarity protection", "Power measurement"], "img": "pwr01-base.webp", "img2": null, "platform": true}, "pwr-bb": {"code": "MW-SHIFT", "title": "MODWARE SHIFT 24 / 12", "slogan": "Steady output whether the input rises or falls.", "long": "Its four-switch buck-boost architecture delivers a fixed 24 V or 12 V across the entire 12–48 V input range. With a few part changes, the same board becomes two products: SHIFT 24 (24 V / 2 A) and SHIFT 12 (12 V / 5 A). The electronic fuse is switched on and off by software; voltage, current, power and temperature are measured. The output stays constant even as the battery voltage drops.", "specs": [["Output", "SHIFT 24: 24 V / 2 A · SHIFT 12: 12 V / 5 A"], ["Architecture", "4-switch buck-boost"], ["Dimensions", "70 × 70 mm"]], "tags": ["Buck-boost", "24 V / 12 V", "eFuse", "Power measurement"], "img": "pwr-bb.webp", "img2": null, "platform": true}, "pwr-bk": {"code": "MW-PURE", "title": "MODWARE PURE 5", "slogan": "Clean 5 V directly from 48 V.", "long": "A 100 V class synchronous buck controller produces 5 V / 3 A from a 12–48 V input in a single step; no intermediate voltage stage is needed. The electronic fuse provides on/off control, overcurrent protection and reverse-current blocking; if an external voltage is applied to the output, it cuts off the reverse current. Voltage, current, power and temperature are measured; it uses the same interface and software as the SHIFT modules.", "specs": [["Output", "5 V / 3 A, regulated"], ["Controller", "100 V class synchronous buck, 250 kHz"], ["Dimensions", "56 × 45 mm"]], "tags": ["5 V / 3 A", "100 V class", "eFuse", "Temperature measurement"], "img": "pwr-bk.webp", "img2": null, "platform": true}, "pwr01-ctl": {"code": "MW-PILOT", "title": "MODWARE PILOT", "slogan": "Displays, manages, logs, communicates.", "long": "The brain of the system. It switches channels on and off, sets outputs, displays measurements and logs events. A 2.0\" color display, a push-button encoder and keys allow on-site monitoring and adjustment; galvanically isolated USB-C and RS-485 (Modbus RTU) enable remote management. Settings, last state and the event log are retained in FRAM, even through a power outage; the global fault LED is driven directly by hardware, independent of software.", "specs": [["Microcontroller", "STM32G474"], ["Display", "2.0\" color, 240 × 320"], ["Communication", "Isolated USB-C, RS-485 Modbus RTU (9600–115200 baud)"], ["Logging", "FRAM event log; real-time clock (optional backup battery holder)"], ["Dimensions", "120 × 85 mm"]], "tags": ["STM32G474", "Modbus RTU", "Isolated USB-C", "FRAM"], "img": "pwr01-ctl.webp", "img2": "pwr01-ctl-top.webp", "platform": true}}</script>
+  <script type="application/json" id="product-data">{"spark": {"code": "MW-SPARK", "title": "MODWARE SPARK", "slogan": "The shortest path from idea to working prototype.", "long": "Bringing your ideas to life starts with the right development board. This compact STM32-based board is designed for testing communication protocols, developing new firmware and building prototypes quickly. Whether you use it for education or industrial projects, its flexible design helps you turn any idea into reality.", "specs": [["Microcontroller", "STM32"], ["Use cases", "Prototyping, firmware development, protocol testing"], ["Intended for", "Education and industrial projects"], ["Form factor", "Compact development board"]], "tags": ["STM32", "Rapid prototyping"], "img": "spark.webp?v=2", "img2": null, "platform": null}, "sense": {"code": "MW-SENSE", "title": "MODWARE SENSE", "slogan": "Accurate measurement, safe systems.", "long": "Without accurate measurement, you cannot build a robust system. ModWare Sense precisely measures current via current sensors, giving developers reliable data. Whether you use it in motor drivers or energy monitoring projects, real-time current tracking makes your designs safer and more efficient.", "specs": [["Measurement", "Current (via current sensors)"], ["Tracking", "Real-time"], ["Applications", "Motor drivers, energy monitoring"], ["Output", "Reliable measurement data for developers"]], "tags": ["Current measurement", "Real-time", "Motor drivers", "Energy monitoring"], "img": "sense.webp", "img2": null, "platform": null}, "aero": {"code": "MW-AERO", "title": "MODWARE AERO", "slogan": "Airspeed and altitude on one board.", "long": "Combine airspeed and altitude measurement on a single board. With its onboard dual pressure sensor, ModWare Aero tracks airspeed while also providing high-precision altitude data. Optimized for unmanned aerial vehicles, drones and aviation projects, this board strengthens your flight control algorithms with reliable data.", "specs": [["Sensor", "Dual pressure sensor"], ["Measurement", "Airspeed and altitude"], ["Interface", "I²C (VCC, GND, SDA, SCL, INT)"], ["Applications", "UAVs, drones, aviation"]], "tags": ["Dual pressure sensor", "Airspeed", "Altitude", "I²C"], "img": "aero.webp", "img2": null, "platform": null}, "field-sensor": {"code": "MW-FIELD-SENSOR", "title": "MODWARE FIELD SENSOR", "slogan": "Measures soil, water and the pump; reports over LoRa.", "long": "The in-field board of the FIELD smart irrigation monitoring system. On drip-irrigated fields it monitors the pump line and the soil: soil moisture, line pressure, flow, soil temperature and pump state. It powers the sensors only while measuring, sends the readings to the gateway in short LoRa packets and sleeps deeply in between. It runs on a 1S 18650 Li-ion cell and charges over USB-C.", "specs": [["Microcontroller", "ESP32"], ["Radio", "LoRa (SX1262), 868 MHz band"], ["Measurements", "Soil moisture, line pressure (0–1.6 MPa), flow (~1–30 L/min), soil temperature, pump state"], ["Power", "1S 18650 Li-ion; ~500 mA USB-C charging"], ["Battery life (estimate)", "~6.5–12 months at a 5-minute interval"], ["Dimensions", "90 × 60 mm, 4 layers"]], "tags": ["LoRa 868 MHz", "5 measurements", "18650 Li-ion cell", "USB-C charging"], "img": "field-sensor.webp", "img2": "field-sensor-top.webp", "platform": true}, "link": {"code": "MW-LINK", "title": "MODWARE LINK", "slogan": "Long range, low power, uninterrupted data.", "long": "A compact solution developed for long-range, low-power communication projects. Its STM32 microcontroller and integrated LoRa module provide reliable data transfer in IoT applications. It is easy to program over USB/UART, while GPIO output pins and an SWD debug port speed up development. It suits a wide range of uses, from sensor networks to smart city applications.", "specs": [["Microcontroller", "STM32"], ["Communication", "Integrated LoRa module"], ["Programming", "USB/UART"], ["Debugging", "SWD debug port"], ["I/O", "GPIO output pins"]], "tags": ["STM32", "LoRa", "USB/UART", "SWD"], "img": "link.webp?v=2", "img2": null, "platform": null}, "field-gateway": {"code": "MW-FIELD-GATEWAY", "title": "MODWARE FIELD GATEWAY", "slogan": "Brings field data to your computer.", "long": "The FIELD board that sits next to the computer. It uses the same ESP32 + LoRa core as the sensor node: it receives the readings from the field, acknowledges them and forwards them to the computer over a USB serial port. The local dashboard on the computer shows current values, raises alerts and keeps a time-stamped log. Powered from the computer’s USB port; no extra power supply or internet connection is needed.", "specs": [["Microcontroller", "ESP32"], ["Radio", "LoRa (SX1262), 868 MHz band"], ["Connection", "USB-C, USB serial port"], ["Power", "USB (from the computer)"], ["Controls", "Status LED, RESET and BOOT buttons"], ["Dimensions", "70 × 38 mm, 4 layers"]], "tags": ["LoRa 868 MHz", "ESP32", "USB-C", "USB serial port"], "img": "field-gateway.webp", "img2": "field-gateway-top.webp", "platform": true}, "axis": {"code": "MW-AXIS", "title": "MODWARE AXIS", "slogan": "Buttons, joysticks, vehicles: all from one controller.", "long": "Simplify your development process. ModWare Axis is a versatile control platform with an onboard microcontroller and digital/analog connection interfaces. By connecting peripherals such as buttons, switches and joysticks, you can control a variety of systems (for example, land and air vehicles or simulation systems).", "specs": [["Processor", "Onboard microcontroller"], ["Interface", "Digital and analog I/O"], ["Peripherals", "Buttons, switches, joysticks"], ["Applications", "Land/air vehicles, simulation"]], "tags": ["Digital I/O", "Analog I/O", "Joystick", "Simulation"], "img": "axis.webp", "img2": null, "platform": null}, "energy": {"code": "MW-ENERGY", "title": "MODWARE ENERGY", "slogan": "The energy backbone of the ecosystem.", "long": "ModWare Energy forms the high-performance energy backbone of the entire ModWare ecosystem. Designed to simplify complex wiring and replace it with a single-board solution, it uses an advanced buck converter architecture to provide stable, regulated voltage to your system. High-quality SMD components and advanced noise-filtering circuitry effectively reduce signal interference and voltage fluctuations, so even the most sensitive sensors and controllers run with industrial-grade reliability.", "specs": [["Architecture", "Buck converter"], ["Output", "Stable, regulated voltage"], ["Filtering", "Noise-filtering circuitry"], ["Components", "High-quality SMD"]], "tags": ["Buck converter", "Noise filtering"], "img": "energy.webp", "img2": null, "platform": null}, "power": {"code": "MW-POWER", "title": "MODWARE POWER", "slogan": "Fixed 5 V and 15 V from inputs up to 75 V.", "long": "ModWare Power safely accepts input voltages up to 75 V and produces fixed 5 V and 15 V outputs. By powering different modules at the same time, from motor drivers to sensor boards, it simplifies complex projects. With its compact, efficient design, it is the stable power supply you need as your system grows.", "specs": [["Input", "Up to 75 V"], ["Outputs", "Fixed 5 V and 15 V"], ["Supply", "Multiple modules at once"], ["Design", "Compact, efficient"]], "tags": ["75 V input", "5 V output", "15 V output"], "img": "power.webp", "img2": null, "platform": null}, "pwr01-base": {"code": "MW-GUARD", "title": "MODWARE GUARD", "slogan": "Protects the input, distributes power, measures everything.", "long": "The backbone of the system. It takes the 12–48 V DC input at a single point, protects against reverse connection, short circuits, overvoltage and undervoltage, and connects three power modules to a common bus. When a module signals a fault, it shuts off all outputs independently of software. MOSFET-based reverse-polarity protection instead of a diode keeps losses and heat low; the fuse, cutoff switch, measurement and module bus are combined on a single board.", "specs": [["Input", "12–48 V DC"], ["Total output target", "123 W (with input above ≈18 V; ≈80 W at 12 V input)"], ["Module slots", "3, plug-in"], ["Dimensions", "220 × 85 mm"]], "tags": ["12–48 V", "3 module slots", "Reverse-polarity protection", "Power measurement"], "img": "pwr01-base.webp", "img2": null, "platform": true}, "pwr-bb": {"code": "MW-SHIFT", "title": "MODWARE SHIFT 24 / 12", "slogan": "Steady output whether the input rises or falls.", "long": "Its four-switch buck-boost architecture delivers a fixed 24 V or 12 V across the entire 12–48 V input range. With a few part changes, the same board becomes two products: SHIFT 24 (24 V / 2 A) and SHIFT 12 (12 V / 5 A). The electronic fuse is switched on and off by software; voltage, current, power and temperature are measured. The output stays constant even as the battery voltage drops.", "specs": [["Output", "SHIFT 24: 24 V / 2 A · SHIFT 12: 12 V / 5 A"], ["Architecture", "4-switch buck-boost"], ["Dimensions", "70 × 70 mm"]], "tags": ["Buck-boost", "24 V / 12 V", "eFuse", "Power measurement"], "img": "pwr-bb.webp", "img2": null, "platform": true}, "pwr-bk": {"code": "MW-PURE", "title": "MODWARE PURE 5", "slogan": "Clean 5 V directly from 48 V.", "long": "A 100 V class synchronous buck controller produces 5 V / 3 A from a 12–48 V input in a single step; no intermediate voltage stage is needed. The electronic fuse provides on/off control, overcurrent protection and reverse-current blocking; if an external voltage is applied to the output, it cuts off the reverse current. Voltage, current, power and temperature are measured; it uses the same interface and software as the SHIFT modules.", "specs": [["Output", "5 V / 3 A, regulated"], ["Controller", "100 V class synchronous buck, 250 kHz"], ["Dimensions", "56 × 45 mm"]], "tags": ["5 V / 3 A", "100 V class", "eFuse", "Temperature measurement"], "img": "pwr-bk.webp", "img2": null, "platform": true}, "pwr01-ctl": {"code": "MW-PILOT", "title": "MODWARE PILOT", "slogan": "Displays, manages, logs, communicates.", "long": "The brain of the system. It switches channels on and off, sets outputs, displays measurements and logs events. A 2.0\" color display, a push-button encoder and keys allow on-site monitoring and adjustment; galvanically isolated USB-C and RS-485 (Modbus RTU) enable remote management. Settings, last state and the event log are retained in FRAM, even through a power outage; the global fault LED is driven directly by hardware, independent of software.", "specs": [["Microcontroller", "STM32G474"], ["Display", "2.0\" color, 240 × 320"], ["Communication", "Isolated USB-C, RS-485 Modbus RTU (9600–115200 baud)"], ["Logging", "FRAM event log; real-time clock (optional backup battery holder)"], ["Dimensions", "120 × 85 mm"]], "tags": ["STM32G474", "Modbus RTU", "Isolated USB-C", "FRAM"], "img": "pwr01-ctl.webp", "img2": "pwr01-ctl-top.webp", "platform": true}}</script>
 
   <!-- ============ ORTAK ALT BİLGİ ============ -->
   <footer class="site-footer">
@@ -536,7 +656,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/split-type@0.3.4/umd/index.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
-  <script src="/js/main.js?v=31" defer></script>
-  <script src="/js/animations.js?v=31" defer></script>
+  <script src="/js/main.js?v=32" defer></script>
+  <script src="/js/animations.js?v=32" defer></script>
 </body>
 </html>
