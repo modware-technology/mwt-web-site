@@ -413,7 +413,7 @@ BLOG_EN = dict(
 # İngilizce metinler: hizmet_en.py (hizmet sayfaları), blog_en_1.py ve blog_en_2.py (blog yazıları). Elle tutulan
 # İngilizce sayfalar: en/index.html, en/products.html, en/about.html, en/quote.html, en/404.html.
 TARIH_EN = "2026-11-04"
-SURUM = 31          # css/js önbellek sürümü (?v=): stil ya da betik değişince bir artırın
+SURUM = 32          # css/js önbellek sürümü (?v=): stil ya da betik değişince bir artırın
 METIN_EN_EK = {     # hizmet_en.METIN_EN'de olmayan sabit metinler
     "Ana Sayfa": "Home", "Hizmetler": "Services", "dk okuma": "min read", "Yazıyı okuyun": "Read the article",
     "İçindekiler": "Contents", "ModWare Technology mühendislik ekibi": "ModWare Technology engineering team",
@@ -896,7 +896,7 @@ MEVCUT = {
                   "Karmaşık elektronik sistemler için endüstriyel standartlarda donanım, gömülü yazılım ve Edge AI çözümleri geliştiriyoruz.",
                   ORG_JSONLD),
         "urunler": ("Ürünler: STM32 Kartları, Sensör, LoRa ve PRISM Güç Modülleri | ModWare",
-                    "STM32 geliştirme ve kontrol kartları, akım ve basınç sensörü kartları, LoRa haberleşme modülü ve 12–48 V PRISM modüler güç platformu. ModWare Technology, Kocaeli.",
+                    "STM32 kartları, akım ve basınç sensörü kartları, LoRa modülü, FIELD sulama izleme sistemi ve 12–48 V PRISM güç platformu. ModWare Technology, Kocaeli.",
                     None),
         "hakkimizda": ("Hakkımızda: Elektronik Ar-Ge ve Donanım Ekibi | ModWare Technology",
                        "Bir TEKNOFEST takımından doğan, İzmit, Kocaeli merkezli mühendislik ekibi: donanım ve PCB tasarımı, gömülü yazılım, proje yönetimi ve makine mühendisliği.",
@@ -910,7 +910,7 @@ MEVCUT = {
                   "We develop industrial-grade hardware, embedded software and Edge AI solutions for complex electronic systems.",
                   ORG_JSONLD_EN),
         "urunler": ("Products: STM32 Boards, Sensors, LoRa and PRISM Power Modules | ModWare",
-                    "STM32 development and control boards, current and pressure sensor boards, a LoRa module and the 12–48 V PRISM modular power platform. ModWare Technology, Türkiye.",
+                    "STM32 boards, current and pressure sensor boards, a LoRa module, the FIELD irrigation monitoring system and the 12–48 V PRISM power platform. ModWare Technology, Türkiye.",
                     None),
         "hakkimizda": ("About Us: Electronics R&D and Hardware Team | ModWare Technology",
                        "An engineering team in İzmit, Kocaeli, Türkiye, born from a TEKNOFEST team: hardware and PCB design, embedded software, project management and mechanical engineering.",
@@ -999,7 +999,7 @@ llms = [
     "",
     "> İzmit, Kocaeli merkezli elektronik Ar-Ge ekibi. Elektronik kart ve donanım tasarımı, PCB tasarımı ve üretimi, "
     "gömülü yazılım, tasarım incelemesi, prototip ve Ar-Ge hizmetleri verir; STM32 kartları, sensör kartları, "
-    "LoRa haberleşme modülü ve 12–48 V PRISM güç platformu gibi kendi modüler ürünlerini geliştirir.",
+    "LoRa haberleşme modülü, FIELD sulama izleme sistemi ve 12–48 V PRISM güç platformu gibi kendi modüler ürünlerini geliştirir.",
     "",
     f"- Dil: Türkçe; İngilizce sürüm {EN.url('index')} altında",
     "- Konum: İzmit, Kocaeli, Türkiye; Türkiye geneline hizmet",
@@ -1026,7 +1026,8 @@ llms = [
     "",
     "> English version of the site: an electronics R&D team in İzmit, Kocaeli, Türkiye offering electronic board and "
     "hardware design, PCB design and manufacturing, embedded software, design review, prototyping and R&D, plus its own "
-    "modular products (STM32 boards, sensor boards, a LoRa module and the 12–48 V PRISM power platform).",
+    "modular products (STM32 boards, sensor boards, a LoRa module, the FIELD irrigation monitoring system and the 12–48 V "
+    "PRISM power platform).",
     "",
     llms_satir(EN, "index", "Home", MEVCUT[EN]["index"][1]),
     *[llms_satir(EN, ("hizmet", k), baslik_bicimi(h["ad"], "en"), h["ozet"]) for k, h in EN.hizmet.items()],

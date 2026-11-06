@@ -46,7 +46,7 @@ Product codes (`MW-SPARK`, `MW-PRISM`, …) never change. Service values on the 
 
 ## Names that never change
 
-ModWare Technology, ModWare, product names (ModWare Spark, Axis, Sense, Aero, Link, Energy, Power), PRISM, GUARD, SHIFT 24 / SHIFT 12, PURE 5, PILOT, product codes (MW-…), TEKNOFEST, STM32, LoRa, Modbus RTU, RS-485, KiCad, part numbers. Place names keep Turkish letters: **İzmit, Kocaeli, Türkiye** (use "Türkiye", not "Turkey").
+ModWare Technology, ModWare, product names (ModWare Spark, Axis, Sense, Aero, Link, Energy, Power), PRISM, GUARD, SHIFT 24 / SHIFT 12, PURE 5, PILOT, FIELD, FIELD GATEWAY, product codes (MW-…), TEKNOFEST, STM32, ESP32, LoRa, Modbus RTU, RS-485, KiCad, part numbers. "FIELD SENSÖR" becomes "FIELD SENSOR" in English. Place names keep Turkish letters: **İzmit, Kocaeli, Türkiye** (use "Türkiye", not "Turkey").
 
 Where the Turkish text says the company serves "Türkiye geneline" (all of Türkiye), write "for clients in Türkiye and abroad" — an offer, not a claim of existing foreign clients. TEKNOFEST may get a short explanation on first use: "TEKNOFEST, Türkiye's largest technology festival".
 
