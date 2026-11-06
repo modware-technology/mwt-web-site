@@ -4,7 +4,7 @@
 // planda buraya da yollar. Bu fonksiyon talebi gizli anahtarla ModWare Panel'e iletir; panel talebe numara
 // verir ve personel orada takip eder. Ziyaretçi bunu görmez; panele ulaşılamazsa form yine çalışır.
 //
-// Ayarlar (Cloudflare > Workers & Pages > mwt-web-site > Settings > Variables and Secrets):
+// Ayarlar (Cloudflare > Workers & Pages > modware-technology > Settings > Variables and Secrets):
 //   TEKLIF_URL      panelin talep alma adresi (…/api/ic/talep)
 //   TALEP_ANAHTARI  gizli; paneldeki TALEP_ANAHTARI ile aynı değer
 
