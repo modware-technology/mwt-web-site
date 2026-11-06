@@ -30,8 +30,10 @@
 /js/*
   Cache-Control: public, max-age=86400
 
-# Depo içi belge (README.md) arama motorlarına kapalı
+# Depo içi belge (README.md) ve sunucu fonksiyonunun kaynağı (functions/) arama motorlarına kapalı
 /README.md
+  X-Robots-Tag: noindex
+/functions/*
   X-Robots-Tag: noindex
 
 # Güvenlik başlıkları

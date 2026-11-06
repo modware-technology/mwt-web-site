@@ -9,7 +9,7 @@ modwaretechnology.com sitesinin kaynak dosyaları. Saf HTML + CSS + JavaScript; 
 | `index.html` | Ana sayfa: hero slaytı, "Nasıl çalışıyoruz" aşamaları, değerler |
 | `urunler.html` | Ürün galerisi (kartlar filtre başlıklarıyla aynı dört kategori grubunda), kategori filtresi, ürün detay penceresi, PRISM (MW-PWR01) entegrasyon şeması, kaydırmayla açılan MODWARE PURE 5, FIELD sulama izleme sistemi şeması (sensör düğümü → LoRa → gateway → bilgisayar) ve öne çıkanları |
 | `hakkimizda.html` | Hakkımızda: fotoğraflı hero, cam kartlar, kaydırmayla açılan cümle |
-| `teklif.html` | Teklif formu (Web3Forms; talepler info@modwaretechnology.com adresine e-postayla gelir) |
+| `teklif.html` | Teklif formu (Web3Forms; talepler info@modwaretechnology.com adresine e-postayla gelir, aynı talep arka planda ekip paneline de kaydedilir) |
 | `404.html` | Bulunamayan sayfa |
 
 **Hizmet sayfaları** (ana menüdeki "Hizmetler" bağlantısı `/hizmetler` adresine gider; hepsi `sitemap.xml`'de de var). Mevcut sayfaların bileşenlerini (sayfa başlığı, kart ızgarası, süreç adımları, kapanış bandı) kullanır; `<body data-page="hizmetler">` menüde "Hizmetler"i seçili gösterir. Her sayfanın "Teklif Al" düğmesi formu ilgili hizmet seçili açar (`/teklif?urun=…`; değer formdaki bir seçenekle birebir aynı olmalı).
@@ -47,7 +47,8 @@ Yeni yazı `site-araclari` dalındaki `blog_yazilar.py`'ye eklenir ve `seo_uret.
 - `assets/urunler/`: ürün görselleri (şeffaf arka planlı WebP)
 - `assets/hakkimizda/`: Hakkımızda arka plan fotoğrafı
 - `assets/sequence/pwr-bk/` (114 kare) ve `pwr-bk-sm/` (57 kare, mobil): Ürünler sayfasındaki kart patlatma kareleri
-- `_headers`: önbellek ve güvenlik başlıkları; `README.md` arama motorlarına kapalı (`X-Robots-Tag: noindex`)
+- `_headers`: önbellek ve güvenlik başlıkları; `README.md` ve `functions/` arama motorlarına kapalı (`X-Robots-Tag: noindex`)
+- `functions/api/talep.js`: teklif formunun arka plan kaydı (Cloudflare Pages Function, `POST /api/talep`). Talebi gizli anahtarla ekip paneline iletir; ziyaretçi görmez. Ayarları "Yayın" bölümünde.
 - `_redirects`: kaldırılan `guc-elektronigi` sayfası `hizmetler`e, `pcb-tasarimi` sayfası `elektronik-kart-tasarimi`ne yönlenir (301). Eski sitenin Google ve Bing'de kayıtlı kalan adresleri de yeni karşılıklarına yönlenir: `mwhub` ve `mwspark` → `urunler`, `iletisim` → `teklif`, `hakkmzda` → `hakkimizda`.
 - `robots.txt`, `sitemap.xml`: arama motorları için; site haritasında bütün sayfalar var
 - `llms.txt`: yapay zekâ araçları (ChatGPT, Claude vb.) için sitenin kısa özeti ve sayfa listesi ([llmstxt.org](https://llmstxt.org) biçimi). Üretici yazar, elle düzenlemeyin. Google bu dosyayı kullanmaz; arama sıralamasına etkisi yoktur.
@@ -67,6 +68,8 @@ Site Cloudflare Pages'ten yayınlanır; `main` dalına gönderilen her değişik
 3. **Custom domains** bölümüne `modwaretechnology.com` ve `www.modwaretechnology.com` eklenir (alan adının DNS'i Cloudflare'dedir). `www` adresi bir yönlendirme kuralıyla (Rules → Redirect Rules) kök adrese 301 ile yönlenir.
 
 Teklif formu Web3Forms'a gönderir: anahtar `teklif.html`'deki `access_key` alanındadır ve `info@modwaretechnology.com` adresine bağlıdır (yeni anahtar: web3forms.com). Anahtarın sayfada görünmesi normaldir.
+
+Form aynı içeriği arka planda `functions/api/talep.js`'e de yollar; fonksiyon talebi ekip paneline iletir (panel kaynağı özel `teklif-api` deposunda, kurulumu `docs/kurulum.md`). Pages projesinde **Settings → Variables and Secrets** altında iki değer gerekir: `TEKLIF_URL` (panelin talep alma adresi, değeri `teklif-api/docs/kurulum.md`'de) ve gizli `TALEP_ANAHTARI` (paneldekiyle aynı). Değerler yokken ya da panel çalışmazken fonksiyon sessizce hata döner; form ve e-posta etkilenmez. Yerelde denemek için: `npx wrangler pages dev . --binding TEKLIF_URL=… --binding TALEP_ANAHTARI=…`.
 
 Yerel önizleme için `site-araclari` dalındaki `onizleme.py` temiz adresleri (`/hizmetler`) Cloudflare gibi açar: `python onizleme.py <site-klasörü>` → `http://127.0.0.1:8765/`.
 ## Güncelleme notları

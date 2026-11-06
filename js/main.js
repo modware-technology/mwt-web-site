@@ -367,6 +367,7 @@
      - Zorunlu alanlar doldukça ilerleme çubuğu dolar
      - Alan altında Türkçe hata mesajları
      - Web3Forms'a gönderir (talep info@ adresine e-postayla gelir); başarılıysa teşekkür ekranı
+     - Aynı talep arka planda ekip paneline de kaydedilir (/api/talep)
      ========================================================= */
   const quote = document.getElementById('quote-form');
   if (quote) {
@@ -475,11 +476,24 @@
       status.className = 'quote-status';
       status.textContent = '';
 
+      const fields = Object.fromEntries(new FormData(quote));
+
+      // Arka plan kaydı: talep, ekip paneline de işlenir (functions/api/talep.js). Beklenmez; başarısız
+      // olursa ziyaretçi bir şey görmez, e-posta yolu yine çalışır.
+      try {
+        fetch('/api/talep', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ...fields, access_key: undefined, dil: EN ? 'en' : 'tr', sayfa: window.location.pathname }),
+          keepalive: true,
+        }).catch(() => {});
+      } catch (_) { /* eski tarayıcı */ }
+
       try {
         const res = await fetch(quote.action, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify(Object.fromEntries(new FormData(quote))),
+          body: JSON.stringify(fields),
         });
         const data = await res.json().catch(() => ({}));
         if (!res.ok || !data.success) throw new Error(data.message || String(res.status));
