@@ -413,7 +413,7 @@ BLOG_EN = dict(
 # İngilizce metinler: hizmet_en.py (hizmet sayfaları), blog_en_1.py ve blog_en_2.py (blog yazıları). Elle tutulan
 # İngilizce sayfalar: en/index.html, en/products.html, en/about.html, en/quote.html, en/404.html.
 TARIH_EN = "2026-11-04"
-SURUM = 32          # css/js önbellek sürümü (?v=): stil ya da betik değişince bir artırın
+SURUM = 33          # css/js önbellek sürümü (?v=): stil ya da betik değişince bir artırın
 METIN_EN_EK = {     # hizmet_en.METIN_EN'de olmayan sabit metinler
     "Ana Sayfa": "Home", "Hizmetler": "Services", "dk okuma": "min read", "Yazıyı okuyun": "Read the article",
     "İçindekiler": "Contents", "ModWare Technology mühendislik ekibi": "ModWare Technology engineering team",
