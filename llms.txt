@@ -14,6 +14,7 @@
 - [Gömülü Yazılım Geliştirme](https://modwaretechnology.com/gomulu-yazilim): Donanımınıza özel, sahada güvenilir çalışan gömülü yazılım: sıfırdan geliştirme ya da mevcut yazılımın iyileştirilmesi.
 - [Tasarım İncelemesi](https://modwaretechnology.com/tasarim-incelemesi): Şematik ve PCB'nizi üretime göndermeden önce inceler, hataları ve riskleri raporlarız.
 - [Prototip ve Ar-Ge](https://modwaretechnology.com/prototip-ar-ge): Fikirden çalışan prototipe, prototipten üretime; test planı ve dokümantasyon.
+- [ModFlow yazılımı](https://modwaretechnology.com/modflow): Elektronik üretim için teklif, satın alma, komponent kaynak bulma, stok, üretim emri ve seri numarası takibi.
 - [Tüm Hizmetler](https://modwaretechnology.com/hizmetler): Elektronik kart ve donanım tasarımı, PCB tasarımı ve üretimi, gömülü yazılım, tasarım incelemesi, prototip ve Ar-Ge. İzmit, Kocaeli'den Türkiye geneline.
 
 ## Ürünler ve Firma

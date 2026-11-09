@@ -10,6 +10,7 @@ modwaretechnology.com sitesinin kaynak dosyaları. Saf HTML + CSS + JavaScript; 
 | `urunler.html` | Ürün galerisi (kartlar filtre başlıklarıyla aynı dört kategori grubunda), kategori filtresi, ürün detay penceresi, PRISM (MW-PWR01) entegrasyon şeması, kaydırmayla açılan MODWARE PURE 5, FIELD sulama izleme sistemi şeması (sensör düğümü → LoRa → gateway → bilgisayar) ve öne çıkanları |
 | `hakkimizda.html` | Hakkımızda: fotoğraflı hero, cam kartlar, kaydırmayla açılan cümle |
 | `teklif.html` | Teklif formu (Web3Forms; talepler info@modwaretechnology.com adresine e-postayla gelir, aynı talep arka planda ekip paneline de kaydedilir) |
+| `modflow.html` | ModFlow yazılımının tanıtım sayfası (`/modflow`): devre izi arka planı, kaydırınca toplanan dağınık notlar, kaydırdıkça çizilen 7 adımlı akış, komponent arama canlandırması, özellikler, SSS. Sayfaya özgü stiller `css/style.css` "15. ModFlow" bölümünde, hareketler `js/modflow.js`'de. "Demo İsteyin" düğmesi formu `?urun=ModFlow` ile açar; talep e-postaya ve panele düşer |
 | `404.html` | Bulunamayan sayfa |
 
 **Hizmet sayfaları** (ana menüdeki "Hizmetler" bağlantısı `/hizmetler` adresine gider; hepsi `sitemap.xml`'de de var). Mevcut sayfaların bileşenlerini (sayfa başlığı, kart ızgarası, süreç adımları, kapanış bandı) kullanır; `<body data-page="hizmetler">` menüde "Hizmetler"i seçili gösterir. Her sayfanın "Teklif Al" düğmesi formu ilgili hizmet seçili açar (`/teklif?urun=…`; değer formdaki bir seçenekle birebir aynı olmalı).
@@ -81,6 +82,12 @@ Yerel önizleme için `site-araclari` dalındaki `onizleme.py` temiz adresleri (
 - Değiştirilecek metinler HTML'de `<!-- METİN -->` yorumlarıyla işaretlidir (özellikle Hakkımızda sayfası).
 - Site içi bağlantılar uzantısız ve kökten başlar: `/hizmetler`, `/blog/`, ana sayfa için `/`. Dosyanın adı `hizmetler.html` olsa da bağlantıda `.html` yazılmaz; Cloudflare Pages `.html` adreslerini ayrıca yönlendirir.
 - Başlıklarda (`h1`–`h3`, teklif formundaki bölüm başlıkları) her kelime büyük harfle başlar: "Elektronik Kart ve Donanım Tasarımı". TDK kuralı gereği "ve, ile, ya da, veya, de/da, ki" ve soru eki "mi" küçük kalır: "Yalnızca PCB Tasarımı Yaptırabilir miyim?". Kısaltmalar (PCB, STM32) olduğu gibi yazılır.
+
+## ModFlow sayfası ve üretici betik
+
+`modflow.html` elle yazılmıştır; `site-araclari` dalındaki `seo_uret.py` bu sayfayı tanımaz. Betik çalıştırıldığında
+`hizmetler.html`'deki "ModFlow Yazılımı" kartı, `sitemap.xml`'deki `/modflow` satırı ve `llms.txt`'deki ModFlow satırı
+silinir. Betiği çalıştırdıktan sonra bu üçünü yeniden ekleyin ya da sayfayı betiğe tanıtın.
 
 ## Arama motoru notları
 
