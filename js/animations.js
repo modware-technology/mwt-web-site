@@ -456,7 +456,73 @@
     };
   }
 
-  const VISUALS = { chip: buildChip, schematic: buildSchematic, modules: buildModules };
+  /* ----- 1d. "flow": ModFlow akışı. Altı adım kutusu yılan biçiminde dizilir, aralarındaki izler çizilir;
+             bir sinyal baştan sona akarak kutuları sırayla yakar, sonunda seri numarası etiketi parlar ----- */
+  function buildFlow(host) {
+    const { svg, glow } = createSvg(host);
+    const baslik = el('text', { class: 'v-mono', x: 50, y: 66 }, svg);
+    baslik.textContent = 'MODFLOW · BOM → SEVKİYAT';
+
+    // [ad, alt yazı, x, y]  — satır 1 soldan sağa, satır 2 sağdan sola, satır 3 soldan sağa
+    const data = [
+      ['BOM', '142 kalem', 50, 90], ['FİYAT', 'TR · Mouser · TME', 340, 90],
+      ['ONAY', '2 basamak', 340, 238], ['SİPARİŞ', 'PO-2026-0014', 50, 238],
+      ['STOK', '+500 adet', 50, 386], ['ÜRETİM', 'UE-2026-0003', 340, 386],
+    ];
+    const baglar = [
+      'M220 132 H340', 'M425 174 V238', 'M340 280 H220', 'M135 322 V386', 'M220 428 H340', 'M425 470 V494',
+    ].map((dd) => el('path', { class: 'v-trace-hot', d: dd }, svg));
+
+    const leds = [];
+    const kutular = data.map(([ad, alt, x, y]) => {
+      const g = el('g', {}, svg);
+      el('rect', { class: 'v-module', x, y, width: 170, height: 84, rx: 12 }, g);
+      const t = el('text', { class: 'v-label', x: x + 16, y: y + 36 }, g);
+      t.textContent = ad;
+      const s = el('text', { class: 'v-mono', x: x + 16, y: y + 58 }, g);
+      s.textContent = alt;
+      leds.push(el('circle', { cx: x + 150, cy: y + 20, r: 5, fill: '#22d3ee', opacity: 0.35, filter: glow }, g));
+      return g;
+    });
+
+    const etiket = el('g', {}, svg);
+    el('rect', { class: 'v-chip', x: 290, y: 494, width: 230, height: 34, rx: 8 }, etiket);
+    const sn = el('text', { class: 'v-mono', x: 405, y: 515, 'text-anchor': 'middle' }, etiket);
+    sn.textContent = 'SN · MW-FIELD-2611-0001';
+    const nokta = el('circle', { class: 'v-pulse', r: 4, cx: -10, cy: -10, opacity: 0, filter: glow }, svg);
+
+    if (!hasGsap) return null;
+
+    const intro = gsap.timeline({ paused: true });
+    intro.call(() => prepDraw(baglar), null, 0).from(baslik, { opacity: 0, duration: 0.3 }, 0);
+    kutular.forEach((g, i) => {
+      intro.from(g, { y: 18, opacity: 0, duration: 0.45, ease: 'back.out(1.6)' }, 0.15 + i * 0.22);
+      intro.to(baglar[i], { strokeDashoffset: 0, duration: 0.25, ease: 'power1.inOut' }, 0.4 + i * 0.22);
+    });
+    intro.from(etiket, { opacity: 0, scale: 0.85, transformOrigin: '50% 50%', duration: 0.4, ease: 'back.out(2)' }, 1.75);
+
+    let dongu = null;
+    return {
+      intro,
+      start() {
+        // Sinyal izleri sırayla dolaşır; vardığı kutunun ışığı yanar, sonda seri no etiketi parlar
+        dongu = gsap.timeline({ repeat: -1, repeatDelay: 1.2, delay: 2 });
+        baglar.forEach((b, i) => {
+          dongu.to(leds[i], { opacity: 1, duration: 0.2 });
+          dongu.add(travel(nokta, b, { duration: 0.45, ease: 'none' }));
+        });
+        dongu.fromTo(etiket, { opacity: 0.6 }, { opacity: 1, duration: 0.25, repeat: 1, yoyo: true });
+        dongu.to(leds, { opacity: 0.35, duration: 0.6 }, '+=0.6');
+      },
+      stop() {
+        if (dongu) dongu.kill();
+        gsap.set(nokta, { opacity: 0 });
+        gsap.set(leds, { opacity: 0.35 });
+      },
+    };
+  }
+
+  const VISUALS = { chip: buildChip, schematic: buildSchematic, modules: buildModules, flow: buildFlow };
 
   // Görselleri hemen oluştur (GSAP olmasa da statik olarak görünürler)
   const visuals = Array.from(document.querySelectorAll('.hero-slide')).map((slide) => {
@@ -644,7 +710,8 @@
     const counter = hero.querySelector('[data-slide-current]');
     const pauseBtn = hero.querySelector('[data-slide-pause]');
     const DURATION = 9;                                   // slayt başına saniye
-    const GLOW = [[0.75, 0.45], [0.68, 0.35], [0.8, 0.6]]; // slayta göre ışık konumu
+    const GLOW_TUR = { chip: [0.75, 0.45], flow: [0.72, 0.4], schematic: [0.68, 0.35], modules: [0.8, 0.6] };
+    const GLOW = slides.map((s) => GLOW_TUR[(s.querySelector('[data-visual]') || {}).dataset?.visual] || [0.75, 0.45]); // slayta göre ışık konumu
 
     // Her slaydın parçaları
     const parts = slides.map((s) => ({
